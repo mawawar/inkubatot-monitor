@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🐣 Inkubator Ayam Monitor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
@@ -42,598 +42,601 @@
     }, () => setStatus('offline'));
   </script>
 
- <style>
-  :root {
-    --bg:       #ffe0f0;
-    --bg2:      #ffc6e0;
-    --panel:    #fff5fb;
-    --border:   #f7a8cc;
-    --accent:   #e91e8c;
-    --accent2:  #ff6eb4;
-    --green:    #2ecc71;
-    --yellow:   #f39c12;
-    --red:      #e74c3c;
-    --purple:   #9b59b6;
-    --text:     #5a1a3a;
-    --text-dim: #c478a0;
-    --glow:     0 4px 24px rgba(233,30,140,0.15);
-  }
+  <style>
+    :root {
+      --sun:      #FFD700;
+      --sun2:     #FF9500;
+      --coral:    #FF6B6B;
+      --peach:    #FFB347;
+      --grass:    #5CB85C;
+      --sky:      #5DADE2;
+      --lavender: #C39BD3;
+      --mint:     #48C9B0;
+      --white:    #FFFFFF;
+      --cream:    #FFFDE7;
+      --text:     #5D4037;
+      --text-dim: #A1887F;
+      --shadow:   0 6px 24px rgba(255,150,0,0.15);
+      --shadow-lg:0 12px 40px rgba(255,140,0,0.22);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(160deg, #FFF9C4 0%, #FFE57F 40%, #FFD740 75%, #FFC107 100%);
+    }
 
-  * { margin:0; padding:0; box-sizing:border-box; }
+    /* CLOUDS */
+    .clouds { position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden; }
+    .cloud {
+      position:absolute;background:rgba(255,255,255,0.6);border-radius:50px;
+      animation:cloudFloat var(--dur,30s) linear var(--delay,0s) infinite;
+    }
+    .cloud::before,.cloud::after{content:'';position:absolute;background:inherit;border-radius:50%;}
+    .c1{width:120px;height:40px;top:8%;}
+    .c1::before{width:60px;height:55px;top:-25px;left:20px;}
+    .c1::after{width:50px;height:45px;top:-15px;left:55px;}
+    .c2{width:90px;height:30px;top:20%;}
+    .c2::before{width:45px;height:40px;top:-20px;left:15px;}
+    .c2::after{width:38px;height:35px;top:-12px;left:42px;}
+    .c3{width:160px;height:52px;top:5%;}
+    .c3::before{width:80px;height:68px;top:-32px;left:28px;}
+    .c3::after{width:65px;height:58px;top:-20px;left:75px;}
+    @keyframes cloudFloat{
+      0%{transform:translateX(-220px);opacity:0}
+      5%{opacity:1} 95%{opacity:1}
+      100%{transform:translateX(110vw);opacity:0}
+    }
 
-  body {
-    background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
-    font-family: 'Exo 2', sans-serif;
-    color: var(--text);
-    min-height: 100vh;
-  }
+    /* PARTICLES */
+    .particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+    .particle{position:absolute;opacity:0;animation:floatUp var(--dur,10s) ease-in-out var(--delay,0s) infinite;}
+    @keyframes floatUp{
+      0%{opacity:0;transform:translateY(100vh) scale(0.6) rotate(0deg);}
+      10%{opacity:0.6;} 90%{opacity:0.3;}
+      100%{opacity:0;transform:translateY(-80px) scale(1.1) rotate(25deg);}
+    }
 
-  /* ========================= */
-  /* TAMBAHAN AESTHETIC KUNING */
-  /* ========================= */
+    body.danger-mode{animation:dangerFlash 0.5s ease infinite;}
+    @keyframes dangerFlash{
+      0%,100%{background:linear-gradient(160deg,#FFF9C4,#FFE57F,#FFD740,#FFC107);}
+      50%{background:linear-gradient(160deg,#FFE0E0,#FFBBBB,#FF8888);}
+    }
 
-  :root {
-    --bg:       #fff9c4;
-    --bg2:      #ffe082;
-    --panel:    #fffde7;
-    --border:   #ffd54f;
-    --accent:   #ffb300;
-    --accent2:  #ffca28;
-    --green:    #66bb6a;
-    --yellow:   #fbc02d;
-    --red:      #e53935;
-    --purple:   #9575cd;
-    --text:     #5d4037;
-    --text-dim: #a1887f;
-    --glow:     0 6px 28px rgba(255, 193, 7, 0.25);
-  }
+    .wrapper{position:relative;z-index:1;padding:16px;max-width:1280px;margin:0 auto;}
 
-  body {
-    background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
-    overflow-x: hidden;
-  }
+    /* TOAST */
+    .toast-container{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;}
+    .toast{
+      padding:14px 20px;border-radius:20px;font-size:0.85rem;font-weight:700;
+      min-width:270px;display:flex;align-items:center;gap:12px;
+      animation:toastIn 0.4s cubic-bezier(.175,.885,.32,1.275);
+      box-shadow:0 8px 24px rgba(0,0,0,0.12);border:2px solid rgba(255,255,255,0.5);
+    }
+    .toast.danger{background:#FFE0E0;color:#c0392b;border-color:#FF6B6B;}
+    .toast.warn  {background:#FFF3CD;color:#8B5E3C;border-color:#FFB347;}
+    .toast.ok    {background:#E8F8E8;color:#27ae60;border-color:#5CB85C;}
+    @keyframes toastIn{from{opacity:0;transform:translateX(60px) scale(0.85)}to{opacity:1;transform:translateX(0) scale(1)}}
+    @keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(60px)}}
 
-  body::after {
-    content:'';
-    position:fixed;
-    width:200%;
-    height:200%;
-    background-image: radial-gradient(circle, rgba(255,235,59,0.15) 1px, transparent 1px);
-    background-size: 40px 40px;
-    animation: floatBg 30s linear infinite;
-    z-index:0;
-  }
+    /* ALARM STRIP */
+    .alarm-strip{
+      display:none;
+      background:linear-gradient(90deg,#FF6B6B,#FF3B3B,#FF6B6B);
+      background-size:200% 100%;
+      color:#fff;padding:12px 20px;border-radius:18px;margin-bottom:12px;
+      font-weight:800;font-size:0.9rem;text-align:center;
+      animation:alarmPulse 0.6s ease infinite, bgShift 2s linear infinite;
+      box-shadow:0 4px 24px rgba(255,59,59,0.4);
+    }
+    .alarm-strip.show{display:block;}
+    @keyframes alarmPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.01);}}
+    @keyframes bgShift{0%{background-position:0%}100%{background-position:200%}}
 
-  @keyframes floatBg {
-    from { transform: translate(0,0); }
-    to   { transform: translate(-200px,-200px); }
-  }
+    /* NOTIF BANNER */
+    .notif-banner{
+      background:rgba(255,255,255,0.72);border:2px solid rgba(255,200,0,0.35);
+      border-radius:18px;padding:12px 18px;margin-bottom:14px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      backdrop-filter:blur(8px);
+    }
+    .notif-banner p{font-size:0.82rem;color:var(--text-dim);font-weight:700;}
+    .btn-notif{
+      background:linear-gradient(135deg,var(--sun),var(--sun2));
+      color:#fff;border:none;padding:9px 20px;border-radius:12px;
+      font-size:0.8rem;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;
+      box-shadow:0 3px 12px rgba(255,150,0,0.35);transition:all 0.2s;
+    }
+    .btn-notif:hover{transform:scale(1.07);box-shadow:0 6px 20px rgba(255,150,0,0.4);}
 
-  header {
-    background: linear-gradient(135deg,#fffde7,#ffe082);
-    border:2px solid var(--border);
-    box-shadow: var(--glow);
-  }
+    /* HEADER */
+    header{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:20px 24px;
+      background:linear-gradient(135deg,rgba(255,255,255,0.88),rgba(255,248,170,0.75));
+      border:2.5px solid rgba(255,200,0,0.45);
+      border-radius:26px;margin-bottom:14px;
+      position:relative;overflow:hidden;
+      box-shadow:var(--shadow-lg);backdrop-filter:blur(12px);
+      flex-wrap:wrap;gap:14px;
+    }
+    header::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:5px;
+      background:linear-gradient(90deg,var(--coral),var(--sun),var(--grass),var(--sky),var(--lavender),var(--coral));
+      background-size:200% 100%;
+      border-radius:26px 26px 0 0;
+      animation:rainbowSlide 4s linear infinite;
+    }
+    @keyframes rainbowSlide{0%{background-position:0%}100%{background-position:200%}}
 
-  .card {
-    background: linear-gradient(145deg,#fffde7,#fff9c4);
-    border:2px solid var(--border);
-    transition: all 0.25s ease;
-    box-shadow:0 6px 18px rgba(255,193,7,0.15);
-  }
+    .header-left{display:flex;align-items:center;gap:16px;}
+    .egg-anim{font-size:2.8rem;display:inline-block;animation:eggBounce 1.8s ease-in-out infinite;}
+    @keyframes eggBounce{
+      0%,100%{transform:translateY(0) rotate(-8deg) scale(1);}
+      50%{transform:translateY(-12px) rotate(8deg) scale(1.12);}
+    }
+    .header-title h1{
+      font-family:'Fredoka One',cursive;font-size:1.6rem;
+      color:var(--sun2);letter-spacing:1px;
+      text-shadow:2px 3px 0 rgba(255,140,0,0.2);
+    }
+    .header-title p{font-size:0.72rem;color:var(--text-dim);letter-spacing:1px;margin-top:2px;font-weight:700;}
 
-  .card:hover {
-    transform:translateY(-6px) scale(1.02);
-    box-shadow:0 12px 30px rgba(255,193,7,0.3);
-  }
+    .status-badge{
+      display:flex;align-items:center;gap:10px;padding:10px 22px;
+      border-radius:20px;font-size:0.8rem;font-weight:800;
+      font-family:'Fredoka One',cursive;letter-spacing:0.5px;transition:all 0.4s ease;
+    }
+    .status-badge.online {background:rgba(92,184,92,0.15);border:2px solid var(--grass);color:var(--grass);box-shadow:0 0 18px rgba(92,184,92,0.2);}
+    .status-badge.offline{background:rgba(255,107,107,0.12);border:2px solid var(--coral);color:var(--coral);box-shadow:0 0 18px rgba(255,107,107,0.2);}
+    .status-badge.waiting{background:rgba(255,179,71,0.15);border:2px solid var(--peach);color:var(--sun2);box-shadow:0 0 18px rgba(255,165,0,0.15);}
+    .dot{width:10px;height:10px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;animation:dotPulse 1.2s ease-in-out infinite;}
+    @keyframes dotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.7);opacity:0.5}}
 
-  .panel {
-    background:linear-gradient(145deg,#fffde7,#fff9c4);
-    border:2px solid var(--border);
-    box-shadow:0 6px 18px rgba(255,193,7,0.15);
-  }
+    /* CARDS */
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:14px;}
+    .card{
+      background:rgba(255,255,255,0.88);
+      border:2.5px solid rgba(255,220,0,0.3);
+      border-radius:24px;padding:18px;
+      position:relative;overflow:hidden;
+      transition:all 0.3s cubic-bezier(.175,.885,.32,1.275);
+      box-shadow:var(--shadow);backdrop-filter:blur(8px);
+    }
+    .card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:var(--card-color);border-radius:24px 24px 0 0;}
+    .card:hover{transform:translateY(-7px) scale(1.02);box-shadow:var(--shadow-lg);border-color:var(--card-color);}
+    .card:hover .card-bg-num{opacity:0.08;}
+    .card-bg-num{
+      position:absolute;right:-8px;bottom:-10px;
+      font-family:'Fredoka One',cursive;font-size:5.5rem;
+      color:var(--card-color);opacity:0.05;
+      transition:opacity 0.3s;pointer-events:none;line-height:1;
+    }
+    .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+    .card-icon{font-size:1.7rem;animation:iconWiggle 4s ease-in-out infinite;}
+    @keyframes iconWiggle{0%,100%{transform:rotate(0deg)}30%{transform:rotate(-10deg)}70%{transform:rotate(10deg)}}
+    .card-label{font-size:0.6rem;color:var(--text-dim);letter-spacing:1.5px;text-transform:uppercase;font-weight:800;}
+    .card-value-wrap{display:flex;align-items:baseline;gap:4px;margin-bottom:8px;}
+    .card-value{font-family:'Fredoka One',cursive;font-size:2.7rem;color:var(--card-color);line-height:1;transition:all 0.4s;}
+    .card-unit{font-size:0.9rem;color:var(--text-dim);font-weight:700;}
+    .card-status{font-size:0.65rem;font-weight:800;padding:4px 10px;border-radius:10px;display:inline-block;letter-spacing:0.5px;}
 
-  .btn-notif {
-    background: linear-gradient(135deg,#ffb300,#ffd54f);
-    color:#5d4037;
-    font-weight:700;
-    box-shadow:0 4px 12px rgba(255,193,7,0.4);
-  }
+    .s-normal {background:#E8F8E8;color:#27ae60;border:1.5px solid #5CB85C;}
+    .s-toleran{background:#FFF3CD;color:#8B5E3C;border:1.5px solid #FFB347;}
+    .s-panas  {background:#FFF0CC;color:#e67e00;border:1.5px solid #FFA500;}
+    .s-dingin {background:#E3F2FD;color:#1976D2;border:1.5px solid #87CEEB;}
+    .s-bahaya {background:#FFE0E0;color:#c0392b;border:1.5px solid #FF6B6B;animation:blinkRed 0.6s step-end infinite;}
+    @keyframes blinkRed{50%{background:#FFBBBB;}}
 
-  .footer-bar {
-    background:linear-gradient(135deg,#fffde7,#ffe082);
-    border:2px solid var(--border);
-  }
+    /* GRID */
+    .main-grid {display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+    .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
 
-  .gauge-fill {
-    stroke:#ffb300 !important;
-  }
+    .panel{
+      background:rgba(255,255,255,0.82);
+      border:2px solid rgba(255,215,0,0.32);
+      border-radius:24px;padding:18px;
+      position:relative;overflow:hidden;
+      box-shadow:var(--shadow);backdrop-filter:blur(8px);
+    }
+    .panel::before{
+      content:'';position:absolute;top:0;left:0;width:5px;height:100%;
+      background:linear-gradient(180deg,var(--sun),var(--peach),transparent);
+      border-radius:24px 0 0 24px;
+    }
+    .panel-title{
+      font-family:'Fredoka One',cursive;font-size:1rem;
+      color:var(--sun2);margin-bottom:16px;
+      display:flex;align-items:center;gap:8px;
+    }
+    .panel-title::after{content:'';flex:1;height:2px;background:linear-gradient(90deg,rgba(255,180,0,0.3),transparent);border-radius:2px;}
 
-  h1 {
-    text-shadow: 0 2px 6px rgba(255,193,7,0.4);
-  }
+    /* GAUGE */
+    .gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;}
+    .gauge{position:relative;width:170px;height:170px;}
+    .gauge svg{width:100%;height:100%;transform:rotate(-90deg);}
+    .gauge-track{fill:none;stroke:rgba(255,200,0,0.15);stroke-width:12;}
+    .gauge-fill{
+      fill:none;stroke-width:12;stroke-linecap:round;
+      stroke-dasharray:440;stroke-dashoffset:440;
+      transition:stroke-dashoffset 1.2s cubic-bezier(.25,.46,.45,.94),stroke 0.5s ease;
+      filter:drop-shadow(0 0 8px currentColor);
+    }
+    .gauge-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+    .gauge-num{font-family:'Fredoka One',cursive;font-size:2.1rem;color:var(--sun2);transition:color 0.5s;}
+    .gauge-lbl{font-size:0.6rem;color:var(--text-dim);letter-spacing:1.5px;margin-top:2px;font-weight:700;}
 
-  tbody tr:hover {
-    background:rgba(255,193,7,0.15);
-  }
-</style>
+    /* RANGE */
+    .range-list{display:flex;flex-direction:column;gap:7px;}
+    .range-item{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:8px 12px;border-radius:12px;
+      background:rgba(255,255,255,0.5);border:1.5px solid rgba(255,200,0,0.18);
+      font-size:0.8rem;font-weight:700;
+    }
+    .range-badge{font-size:0.62rem;padding:3px 10px;border-radius:8px;font-weight:800;letter-spacing:0.5px;border:1.5px solid currentColor;}
+
+    /* CHART */
+    .chart-wrap{position:relative;height:180px;}
+
+    /* TABLE */
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    table{width:100%;border-collapse:collapse;font-size:0.78rem;min-width:520px;}
+    thead th{font-size:0.65rem;letter-spacing:1px;color:var(--sun2);text-transform:uppercase;padding:10px 12px;border-bottom:2px solid rgba(255,180,0,0.25);text-align:left;font-weight:800;font-family:'Fredoka One',cursive;}
+    tbody tr{border-bottom:1px solid rgba(255,200,0,0.1);transition:background 0.2s;}
+    tbody tr:hover{background:rgba(255,240,150,0.2);}
+    tbody tr:first-child{animation:rowSlideIn 0.4s ease;}
+    @keyframes rowSlideIn{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+    tbody td{padding:9px 12px;color:var(--text);}
+    tbody td:first-child{color:var(--text-dim);font-size:0.72rem;white-space:nowrap;font-weight:600;}
+    .tbadge{font-size:0.62rem;padding:3px 9px;border-radius:8px;font-weight:800;letter-spacing:0.5px;border:1.5px solid currentColor;}
+
+    /* FOOTER */
+    .footer-bar{
+      display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+      padding:12px 18px;
+      background:rgba(255,255,255,0.75);border:2px solid rgba(255,215,0,0.3);border-radius:18px;
+      font-size:0.72rem;color:var(--text-dim);font-weight:700;backdrop-filter:blur(8px);
+    }
+    .blink{animation:blink 1s step-end infinite;color:var(--coral);}
+    @keyframes blink{50%{opacity:0}}
+    .flip{animation:numFlip 0.3s ease;}
+    @keyframes numFlip{0%{transform:scaleY(0.5);opacity:0.5}100%{transform:scaleY(1);opacity:1}}
+
+    @media(max-width:768px){
+      .main-grid{grid-template-columns:1fr;}
+      .chart-grid{grid-template-columns:1fr;}
+      .cards{grid-template-columns:repeat(2,1fr);}
+      .header-title h1{font-size:1.2rem;}
+    }
+    @media(max-width:420px){.cards{grid-template-columns:1fr;}}
+  </style>
 </head>
 <body>
 
-<div class="bg-grid"></div>
-<div class="bg-glow bg-glow-1"></div>
-<div class="bg-glow bg-glow-2"></div>
-<div class="bg-glow bg-glow-3"></div>
-<div class="scanlines"></div>
+<div class="clouds">
+  <div class="cloud c1" style="--dur:36s;--delay:-3s;"></div>
+  <div class="cloud c2" style="--dur:28s;--delay:-14s;"></div>
+  <div class="cloud c3" style="--dur:44s;--delay:-22s;"></div>
+  <div class="cloud c1" style="--dur:32s;--delay:-8s;top:22%;"></div>
+  <div class="cloud c2" style="--dur:38s;--delay:-19s;top:14%;"></div>
+</div>
 
-<!-- FLOATING PARTICLES -->
 <div class="particles" id="particles"></div>
-
-<!-- TOAST -->
 <div class="toast-container" id="toastContainer"></div>
 
 <div class="wrapper">
 
-  <!-- ALARM STRIP -->
   <div class="alarm-strip" id="alarmStrip">🚨 BAHAYA! SUHU KRITIS — SEGERA PERIKSA INKUBATOR! 🚨</div>
 
-  <!-- NOTIF BANNER -->
   <div class="notif-banner" id="notifBanner">
-    <p>🔔 AKTIFKAN NOTIFIKASI UNTUK ALERT SUHU BAHAYA</p>
-    <button class="btn-notif" onclick="requestNotif()">AKTIFKAN</button>
+    <p>🔔 Aktifkan notifikasi untuk alert suhu bahaya!</p>
+    <button class="btn-notif" onclick="requestNotif()">Aktifkan Notifikasi</button>
   </div>
 
-  <!-- HEADER -->
   <header>
     <div class="header-left">
       <div class="egg-anim">🐣</div>
       <div class="header-title">
-        <h1>INKUBATOR MONITOR</h1>
-        <p>ESP32 · DS18B20 · DHT22 · FIREBASE REALTIME</p>
+        <h1>Inkubator Ayam Monitor</h1>
+        <p>ESP32 · DS18B20 · DHT22 · Firebase Realtime</p>
       </div>
     </div>
     <div class="status-badge waiting" id="statusBadge">
       <div class="dot"></div>
-      <span id="statusText">MENUNGGU...</span>
+      <span id="statusText">Menunggu...</span>
     </div>
   </header>
 
-  <!-- CARDS -->
   <div class="cards">
-    <div class="card" style="--card-color:var(--gold);">
-      <div class="card-top">
-        <div class="card-icon">🌡️</div>
-        <div class="card-label">SUHU PROBE</div>
-      </div>
-      <div class="card-value-wrap">
-        <span class="card-value" id="tempProbe">--</span>
-        <span class="card-unit">°C</span>
-      </div>
+    <div class="card" style="--card-color:#FF9500;">
+      <div class="card-top"><div class="card-icon">🌡️</div><div class="card-label">Suhu Probe</div></div>
+      <div class="card-value-wrap"><span class="card-value" id="tempProbe">--</span><span class="card-unit">°C</span></div>
       <div class="card-status s-dingin" id="tempStatus">--</div>
       <div class="card-bg-num" id="bgProbe">--</div>
     </div>
-    <div class="card" style="--card-color:var(--cyan);">
-      <div class="card-top">
-        <div class="card-icon">🌡️</div>
-        <div class="card-label">SUHU DHT22</div>
-      </div>
-      <div class="card-value-wrap">
-        <span class="card-value" id="tempDHT">--</span>
-        <span class="card-unit">°C</span>
-      </div>
+    <div class="card" style="--card-color:#5DADE2;">
+      <div class="card-top"><div class="card-icon">🌡️</div><div class="card-label">Suhu DHT22</div></div>
+      <div class="card-value-wrap"><span class="card-value" id="tempDHT">--</span><span class="card-unit">°C</span></div>
       <div class="card-status s-normal" id="dhtStatus">--</div>
       <div class="card-bg-num" id="bgDHT">--</div>
     </div>
-    <div class="card" style="--card-color:var(--blue);">
-      <div class="card-top">
-        <div class="card-icon">💧</div>
-        <div class="card-label">KELEMBABAN</div>
-      </div>
-      <div class="card-value-wrap">
-        <span class="card-value" id="humidity">--</span>
-        <span class="card-unit">%</span>
-      </div>
+    <div class="card" style="--card-color:#5CB85C;">
+      <div class="card-top"><div class="card-icon">💧</div><div class="card-label">Kelembaban</div></div>
+      <div class="card-value-wrap"><span class="card-value" id="humidity">--</span><span class="card-unit">%</span></div>
       <div class="card-status s-normal" id="humidStatus">--</div>
       <div class="card-bg-num" id="bgHumid">--</div>
     </div>
-    <div class="card" style="--card-color:var(--purple);">
-      <div class="card-top">
-        <div class="card-icon">💨</div>
-        <div class="card-label">KUALITAS UDARA</div>
-      </div>
-      <div class="card-value-wrap">
-        <span class="card-value" id="airQuality">--</span>
-        <span class="card-unit">ppm</span>
-      </div>
+    <div class="card" style="--card-color:#C39BD3;">
+      <div class="card-top"><div class="card-icon">💨</div><div class="card-label">Kualitas Udara</div></div>
+      <div class="card-value-wrap"><span class="card-value" id="airQuality">--</span><span class="card-unit">ppm</span></div>
       <div class="card-status s-normal" id="airStatus">--</div>
       <div class="card-bg-num" id="bgAir">--</div>
     </div>
   </div>
 
-  <!-- GAUGE + RANGE -->
   <div class="main-grid">
     <div class="panel">
-      <div class="panel-title">⚡ GAUGE SUHU PROBE</div>
+      <div class="panel-title">⚡ Gauge Suhu Probe</div>
       <div class="gauge-wrap">
         <div class="gauge">
           <svg viewBox="0 0 160 160">
             <circle class="gauge-track" cx="80" cy="80" r="70"/>
-            <circle class="gauge-fill" id="gaugeFill" cx="80" cy="80" r="70" stroke="var(--gold)"/>
+            <circle class="gauge-fill" id="gaugeFill" cx="80" cy="80" r="70" stroke="#FF9500"/>
           </svg>
           <div class="gauge-center">
             <div class="gauge-num" id="gaugeNum">--</div>
             <div class="gauge-lbl">°C PROBE</div>
           </div>
         </div>
-        <div class="card-status s-normal" id="gaugeStatus" style="font-family:'Orbitron';font-size:0.6rem;letter-spacing:1px;">--</div>
+        <div class="card-status s-normal" id="gaugeStatus">--</div>
       </div>
     </div>
     <div class="panel">
-      <div class="panel-title">🌡️ RANGE SUHU IDEAL</div>
+      <div class="panel-title">🌡️ Range Suhu Ideal</div>
       <div class="range-list">
-        <div class="range-item">
-          <span style="color:var(--blue);">❄️ &lt; 30°C</span>
-          <span class="range-badge" style="color:var(--blue);">TERLALU DINGIN</span>
-        </div>
-        <div class="range-item">
-          <span style="color:var(--green);">✅ 30 – 35°C</span>
-          <span class="range-badge" style="color:var(--green);">NORMAL</span>
-        </div>
-        <div class="range-item">
-          <span style="color:var(--orange);">⚠️ 36 – 38°C</span>
-          <span class="range-badge" style="color:var(--orange);">TOLERANSI</span>
-        </div>
-        <div class="range-item">
-          <span style="color:var(--gold);">🔥 39 – 40°C</span>
-          <span class="range-badge" style="color:var(--gold);">PANAS!</span>
-        </div>
-        <div class="range-item">
-          <span style="color:var(--red);">☠️ &gt; 40°C</span>
-          <span class="range-badge" style="color:var(--red);">BAHAYA!</span>
-        </div>
+        <div class="range-item"><span style="color:#1976D2;">❄️ &lt; 30°C</span><span class="range-badge" style="color:#1976D2;">Terlalu Dingin</span></div>
+        <div class="range-item"><span style="color:#27ae60;">✅ 30 – 35°C</span><span class="range-badge" style="color:#27ae60;">Normal</span></div>
+        <div class="range-item"><span style="color:#e67e00;">⚠️ 36 – 38°C</span><span class="range-badge" style="color:#e67e00;">Toleransi</span></div>
+        <div class="range-item"><span style="color:#FF9500;">🔥 39 – 40°C</span><span class="range-badge" style="color:#FF9500;">Panas!</span></div>
+        <div class="range-item"><span style="color:#c0392b;">☠️ &gt; 40°C</span><span class="range-badge" style="color:#c0392b;">Bahaya!</span></div>
       </div>
-      <div style="margin-top:16px;">
-        <div class="panel-title">💧 RANGE KELEMBABAN</div>
+      <div style="margin-top:14px;">
+        <div class="panel-title">💧 Range Kelembaban</div>
         <div class="range-list">
-          <div class="range-item">
-            <span style="color:var(--blue);">&lt; 55%</span>
-            <span class="range-badge" style="color:var(--blue);">KERING</span>
-          </div>
-          <div class="range-item">
-            <span style="color:var(--green);">55 – 65%</span>
-            <span class="range-badge" style="color:var(--green);">IDEAL</span>
-          </div>
-          <div class="range-item">
-            <span style="color:var(--orange);">&gt; 65%</span>
-            <span class="range-badge" style="color:var(--orange);">LEMBAB</span>
-          </div>
+          <div class="range-item"><span style="color:#1976D2;">&lt; 55%</span><span class="range-badge" style="color:#1976D2;">Kering</span></div>
+          <div class="range-item"><span style="color:#27ae60;">55 – 65%</span><span class="range-badge" style="color:#27ae60;">Ideal</span></div>
+          <div class="range-item"><span style="color:#e67e00;">&gt; 65%</span><span class="range-badge" style="color:#e67e00;">Lembab</span></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- CHARTS -->
   <div class="chart-grid">
     <div class="panel">
-      <div class="panel-title">📈 GRAFIK SUHU REALTIME</div>
+      <div class="panel-title">📈 Grafik Suhu Realtime</div>
       <div class="chart-wrap"><canvas id="tempChart"></canvas></div>
     </div>
     <div class="panel">
-      <div class="panel-title">💧 GRAFIK KELEMBABAN REALTIME</div>
+      <div class="panel-title">💧 Grafik Kelembaban Realtime</div>
       <div class="chart-wrap"><canvas id="humidChart"></canvas></div>
     </div>
   </div>
 
-  <!-- TABLE -->
-  <div class="panel" style="margin-bottom:12px;">
-    <div class="panel-title">📋 RIWAYAT DATA</div>
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-title">📋 Riwayat Data</div>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr>
-            <th>Tanggal & Waktu</th>
-            <th>Probe (°C)</th>
-            <th>DHT22 (°C)</th>
-            <th>Humid (%)</th>
-            <th>Udara</th>
-            <th>Status</th>
-          </tr>
+          <tr><th>Tanggal & Waktu</th><th>Probe (°C)</th><th>DHT22 (°C)</th><th>Humid (%)</th><th>Udara</th><th>Status</th></tr>
         </thead>
         <tbody id="historyBody">
-          <tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:24px;font-family:'Orbitron';font-size:0.65rem;letter-spacing:2px;">MENUNGGU DATA DARI FIREBASE...</td></tr>
+          <tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:24px;font-weight:700;">Menunggu data dari Firebase... 🌸</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- FOOTER -->
   <div class="footer-bar">
-    <span>🐣 INKUBATOR AYAM v3.0 · ESP32 + FIREBASE RTDB</span>
-    <span>LAST UPDATE: <span id="lastUpdate" style="color:var(--gold);">--</span> <span class="blink">♥</span></span>
+    <span>🐣 Inkubator Ayam v3.0 · ESP32 + Firebase RTDB</span>
+    <span>Update: <span id="lastUpdate" style="color:var(--sun2);font-weight:800;">--</span> <span class="blink">♥</span></span>
   </div>
 
 </div>
 
 <script>
-// ====== PARTICLES ======
-const emojis = ['🐣','🥚','🐥','✨','⭐'];
-const container = document.getElementById('particles');
-for(let i=0;i<18;i++){
-  const p = document.createElement('div');
-  p.className = 'particle';
-  p.textContent = emojis[i % emojis.length];
-  p.style.left = Math.random()*100 + 'vw';
-  p.style.setProperty('--dur', (8+Math.random()*12)+'s');
-  p.style.setProperty('--delay', (Math.random()*10)+'s');
-  p.style.fontSize = (0.6+Math.random()*0.8)+'rem';
-  container.appendChild(p);
+// PARTICLES
+const emojis=['🐣','🥚','🐥','🌟','✨','🌼','☀️','🌸'];
+const pCont=document.getElementById('particles');
+for(let i=0;i<22;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.textContent=emojis[i%emojis.length];
+  p.style.left=Math.random()*100+'vw';
+  p.style.setProperty('--dur',(9+Math.random()*14)+'s');
+  p.style.setProperty('--delay',(Math.random()*14)+'s');
+  p.style.fontSize=(0.7+Math.random()*1)+'rem';
+  pCont.appendChild(p);
 }
 
-// ====== AUDIO (Web Audio API) ======
-const AudioCtx = window.AudioContext || window.webkitAudioContext;
-let audioCtx = null;
-
-function initAudio() {
-  if(!audioCtx) audioCtx = new AudioCtx();
+// AUDIO
+const AudioCtx=window.AudioContext||window.webkitAudioContext;
+let audioCtx=null;
+function initAudio(){if(!audioCtx)audioCtx=new AudioCtx();}
+function playBeep(freq=880,type='sine',dur=0.3,vol=0.3){
+  try{
+    initAudio();if(audioCtx.state==='suspended')audioCtx.resume();
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+    o.connect(g);g.connect(audioCtx.destination);
+    o.frequency.value=freq;o.type=type;
+    g.gain.setValueAtTime(vol,audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);
+    o.start();o.stop(audioCtx.currentTime+dur);
+  }catch(e){}
 }
-
-function playBeep(freq=880, type='sine', dur=0.3, vol=0.3){
-  try {
-    initAudio();
-    if(audioCtx.state === 'suspended') audioCtx.resume();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain); gain.connect(audioCtx.destination);
-    osc.frequency.value = freq;
-    osc.type = type;
-    gain.gain.setValueAtTime(vol, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
-    osc.start(); osc.stop(audioCtx.currentTime + dur);
-  } catch(e){}
-}
-
 function playAlarm(){
-  // Siren effect
-  try {
-    initAudio();
-    if(audioCtx.state === 'suspended') audioCtx.resume();
-    let t = audioCtx.currentTime;
+  try{
+    initAudio();if(audioCtx.state==='suspended')audioCtx.resume();
+    let t=audioCtx.currentTime;
     for(let i=0;i<4;i++){
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.connect(gain); gain.connect(audioCtx.destination);
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(440, t + i*0.5);
-      osc.frequency.linearRampToValueAtTime(880, t + i*0.5 + 0.25);
-      osc.frequency.linearRampToValueAtTime(440, t + i*0.5 + 0.5);
-      gain.gain.setValueAtTime(0.2, t + i*0.5);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + i*0.5 + 0.5);
-      osc.start(t + i*0.5);
-      osc.stop(t + i*0.5 + 0.5);
+      const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+      o.connect(g);g.connect(audioCtx.destination);o.type='sawtooth';
+      o.frequency.setValueAtTime(440,t+i*0.5);
+      o.frequency.linearRampToValueAtTime(880,t+i*0.5+0.25);
+      o.frequency.linearRampToValueAtTime(440,t+i*0.5+0.5);
+      g.gain.setValueAtTime(0.2,t+i*0.5);
+      g.gain.exponentialRampToValueAtTime(0.001,t+i*0.5+0.5);
+      o.start(t+i*0.5);o.stop(t+i*0.5+0.5);
     }
-  } catch(e){}
+  }catch(e){}
 }
+function playWarn(){playBeep(660,'triangle',0.4,0.2);setTimeout(()=>playBeep(550,'triangle',0.3,0.15),250);}
+function playOk(){playBeep(523,'sine',0.15,0.15);setTimeout(()=>playBeep(659,'sine',0.15,0.15),120);setTimeout(()=>playBeep(784,'sine',0.2,0.12),240);}
+document.addEventListener('click',initAudio,{once:true});
+document.addEventListener('touchstart',initAudio,{once:true});
 
-function playWarn(){
-  playBeep(660,'triangle',0.4,0.2);
-  setTimeout(()=>playBeep(550,'triangle',0.3,0.15), 250);
-}
-
-function playOk(){
-  playBeep(523,'sine',0.15,0.15);
-  setTimeout(()=>playBeep(659,'sine',0.15,0.15), 120);
-  setTimeout(()=>playBeep(784,'sine',0.2,0.12), 240);
-}
-
-// Init audio on first user interaction
-document.addEventListener('click', initAudio, {once:true});
-document.addEventListener('touchstart', initAudio, {once:true});
-
-// ====== STATUS ======
 function setStatus(s){
-  const b = document.getElementById('statusBadge');
-  const t = document.getElementById('statusText');
-  b.className = 'status-badge ' + s;
-  t.textContent = s === 'online' ? 'ONLINE' : 'OFFLINE';
+  const b=document.getElementById('statusBadge'),t=document.getElementById('statusText');
+  b.className='status-badge '+s;
+  t.textContent=s==='online'?'Online':'Offline';
 }
 
-// ====== TOAST ======
-function showToast(msg, type='ok'){
-  const icons = {ok:'✅', warn:'⚠️', danger:'🚨'};
-  const div = document.createElement('div');
-  div.className = `toast ${type}`;
-  div.innerHTML = `<span>${icons[type]}</span><span>${msg}</span>`;
-  document.getElementById('toastContainer').appendChild(div);
-  setTimeout(()=>{
-    div.style.animation='toastOut 0.3s ease forwards';
-    setTimeout(()=>div.remove(), 300);
-  }, 5000);
+function showToast(msg,type='ok'){
+  const icons={ok:'✅',warn:'⚠️',danger:'🚨'};
+  const d=document.createElement('div');
+  d.className=`toast ${type}`;
+  d.innerHTML=`<span>${icons[type]}</span><span>${msg}</span>`;
+  document.getElementById('toastContainer').appendChild(d);
+  setTimeout(()=>{d.style.animation='toastOut 0.3s ease forwards';setTimeout(()=>d.remove(),300);},5000);
 }
 
-// ====== NOTIF ======
 function requestNotif(){
-  if(!('Notification' in window)){ showToast('Browser tidak support notifikasi','warn'); return; }
+  if(!('Notification'in window)){showToast('Browser tidak support notifikasi','warn');return;}
   Notification.requestPermission().then(p=>{
-    if(p==='granted'){
-      document.getElementById('notifBanner').style.display='none';
-      showToast('Notifikasi berhasil diaktifkan!','ok');
-      playOk();
-    } else {
-      showToast('Izin notifikasi ditolak','warn');
-    }
+    if(p==='granted'){document.getElementById('notifBanner').style.display='none';showToast('Notifikasi aktif! 🎉','ok');playOk();}
+    else showToast('Izin notifikasi ditolak','warn');
   });
 }
+function sendNotif(title,body){if(Notification.permission==='granted')new Notification(title,{body});}
+if(Notification.permission==='granted')document.getElementById('notifBanner').style.display='none';
 
-function sendNotif(title, body){
-  if(Notification.permission==='granted'){
-    new Notification(title, { body });
-  }
-}
+// CHARTS
+const labels=[],probeData=[],dhtData=[],humidData=[],historyRows=[];
+let lastStatus='',alarmInterval=null;
+const cFont={family:'Nunito',size:11};
+const cGrid='rgba(255,180,0,0.1)';
+const cTick='#A1887F';
 
-if(Notification.permission==='granted'){
-  document.getElementById('notifBanner').style.display='none';
-}
-
-// ====== CHART SETUP ======
-const labels=[], probeData=[], dhtData=[], humidData=[], historyRows=[];
-let lastStatus='', alarmInterval=null;
-
-const chartOpts = (yMin, yMax, colors) => ({
-  responsive:true, maintainAspectRatio:false,
-  animation:{ duration:600, easing:'easeInOutQuart' },
-  plugins:{
-    legend:{ labels:{ color:'#7a7060', font:{family:'Rajdhani',size:11}, boxWidth:12 } }
-  },
-  scales:{
-    x:{ ticks:{ color:'#7a7060', font:{family:'Rajdhani',size:10}, maxTicksLimit:6 }, grid:{ color:'rgba(255,200,50,0.05)' } },
-    y:{ min:yMin, max:yMax, ticks:{ color:'#7a7060', font:{family:'Rajdhani',size:10} }, grid:{ color:'rgba(255,200,50,0.05)' } }
+const tempChart=new Chart(document.getElementById('tempChart').getContext('2d'),{
+  type:'line',
+  data:{labels,datasets:[
+    {label:'Probe',data:probeData,borderColor:'#FF9500',backgroundColor:'rgba(255,149,0,0.1)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#FF9500',tension:0.4,fill:true},
+    {label:'DHT22',data:dhtData,borderColor:'#5DADE2',backgroundColor:'rgba(93,173,226,0.08)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#5DADE2',tension:0.4,fill:true}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},
+    plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},
+    scales:{
+      x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},
+      y:{min:20,max:50,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}
+    }
   }
 });
 
-const tempChart = new Chart(document.getElementById('tempChart').getContext('2d'), {
+const humidChart=new Chart(document.getElementById('humidChart').getContext('2d'),{
   type:'line',
-  data:{
-    labels,
-    datasets:[
-      {label:'Probe',data:probeData,borderColor:'#ffc832',backgroundColor:'rgba(255,200,50,0.06)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#ffc832',tension:0.4,fill:true},
-      {label:'DHT22',data:dhtData,borderColor:'#00fff0',backgroundColor:'rgba(0,255,240,0.04)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#00fff0',tension:0.4,fill:true}
-    ]
-  },
-  options: chartOpts(20, 50)
+  data:{labels,datasets:[
+    {label:'Kelembaban (%)',data:humidData,borderColor:'#5CB85C',backgroundColor:'rgba(92,184,92,0.1)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#5CB85C',tension:0.4,fill:true}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},
+    plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},
+    scales:{
+      x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},
+      y:{min:0,max:100,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}
+    }
+  }
 });
 
-const humidChart = new Chart(document.getElementById('humidChart').getContext('2d'), {
-  type:'line',
-  data:{
-    labels,
-    datasets:[
-      {label:'Kelembaban (%)',data:humidData,borderColor:'#00b4ff',backgroundColor:'rgba(0,180,255,0.08)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#00b4ff',tension:0.4,fill:true}
-    ]
-  },
-  options: chartOpts(0, 100)
-});
-
-// ====== GET STATUS ======
 function getStatus(t){
-  if(t<30)  return{text:'TERLALU DINGIN', cls:'s-dingin', color:'var(--blue)'};
-  if(t<=35) return{text:'NORMAL',         cls:'s-normal', color:'var(--green)'};
-  if(t<=38) return{text:'TOLERANSI',      cls:'s-toleran',color:'var(--orange)'};
-  if(t<=40) return{text:'PANAS!',         cls:'s-panas',  color:'var(--gold)'};
-  return          {text:'BAHAYA!',        cls:'s-bahaya', color:'var(--red)'};
+  if(t<30)  return{text:'Terlalu Dingin',cls:'s-dingin',color:'#1976D2'};
+  if(t<=35) return{text:'Normal',        cls:'s-normal',color:'#27ae60'};
+  if(t<=38) return{text:'Toleransi',     cls:'s-toleran',color:'#e67e00'};
+  if(t<=40) return{text:'Panas!',        cls:'s-panas', color:'#FF9500'};
+  return         {text:'BAHAYA!',        cls:'s-bahaya',color:'#c0392b'};
 }
 
-// ====== GAUGE ======
 function updateGauge(t){
-  const pct = Math.min(Math.max((t-20)/30, 0), 1);
-  const fill = document.getElementById('gaugeFill');
-  fill.style.strokeDashoffset = 440*(1-pct);
-  const st = getStatus(t);
-  fill.style.stroke = st.color;
-  fill.style.filter = `drop-shadow(0 0 8px ${st.color})`;
-  const n = document.getElementById('gaugeNum');
-  n.style.color = st.color;
-  n.style.textShadow = `0 0 20px ${st.color}`;
-  n.textContent = t.toFixed(1);
-  const gs = document.getElementById('gaugeStatus');
-  gs.textContent = st.text;
-  gs.className = 'card-status ' + st.cls;
+  const pct=Math.min(Math.max((t-20)/30,0),1);
+  const fill=document.getElementById('gaugeFill');
+  fill.style.strokeDashoffset=440*(1-pct);
+  const st=getStatus(t);
+  fill.style.stroke=st.color;
+  const n=document.getElementById('gaugeNum');
+  n.style.color=st.color;n.textContent=t.toFixed(1);
+  const gs=document.getElementById('gaugeStatus');
+  gs.textContent=st.text;gs.className='card-status '+st.cls;
 }
 
-// ====== ANIMATE VALUE ======
-function animateValue(el, val, decimals=1){
-  el.classList.remove('flip');
-  void el.offsetWidth;
-  el.classList.add('flip');
-  el.textContent = val.toFixed(decimals);
+function animateValue(el,val,dec=1){
+  el.classList.remove('flip');void el.offsetWidth;
+  el.classList.add('flip');el.textContent=val.toFixed(dec);
 }
 
-// ====== UPDATE UI ======
-window.updateUI = function({probe, dht, humid, air, time}){
-  // Update card values with animation
-  animateValue(document.getElementById('tempProbe'), probe);
-  animateValue(document.getElementById('tempDHT'), dht);
-  animateValue(document.getElementById('humidity'), humid);
-  document.getElementById('airQuality').textContent = air>0 ? air.toFixed(0) : '--';
-  document.getElementById('lastUpdate').textContent = time;
+window.updateUI=function({probe,dht,humid,air,time}){
+  animateValue(document.getElementById('tempProbe'),probe);
+  animateValue(document.getElementById('tempDHT'),dht);
+  animateValue(document.getElementById('humidity'),humid);
+  document.getElementById('airQuality').textContent=air>0?air.toFixed(0):'--';
+  document.getElementById('lastUpdate').textContent=time;
+  document.getElementById('bgProbe').textContent=probe.toFixed(0);
+  document.getElementById('bgDHT').textContent=dht.toFixed(0);
+  document.getElementById('bgHumid').textContent=humid.toFixed(0);
+  document.getElementById('bgAir').textContent=air>0?air.toFixed(0):'--';
 
-  // BG numbers
-  document.getElementById('bgProbe').textContent = probe.toFixed(0);
-  document.getElementById('bgDHT').textContent = dht.toFixed(0);
-  document.getElementById('bgHumid').textContent = humid.toFixed(0);
-  document.getElementById('bgAir').textContent = air>0 ? air.toFixed(0) : '--';
-
-  const st = getStatus(probe);
-
-  // Status badge update + audio/alarm
-  if(st.text !== lastStatus){
-    lastStatus = st.text;
-
-    if(st.cls === 's-bahaya'){
-      // DANGER MODE
+  const st=getStatus(probe);
+  if(st.text!==lastStatus){
+    lastStatus=st.text;
+    if(st.cls==='s-bahaya'){
       document.body.classList.add('danger-mode');
       document.getElementById('alarmStrip').classList.add('show');
-      showToast(`🚨 SUHU BAHAYA! ${probe.toFixed(1)}°C`, 'danger');
-      sendNotif('🚨 INKUBATOR BAHAYA!', `Suhu probe: ${probe.toFixed(1)}°C — Segera periksa!`);
+      showToast(`🚨 SUHU BAHAYA! ${probe.toFixed(1)}°C`,'danger');
+      sendNotif('🚨 Inkubator BAHAYA!',`Suhu: ${probe.toFixed(1)}°C — Segera periksa!`);
       playAlarm();
-      if(!alarmInterval) alarmInterval = setInterval(playAlarm, 8000);
+      if(!alarmInterval)alarmInterval=setInterval(playAlarm,8000);
     } else {
-      // Exit danger mode
       document.body.classList.remove('danger-mode');
       document.getElementById('alarmStrip').classList.remove('show');
-      if(alarmInterval){ clearInterval(alarmInterval); alarmInterval=null; }
-
-      if(st.cls === 's-panas'){
-        showToast(`🔥 Suhu Panas! ${probe.toFixed(1)}°C`, 'warn');
-        sendNotif('🔥 Suhu Inkubator Panas', `Suhu: ${probe.toFixed(1)}°C`);
-        playWarn();
-      } else if(st.cls === 's-dingin'){
-        showToast(`❄️ Suhu Terlalu Dingin! ${probe.toFixed(1)}°C`, 'warn');
-        playWarn();
-      } else if(st.cls === 's-normal'){
-        showToast(`✅ Suhu Normal ${probe.toFixed(1)}°C`, 'ok');
-        playOk();
-      }
+      if(alarmInterval){clearInterval(alarmInterval);alarmInterval=null;}
+      if(st.cls==='s-panas'){showToast(`🔥 Suhu Panas! ${probe.toFixed(1)}°C`,'warn');playWarn();}
+      else if(st.cls==='s-dingin'){showToast(`❄️ Suhu Dingin! ${probe.toFixed(1)}°C`,'warn');playWarn();}
+      else if(st.cls==='s-normal'){showToast(`✅ Suhu Normal! ${probe.toFixed(1)}°C`,'ok');playOk();}
     }
   }
 
-  // Update card statuses
-  const tempEl = document.getElementById('tempStatus');
-  tempEl.textContent = st.text; tempEl.className = 'card-status ' + st.cls;
-
-  const dhtSt = getStatus(dht);
-  const dhtEl = document.getElementById('dhtStatus');
-  dhtEl.textContent = dhtSt.text; dhtEl.className = 'card-status ' + dhtSt.cls;
-
-  const hs = humid>=55&&humid<=65 ? {text:'IDEAL',cls:'s-normal'} : humid<55 ? {text:'KERING',cls:'s-dingin'} : {text:'LEMBAB',cls:'s-toleran'};
-  const humEl = document.getElementById('humidStatus');
-  humEl.textContent = hs.text; humEl.className = 'card-status ' + hs.cls;
-
-  const as = air<400 ? {text:'BERSIH',cls:'s-normal'} : air<1000 ? {text:'SEDANG',cls:'s-toleran'} : {text:'BERBAHAYA',cls:'s-bahaya'};
-  const airEl = document.getElementById('airStatus');
-  airEl.textContent = as.text; airEl.className = 'card-status ' + as.cls;
+  const te=document.getElementById('tempStatus');te.textContent=st.text;te.className='card-status '+st.cls;
+  const ds=getStatus(dht),de=document.getElementById('dhtStatus');de.textContent=ds.text;de.className='card-status '+ds.cls;
+  const hs=humid>=55&&humid<=65?{text:'Ideal',cls:'s-normal'}:humid<55?{text:'Kering',cls:'s-dingin'}:{text:'Lembab',cls:'s-toleran'};
+  const he=document.getElementById('humidStatus');he.textContent=hs.text;he.className='card-status '+hs.cls;
+  const as=air<400?{text:'Bersih',cls:'s-normal'}:air<1000?{text:'Sedang',cls:'s-toleran'}:{text:'Berbahaya',cls:'s-bahaya'};
+  const ae=document.getElementById('airStatus');ae.textContent=as.text;ae.className='card-status '+as.cls;
 
   updateGauge(probe);
 
-  // Update charts
-  const timeShort = time.split(', ')[1] || time;
-  if(labels.length >= 20){ labels.shift(); probeData.shift(); dhtData.shift(); humidData.shift(); }
-  labels.push(timeShort);
-  probeData.push(probe);
-  dhtData.push(dht);
-  humidData.push(humid);
-  tempChart.update();
-  humidChart.update();
+  const ts=time.split(', ')[1]||time;
+  if(labels.length>=20){labels.shift();probeData.shift();dhtData.shift();humidData.shift();}
+  labels.push(ts);probeData.push(probe);dhtData.push(dht);humidData.push(humid);
+  tempChart.update();humidChart.update();
 
-  // Update table
-  historyRows.unshift({time, probe, dht, humid, air, st});
-  if(historyRows.length > 20) historyRows.pop();
-  document.getElementById('historyBody').innerHTML = historyRows.map(r=>`
+  historyRows.unshift({time,probe,dht,humid,air,st});
+  if(historyRows.length>20)historyRows.pop();
+  document.getElementById('historyBody').innerHTML=historyRows.map(r=>`
     <tr>
       <td>${r.time}</td>
-      <td style="color:var(--gold);font-weight:700;">${r.probe.toFixed(1)}</td>
-      <td style="color:var(--cyan);font-weight:700;">${r.dht.toFixed(1)}</td>
-      <td style="color:var(--blue);font-weight:700;">${r.humid.toFixed(1)}</td>
-      <td style="color:var(--purple);">${r.air>0?r.air.toFixed(0):'--'}</td>
+      <td style="color:#FF9500;font-weight:800;">${r.probe.toFixed(1)}</td>
+      <td style="color:#5DADE2;font-weight:800;">${r.dht.toFixed(1)}</td>
+      <td style="color:#5CB85C;font-weight:800;">${r.humid.toFixed(1)}</td>
+      <td style="color:#C39BD3;font-weight:700;">${r.air>0?r.air.toFixed(0):'--'}</td>
       <td><span class="tbadge ${r.st.cls}">${r.st.text}</span></td>
     </tr>`).join('');
 };
