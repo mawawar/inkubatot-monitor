@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Inkubator Ayam Monitor</title>
+  <title>Inkubator Ayam Monitor 🐣</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;800&display=swap" rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
-
+ 
     const firebaseConfig = {
       apiKey: "AIzaSyDj10sgn0UnQTwh4knuVq9pJCPp3A3Pm24",
       authDomain: "inkubator-anak-ayam.firebaseapp.com",
@@ -19,20 +19,24 @@
       messagingSenderId: "831255035925",
       appId: "1:831255035925:web:b63716fcfaa46de356ce1c"
     };
-
+ 
     const app = initializeApp(firebaseConfig);
     const db  = getDatabase(app);
-
+ 
     onValue(ref(db, '/inkubator'), (snapshot) => {
       const data = snapshot.val();
       if (!data) return;
-      const now = new Date().toLocaleTimeString('id-ID');
+      const now = new Date();
+      const timestamp = now.toLocaleString('id-ID', {
+        day:'2-digit', month:'2-digit', year:'numeric',
+        hour:'2-digit', minute:'2-digit', second:'2-digit'
+      });
       window.updateUI({
         probe:  data.suhu_probe      ?? 0,
         dht:    data.suhu_dht        ?? 0,
         humid:  data.kelembaban      ?? 0,
         air:    data.kualitas_udara  ?? 0,
-        time:   now
+        time:   timestamp
       });
       document.getElementById('statusBadge').className = 'status-badge online';
       document.getElementById('statusText').textContent = 'ONLINE';
@@ -41,136 +45,177 @@
       document.getElementById('statusText').textContent = 'OFFLINE';
     });
   </script>
-
+ 
   <style>
     :root {
-      --bg:        #ffe0f0;
-      --bg2:       #ffc6e0;
-      --panel:     #fff0f7;
-      --border:    #f7a8cc;
-      --accent:    #e91e8c;
-      --accent2:   #ff6eb4;
-      --green:     #2ecc71;
-      --yellow:    #f39c12;
-      --red:       #e74c3c;
-      --purple:    #9b59b6;
-      --text:      #5a1a3a;
-      --text-dim:  #c478a0;
-      --glow:      0 4px 24px rgba(233,30,140,0.15);
+      --bg:       #ffe0f0;
+      --bg2:      #ffc6e0;
+      --panel:    #fff5fb;
+      --border:   #f7a8cc;
+      --accent:   #e91e8c;
+      --accent2:  #ff6eb4;
+      --green:    #2ecc71;
+      --yellow:   #f39c12;
+      --red:      #e74c3c;
+      --purple:   #9b59b6;
+      --text:     #5a1a3a;
+      --text-dim: #c478a0;
+      --glow:     0 4px 24px rgba(233,30,140,0.15);
     }
     * { margin:0; padding:0; box-sizing:border-box; }
+ 
     body {
       background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
       font-family: 'Exo 2', sans-serif;
       color: var(--text);
       min-height: 100vh;
     }
+ 
     body::before {
-      content: '';
-      position: fixed; inset: 0;
+      content:''; position:fixed; inset:0;
       background-image:
         radial-gradient(circle at 20% 20%, rgba(255,182,218,0.4) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(255,105,180,0.2) 0%, transparent 50%);
-      pointer-events: none; z-index: 0;
+      pointer-events:none; z-index:0;
     }
-    .wrapper { position:relative; z-index:1; padding:20px; max-width:1200px; margin:0 auto; }
-
+ 
+    .wrapper { position:relative; z-index:1; padding:16px; max-width:1200px; margin:0 auto; }
+ 
+    /* TOAST NOTIF */
+    .toast-container { position:fixed; top:20px; right:20px; z-index:9999; display:flex; flex-direction:column; gap:10px; }
+    .toast {
+      padding:14px 18px; border-radius:12px; font-size:0.85rem; font-weight:600;
+      box-shadow:0 4px 20px rgba(0,0,0,0.15); min-width:260px;
+      animation:slideIn 0.3s ease;
+      display:flex; align-items:center; gap:10px;
+    }
+    .toast.danger { background:#fff0f0; border:2px solid var(--red); color:var(--red); }
+    .toast.warn   { background:#fff8e1; border:2px solid var(--yellow); color:#8a5a00; }
+    .toast.ok     { background:#f0fff4; border:2px solid var(--green); color:#1a7a45; }
+    @keyframes slideIn { from{opacity:0;transform:translateX(50px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes slideOut{ from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(50px)} }
+ 
+    /* NOTIF PERMISSION BANNER */
+    .notif-banner {
+      background:linear-gradient(135deg,#fff5fb,#ffe8f4);
+      border:2px solid var(--border); border-radius:12px;
+      padding:12px 16px; margin-bottom:16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      flex-wrap:wrap;
+    }
+    .notif-banner p { font-size:0.82rem; color:var(--text-dim); }
+    .btn-notif {
+      background:var(--accent); color:white; border:none;
+      padding:8px 16px; border-radius:10px; font-size:0.8rem;
+      font-weight:600; cursor:pointer; transition:opacity 0.2s;
+      font-family:'Exo 2',sans-serif;
+    }
+    .btn-notif:hover { opacity:0.85; }
+ 
+    /* HEADER */
     header {
       display:flex; align-items:center; justify-content:space-between;
-      padding:20px 24px;
-      background: linear-gradient(135deg, #fff0f7, #ffe4f2);
-      border:2px solid var(--border);
-      border-radius:20px; margin-bottom:20px;
-      box-shadow: var(--glow);
+      padding:18px 20px;
+      background:linear-gradient(135deg,#fff0f7,#ffe4f2);
+      border:2px solid var(--border); border-radius:20px;
+      margin-bottom:16px; box-shadow:var(--glow);
+      flex-wrap:wrap; gap:12px;
     }
-    .header-left h1 {
-      font-size:1.6rem; font-weight:800;
-      color: var(--accent);
-      text-shadow: 0 2px 10px rgba(233,30,140,0.3);
-      letter-spacing:2px;
-    }
-    .header-left p { font-family:'Share Tech Mono',monospace; font-size:0.75rem; color:var(--text-dim); margin-top:4px; }
-
-    .status-badge {
-      display:flex; align-items:center; gap:8px;
-      padding:8px 16px; border-radius:20px;
-      font-size:0.8rem; font-weight:600; letter-spacing:1px;
-    }
+    .header-left h1 { font-size:1.4rem; font-weight:800; color:var(--accent); letter-spacing:2px; }
+    .header-left p  { font-family:'Share Tech Mono',monospace; font-size:0.7rem; color:var(--text-dim); margin-top:4px; }
+ 
+    .status-badge { display:flex; align-items:center; gap:8px; padding:8px 16px; border-radius:20px; font-size:0.8rem; font-weight:600; }
     .status-badge.online  { background:rgba(46,204,113,0.15); border:2px solid var(--green); color:#1a7a45; }
     .status-badge.offline { background:rgba(231,76,60,0.15);  border:2px solid var(--red);   color:var(--red); }
-    .status-badge.waiting { background:rgba(243,156,18,0.15); border:2px solid var(--yellow); color:#a0690a; }
+    .status-badge.waiting { background:rgba(243,156,18,0.15); border:2px solid var(--yellow); color:#8a5a00; }
     .dot { width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse 1.5s infinite; }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.3)} }
-
-    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-bottom:20px; }
+ 
+    /* CARDS */
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:16px; }
     .card {
-      background: linear-gradient(135deg, #fff5fb, #ffe8f4);
-      border:2px solid var(--border);
-      border-radius:16px; padding:20px; position:relative; overflow:hidden;
-      transition:transform 0.2s, box-shadow 0.2s;
+      background:linear-gradient(135deg,#fff5fb,#ffe8f4);
+      border:2px solid var(--border); border-radius:16px; padding:16px;
+      position:relative; overflow:hidden;
+      transition:transform 0.2s,box-shadow 0.2s;
       animation:fadeUp 0.5s ease both;
-      box-shadow: 0 4px 16px rgba(233,30,140,0.08);
+      box-shadow:0 4px 16px rgba(233,30,140,0.08);
     }
-    .card::before {
-      content:''; position:absolute; top:0; left:0; right:0; height:4px;
-      background:var(--card-color, var(--accent));
-      border-radius:16px 16px 0 0;
-    }
+    .card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--card-color,var(--accent)); border-radius:16px 16px 0 0; }
     .card:hover { transform:translateY(-4px); box-shadow:0 8px 24px rgba(233,30,140,0.2); }
-    .card-icon  { font-size:1.8rem; margin-bottom:10px; }
-    .card-label { font-size:0.7rem; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
-    .card-value { font-family:'Share Tech Mono',monospace; font-size:2rem; font-weight:700; color:var(--card-color, var(--accent)); }
-    .card-unit  { font-size:0.9rem; color:var(--text-dim); margin-left:4px; }
-    .card-status { margin-top:10px; font-size:0.75rem; font-weight:600; padding:4px 10px; border-radius:10px; display:inline-block; }
-
-    .status-normal  { background:rgba(46,204,113,0.15);  color:#1a7a45; }
-    .status-toleran { background:rgba(243,156,18,0.15);  color:#8a5a00; }
-    .status-panas   { background:rgba(255,110,180,0.2);  color:#c0005a; }
-    .status-dingin  { background:rgba(155,89,182,0.15);  color:#6a1a9a; }
-    .status-bahaya  { background:rgba(231,76,60,0.15);   color:var(--red); }
-
-    .main-grid { display:grid; grid-template-columns:2fr 1fr; gap:16px; margin-bottom:20px; }
-    @media(max-width:768px){ .main-grid{grid-template-columns:1fr} }
-
+    .card-icon  { font-size:1.5rem; margin-bottom:8px; }
+    .card-label { font-size:0.65rem; color:var(--text-dim); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+    .card-value { font-family:'Share Tech Mono',monospace; font-size:1.8rem; font-weight:700; color:var(--card-color,var(--accent)); }
+    .card-unit  { font-size:0.85rem; color:var(--text-dim); margin-left:2px; }
+    .card-status{ margin-top:8px; font-size:0.7rem; font-weight:600; padding:3px 8px; border-radius:8px; display:inline-block; }
+ 
+    .status-normal { background:rgba(46,204,113,0.15); color:#1a7a45; }
+    .status-toleran{ background:rgba(243,156,18,0.15); color:#8a5a00; }
+    .status-panas  { background:rgba(255,110,180,0.2); color:#c0005a; }
+    .status-dingin { background:rgba(155,89,182,0.15); color:#6a1a9a; }
+    .status-bahaya { background:rgba(231,76,60,0.15);  color:var(--red); }
+ 
+    /* MAIN GRID */
+    .main-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+    .chart-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+ 
+    @media(max-width:768px) {
+      .main-grid  { grid-template-columns:1fr; }
+      .chart-grid { grid-template-columns:1fr; }
+      .cards { grid-template-columns:repeat(2,1fr); }
+      header { flex-direction:column; align-items:flex-start; }
+      .header-left h1 { font-size:1.1rem; }
+    }
+    @media(max-width:400px) {
+      .cards { grid-template-columns:1fr; }
+    }
+ 
     .panel {
-      background: linear-gradient(135deg, #fff5fb, #ffe8f4);
-      border:2px solid var(--border);
-      border-radius:16px; padding:20px;
-      box-shadow: 0 4px 16px rgba(233,30,140,0.08);
+      background:linear-gradient(135deg,#fff5fb,#ffe8f4);
+      border:2px solid var(--border); border-radius:16px; padding:16px;
+      box-shadow:0 4px 16px rgba(233,30,140,0.08);
     }
     .panel-title {
-      font-size:0.75rem; letter-spacing:2px; text-transform:uppercase;
-      color:var(--accent); margin-bottom:16px;
+      font-size:0.72rem; letter-spacing:2px; text-transform:uppercase;
+      color:var(--accent); margin-bottom:14px;
       display:flex; align-items:center; gap:8px; font-weight:700;
     }
-    .panel-title::after { content:''; flex:1; height:2px; background:linear-gradient(90deg, var(--border), transparent); border-radius:2px; }
-
-    .gauge { position:relative; width:160px; height:160px; }
+    .panel-title::after { content:''; flex:1; height:2px; background:linear-gradient(90deg,var(--border),transparent); border-radius:2px; }
+ 
+    /* GAUGE */
+    .gauge { position:relative; width:140px; height:140px; margin:0 auto; }
     .gauge svg { width:100%; height:100%; transform:rotate(-90deg); }
     .gauge-track { fill:none; stroke:#f7c6df; stroke-width:12; }
     .gauge-fill  { fill:none; stroke-width:12; stroke-linecap:round; stroke-dasharray:440; stroke-dashoffset:440; transition:stroke-dashoffset 1s ease,stroke 0.5s ease; }
-    .gauge-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-    .gauge-num { font-family:'Share Tech Mono',monospace; font-size:1.8rem; font-weight:700; color:var(--accent); }
-    .gauge-lbl { font-size:0.65rem; color:var(--text-dim); letter-spacing:1px; }
-    .gauge-wrap { display:flex; flex-direction:column; align-items:center; gap:16px; }
-    .chart-wrap { position:relative; height:220px; }
-
-    .table-wrap { overflow-x:auto; }
-    table { width:100%; border-collapse:collapse; font-size:0.8rem; }
-    thead th { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:2px; color:var(--accent); text-transform:uppercase; padding:10px 12px; border-bottom:2px solid var(--border); text-align:left; }
+    .gauge-center{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .gauge-num   { font-family:'Share Tech Mono',monospace; font-size:1.6rem; font-weight:700; color:var(--accent); }
+    .gauge-lbl   { font-size:0.6rem; color:var(--text-dim); letter-spacing:1px; }
+    .gauge-wrap  { display:flex; flex-direction:column; align-items:center; gap:12px; }
+ 
+    .chart-wrap { position:relative; height:180px; }
+ 
+    /* RANGE LIST */
+    .range-list { display:flex; flex-direction:column; gap:5px; font-size:0.72rem; margin-top:8px; }
+    .range-item { display:flex; justify-content:space-between; align-items:center; }
+ 
+    /* TABLE */
+    .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    table { width:100%; border-collapse:collapse; font-size:0.75rem; min-width:480px; }
+    thead th { font-family:'Share Tech Mono',monospace; font-size:0.62rem; letter-spacing:1px; color:var(--accent); text-transform:uppercase; padding:8px 10px; border-bottom:2px solid var(--border); text-align:left; }
     tbody tr { border-bottom:1px solid rgba(247,168,204,0.4); transition:background 0.2s; }
     tbody tr:hover { background:rgba(233,30,140,0.05); }
-    tbody td { padding:10px 12px; font-family:'Share Tech Mono',monospace; color:var(--text); }
-    tbody td:first-child { color:var(--text-dim); font-size:0.75rem; }
-    .badge { padding:3px 8px; border-radius:8px; font-size:0.7rem; font-weight:600; }
-
+    tbody td { padding:8px 10px; font-family:'Share Tech Mono',monospace; color:var(--text); }
+    tbody td:first-child { color:var(--text-dim); font-size:0.68rem; white-space:nowrap; }
+    .badge { padding:3px 8px; border-radius:8px; font-size:0.68rem; font-weight:600; white-space:nowrap; }
+ 
+    /* FOOTER */
     .footer-bar {
-      display:flex; justify-content:space-between; align-items:center;
-      padding:12px 20px;
-      background: linear-gradient(135deg, #fff5fb, #ffe8f4);
-      border:2px solid var(--border);
-      border-radius:12px; font-family:'Share Tech Mono',monospace; font-size:0.72rem; color:var(--text-dim);
-      box-shadow: 0 4px 16px rgba(233,30,140,0.08);
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;
+      padding:12px 16px;
+      background:linear-gradient(135deg,#fff5fb,#ffe8f4);
+      border:2px solid var(--border); border-radius:12px;
+      font-family:'Share Tech Mono',monospace; font-size:0.7rem; color:var(--text-dim);
+      box-shadow:0 4px 16px rgba(233,30,140,0.08);
     }
     .blink { animation:blink 1s step-end infinite; color:var(--accent); }
     @keyframes blink { 50%{opacity:0} }
@@ -179,19 +224,28 @@
     .card:nth-child(2){animation-delay:0.10s}
     .card:nth-child(3){animation-delay:0.15s}
     .card:nth-child(4){animation-delay:0.20s}
-
-    /* Decorative circles */
+ 
     .deco { position:fixed; border-radius:50%; pointer-events:none; z-index:0; }
-    .deco1 { width:300px; height:300px; background:rgba(255,182,218,0.2); top:-100px; right:-100px; }
-    .deco2 { width:200px; height:200px; background:rgba(255,105,180,0.15); bottom:-50px; left:-50px; }
+    .deco1{ width:300px; height:300px; background:rgba(255,182,218,0.2); top:-100px; right:-100px; }
+    .deco2{ width:200px; height:200px; background:rgba(255,105,180,0.15); bottom:-50px; left:-50px; }
   </style>
 </head>
 <body>
 <div class="deco deco1"></div>
 <div class="deco deco2"></div>
-
+ 
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+ 
 <div class="wrapper">
-
+ 
+  <!-- NOTIF BANNER -->
+  <div class="notif-banner" id="notifBanner">
+    <p>🔔 Aktifkan notifikasi browser untuk mendapat alert suhu bahaya!</p>
+    <button class="btn-notif" onclick="requestNotif()">Aktifkan Notifikasi</button>
+  </div>
+ 
+  <!-- HEADER -->
   <header>
     <div class="header-left">
       <h1>🐣 INKUBATOR MONITOR</h1>
@@ -202,41 +256,39 @@
       <span id="statusText">MENUNGGU...</span>
     </div>
   </header>
-
+ 
+  <!-- CARDS -->
   <div class="cards">
     <div class="card" style="--card-color:#e91e8c;">
       <div class="card-icon">🌡️</div>
-      <div class="card-label">Suhu Probe (DS18B20)</div>
+      <div class="card-label">Suhu Probe</div>
       <div><span class="card-value" id="tempProbe">--</span><span class="card-unit">°C</span></div>
       <div class="card-status status-dingin" id="tempStatus">--</div>
     </div>
     <div class="card" style="--card-color:#ff6eb4;">
       <div class="card-icon">🌡️</div>
-      <div class="card-label">Suhu Udara (DHT22)</div>
+      <div class="card-label">Suhu DHT22</div>
       <div><span class="card-value" id="tempDHT">--</span><span class="card-unit">°C</span></div>
       <div class="card-status status-normal" id="dhtStatus">--</div>
     </div>
     <div class="card" style="--card-color:#9b59b6;">
       <div class="card-icon">💧</div>
-      <div class="card-label">Kelembaban (DHT22)</div>
+      <div class="card-label">Kelembaban</div>
       <div><span class="card-value" id="humidity">--</span><span class="card-unit">%</span></div>
       <div class="card-status status-normal" id="humidStatus">--</div>
     </div>
     <div class="card" style="--card-color:#f39c12;">
       <div class="card-icon">💨</div>
-      <div class="card-label">Kualitas Udara (MQ135)</div>
+      <div class="card-label">Kualitas Udara</div>
       <div><span class="card-value" id="airQuality">--</span><span class="card-unit">ppm</span></div>
       <div class="card-status status-normal" id="airStatus">--</div>
     </div>
   </div>
-
-  <div class="main-grid">
+ 
+  <!-- GAUGE + RANGE -->
+  <div class="main-grid" style="margin-bottom:12px;">
     <div class="panel">
-      <div class="panel-title">📈 Grafik Suhu Realtime</div>
-      <div class="chart-wrap"><canvas id="tempChart"></canvas></div>
-    </div>
-    <div class="panel">
-      <div class="panel-title">⚡ Gauge Suhu</div>
+      <div class="panel-title">⚡ Gauge Suhu Probe</div>
       <div class="gauge-wrap">
         <div class="gauge">
           <svg viewBox="0 0 160 160">
@@ -248,28 +300,53 @@
             <div class="gauge-lbl">°C PROBE</div>
           </div>
         </div>
-        <div style="width:100%;">
-          <div class="panel-title">🌡️ Range Suhu</div>
-          <div style="display:flex;flex-direction:column;gap:6px;font-size:0.75rem;">
-            <div style="display:flex;justify-content:space-between;"><span style="color:#9b59b6;">❄️ &lt; 30°C</span><span class="badge status-dingin">TERLALU DINGIN</span></div>
-            <div style="display:flex;justify-content:space-between;"><span style="color:#1a7a45;">✅ 30–35°C</span><span class="badge status-normal">NORMAL</span></div>
-            <div style="display:flex;justify-content:space-between;"><span style="color:#8a5a00;">⚠️ 36–38°C</span><span class="badge status-toleran">TOLERANSI</span></div>
-            <div style="display:flex;justify-content:space-between;"><span style="color:#c0005a;">🔥 39–40°C</span><span class="badge status-panas">PANAS</span></div>
-            <div style="display:flex;justify-content:space-between;"><span style="color:#e74c3c;">&gt; 40°C</span><span class="badge status-bahaya">BAHAYA!</span></div>
-          </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">🌡️ Keterangan Range</div>
+      <div class="range-list">
+        <div class="range-item"><span style="color:#9b59b6;">❄️ &lt; 30°C</span><span class="badge status-dingin">TERLALU DINGIN</span></div>
+        <div class="range-item"><span style="color:#1a7a45;">✅ 30–35°C</span><span class="badge status-normal">NORMAL</span></div>
+        <div class="range-item"><span style="color:#8a5a00;">⚠️ 36–38°C</span><span class="badge status-toleran">TOLERANSI</span></div>
+        <div class="range-item"><span style="color:#c0005a;">🔥 39–40°C</span><span class="badge status-panas">PANAS</span></div>
+        <div class="range-item"><span style="color:#e74c3c;">☠️ &gt; 40°C</span><span class="badge status-bahaya">BAHAYA!</span></div>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="panel-title">💧 Kelembaban Ideal</div>
+        <div class="range-list">
+          <div class="range-item"><span style="color:#9b59b6;">&lt; 55%</span><span class="badge status-dingin">KERING</span></div>
+          <div class="range-item"><span style="color:#1a7a45;">55–65%</span><span class="badge status-normal">IDEAL</span></div>
+          <div class="range-item"><span style="color:#8a5a00;">&gt; 65%</span><span class="badge status-toleran">LEMBAB</span></div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="panel" style="margin-bottom:16px;">
+ 
+  <!-- CHARTS -->
+  <div class="chart-grid">
+    <div class="panel">
+      <div class="panel-title">📈 Grafik Suhu Realtime</div>
+      <div class="chart-wrap"><canvas id="tempChart"></canvas></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">💧 Grafik Kelembaban Realtime</div>
+      <div class="chart-wrap"><canvas id="humidChart"></canvas></div>
+    </div>
+  </div>
+ 
+  <!-- TABLE -->
+  <div class="panel" style="margin-bottom:12px;">
     <div class="panel-title">📋 Riwayat Data</div>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>Waktu</th><th>Probe (°C)</th><th>DHT22 (°C)</th>
-            <th>Humid (%)</th><th>Udara (ppm)</th><th>Status</th>
+            <th>Tanggal & Waktu</th>
+            <th>Probe (°C)</th>
+            <th>DHT22 (°C)</th>
+            <th>Humid (%)</th>
+            <th>Udara</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody id="historyBody">
@@ -278,35 +355,59 @@
       </table>
     </div>
   </div>
-
+ 
+  <!-- FOOTER -->
   <div class="footer-bar">
-    <span>🐣 INKUBATOR AYAM v1.0 · ESP32 + FIREBASE REALTIME</span>
-    <span>Update terakhir: <span id="lastUpdate">--</span> <span class="blink">♥</span></span>
+    <span>🐣 INKUBATOR AYAM v2.0 · ESP32 + FIREBASE</span>
+    <span>Update: <span id="lastUpdate">--</span> <span class="blink">♥</span></span>
   </div>
+ 
 </div>
-
+ 
 <script>
-  const labels=[], probeData=[], dhtData=[], historyRows=[];
-
-  const chart = new Chart(document.getElementById('tempChart').getContext('2d'), {
+  const labels=[], probeData=[], dhtData=[], humidData=[], historyRows=[];
+  let lastStatus = '';
+ 
+  // ===== CHART SUHU =====
+  const tempChart = new Chart(document.getElementById('tempChart').getContext('2d'), {
     type:'line',
     data:{
       labels,
       datasets:[
-        {label:'Probe (DS18B20)',data:probeData,borderColor:'#e91e8c',backgroundColor:'rgba(233,30,140,0.08)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#e91e8c',tension:0.4,fill:true},
+        {label:'Probe',data:probeData,borderColor:'#e91e8c',backgroundColor:'rgba(233,30,140,0.08)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#e91e8c',tension:0.4,fill:true},
         {label:'DHT22',data:dhtData,borderColor:'#9b59b6',backgroundColor:'rgba(155,89,182,0.05)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#9b59b6',tension:0.4,fill:true}
       ]
     },
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{labels:{color:'#5a1a3a',font:{family:'Share Tech Mono',size:11}}}},
+      plugins:{legend:{labels:{color:'#5a1a3a',font:{family:'Share Tech Mono',size:10}}}},
       scales:{
-        x:{ticks:{color:'#c478a0',font:{family:'Share Tech Mono',size:10}},grid:{color:'rgba(247,168,204,0.3)'}},
-        y:{min:20,max:50,ticks:{color:'#c478a0',font:{family:'Share Tech Mono',size:10}},grid:{color:'rgba(247,168,204,0.3)'}}
+        x:{ticks:{color:'#c478a0',font:{family:'Share Tech Mono',size:9},maxTicksLimit:6},grid:{color:'rgba(247,168,204,0.3)'}},
+        y:{min:20,max:50,ticks:{color:'#c478a0',font:{family:'Share Tech Mono',size:9}},grid:{color:'rgba(247,168,204,0.3)'}}
       }
     }
   });
-
+ 
+  // ===== CHART KELEMBABAN =====
+  const humidChart = new Chart(document.getElementById('humidChart').getContext('2d'), {
+    type:'line',
+    data:{
+      labels,
+      datasets:[
+        {label:'Kelembaban (%)',data:humidData,borderColor:'#9b59b6',backgroundColor:'rgba(155,89,182,0.1)',borderWidth:2,pointRadius:3,pointBackgroundColor:'#9b59b6',tension:0.4,fill:true}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#5a1a3a',font:{family:'Share Tech Mono',size:10}}}},
+      scales:{
+        x:{ticks:{color:'#c478a0',font:{family:'Share Tech Mono',size:9},maxTicksLimit:6},grid:{color:'rgba(247,168,204,0.3)'}},
+        y:{min:0,max:100,ticks:{color:'#c478a0',font:{family:'Share Tech Mono',size:9}},grid:{color:'rgba(247,168,204,0.3)'}}
+      }
+    }
+  });
+ 
+  // ===== STATUS =====
   function getStatus(t){
     if(t<30)  return{text:'TERLALU DINGIN',cls:'status-dingin'};
     if(t<=35) return{text:'NORMAL',        cls:'status-normal'};
@@ -314,7 +415,8 @@
     if(t<=40) return{text:'PANAS!',        cls:'status-panas'};
     return          {text:'BAHAYA!',       cls:'status-bahaya'};
   }
-
+ 
+  // ===== GAUGE =====
   function updateGauge(t){
     const pct=Math.min(Math.max((t-20)/30,0),1);
     const fill=document.getElementById('gaugeFill');
@@ -326,36 +428,97 @@
     n.style.color=c[st.cls];
     n.textContent=t.toFixed(1);
   }
-
+ 
+  // ===== TOAST NOTIF =====
+  function showToast(msg, type='ok'){
+    const icons = {ok:'✅', warn:'⚠️', danger:'🚨'};
+    const div = document.createElement('div');
+    div.className = `toast ${type}`;
+    div.innerHTML = `<span>${icons[type]}</span><span>${msg}</span>`;
+    document.getElementById('toastContainer').appendChild(div);
+    setTimeout(()=>{
+      div.style.animation='slideOut 0.3s ease forwards';
+      setTimeout(()=>div.remove(), 300);
+    }, 4000);
+  }
+ 
+  // ===== BROWSER NOTIFICATION =====
+  function requestNotif(){
+    if(!('Notification' in window)){ showToast('Browser tidak support notifikasi','warn'); return; }
+    Notification.requestPermission().then(p=>{
+      if(p==='granted'){
+        document.getElementById('notifBanner').style.display='none';
+        showToast('Notifikasi berhasil diaktifkan! 🎉','ok');
+      } else {
+        showToast('Izin notifikasi ditolak','warn');
+      }
+    });
+  }
+ 
+  function sendNotif(title, body){
+    if(Notification.permission==='granted'){
+      new Notification(title, { body, icon:'🐣' });
+    }
+  }
+ 
+  // Auto hide banner if already granted
+  if(Notification.permission==='granted'){
+    document.getElementById('notifBanner').style.display='none';
+  }
+ 
+  // ===== UPDATE UI =====
   window.updateUI=function({probe,dht,humid,air,time}){
     document.getElementById('tempProbe').textContent =probe.toFixed(1);
     document.getElementById('tempDHT').textContent   =dht.toFixed(1);
     document.getElementById('humidity').textContent  =humid.toFixed(1);
     document.getElementById('airQuality').textContent=air>0?air.toFixed(0):'--';
     document.getElementById('lastUpdate').textContent=time;
-
+ 
     const st=getStatus(probe);
+ 
+    // Notif kalau status berubah jadi bahaya/panas
+    if(st.text !== lastStatus){
+      lastStatus = st.text;
+      if(st.cls==='status-bahaya'){
+        showToast(`🚨 SUHU BAHAYA! ${probe.toFixed(1)}°C`, 'danger');
+        sendNotif('🚨 INKUBATOR BAHAYA!', `Suhu probe: ${probe.toFixed(1)}°C - Segera periksa!`);
+      } else if(st.cls==='status-panas'){
+        showToast(`🔥 Suhu Panas! ${probe.toFixed(1)}°C`, 'warn');
+        sendNotif('🔥 Suhu Inkubator Panas', `Suhu probe: ${probe.toFixed(1)}°C`);
+      } else if(st.cls==='status-dingin'){
+        showToast(`❄️ Suhu Terlalu Dingin! ${probe.toFixed(1)}°C`, 'warn');
+        sendNotif('❄️ Suhu Inkubator Dingin', `Suhu probe: ${probe.toFixed(1)}°C`);
+      }
+    }
+ 
     const el=document.getElementById('tempStatus');
     el.textContent=st.text; el.className='card-status '+st.cls;
-
+ 
     const dhtSt=getStatus(dht);
     const de=document.getElementById('dhtStatus');
     de.textContent=dhtSt.text; de.className='card-status '+dhtSt.cls;
-
+ 
     const hs=humid>=55&&humid<=65?{text:'IDEAL',cls:'status-normal'}:humid<55?{text:'KERING',cls:'status-dingin'}:{text:'LEMBAB',cls:'status-toleran'};
     const he=document.getElementById('humidStatus');
     he.textContent=hs.text; he.className='card-status '+hs.cls;
-
+ 
     const as=air<400?{text:'BERSIH',cls:'status-normal'}:air<1000?{text:'SEDANG',cls:'status-toleran'}:{text:'BERBAHAYA',cls:'status-bahaya'};
     const ae=document.getElementById('airStatus');
     ae.textContent=as.text; ae.className='card-status '+as.cls;
-
+ 
     updateGauge(probe);
-
-    if(labels.length>=15){labels.shift();probeData.shift();dhtData.shift();}
-    labels.push(time); probeData.push(probe); dhtData.push(dht);
-    chart.update();
-
+ 
+    // Update charts
+    const timeShort = time.split(', ')[1] || time;
+    if(labels.length>=15){ labels.shift(); probeData.shift(); dhtData.shift(); humidData.shift(); }
+    labels.push(timeShort);
+    probeData.push(probe);
+    dhtData.push(dht);
+    humidData.push(humid);
+    tempChart.update();
+    humidChart.update();
+ 
+    // Update table
     historyRows.unshift({time,probe,dht,humid,air,st});
     if(historyRows.length>20)historyRows.pop();
     document.getElementById('historyBody').innerHTML=historyRows.map(r=>`
