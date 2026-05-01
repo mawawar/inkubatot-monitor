@@ -214,10 +214,27 @@
     .footer-bar span{font-family:var(--font-body);font-size:0.8rem;color:var(--text-dim);font-weight:700;}
     .blink{animation:blink 1s step-end infinite;color:var(--coral);}
     @keyframes blink{50%{opacity:0}}
-    .flip{animation:numFlip 0.3s ease;}
+        .flip{animation:numFlip 0.3s ease;}
     @keyframes numFlip{0%{transform:scaleY(0.5);opacity:0.5}100%{transform:scaleY(1);opacity:1}}
 
+    /* FITUR TAMBAHAN */
+    .action-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;}
+    .action-card{background:rgba(255,255,255,0.58);border:1.5px solid rgba(255,200,0,0.22);border-radius:16px;padding:12px;}
+    .action-label{font-family:var(--font-body);font-size:0.78rem;color:var(--text-dim);font-weight:800;}
+    .action-value{font-family:var(--font-head);font-size:1.3rem;color:var(--sun2);margin-top:4px;}
+    .score-wrap{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;}
+    .score-circle{width:130px;height:130px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:2rem;color:#fff;background:conic-gradient(#27ae60 0deg,#27ae60 300deg,rgba(255,255,255,0.5) 300deg);box-shadow:var(--shadow);}
+    .event-log{display:flex;flex-direction:column;gap:8px;max-height:210px;overflow:auto;}
+    .event-item{padding:9px 12px;border-radius:12px;background:rgba(255,255,255,0.55);border:1.5px solid rgba(255,200,0,0.18);font-family:var(--font-body);font-size:0.8rem;font-weight:700;color:var(--text);}
+    .select-age{width:100%;padding:10px 12px;border-radius:12px;border:2px solid rgba(255,200,0,0.35);font-family:var(--font-body);font-weight:800;color:var(--text);background:rgba(255,255,255,0.8);}
+    .btn-action{display:inline-block;text-decoration:none;text-align:center;background:linear-gradient(135deg,var(--sun),var(--sun2));color:#fff;border:none;padding:10px 18px;border-radius:12px;font-family:var(--font-head);font-size:0.95rem;cursor:pointer;box-shadow:0 3px 12px rgba(255,150,0,0.35);}
+    body.presentation-mode .wrapper{max-width:1600px;}
+    body.presentation-mode .notif-banner,
+    body.presentation-mode .spreadsheet-panel,
+    body.presentation-mode .footer-bar{display:none;}
+
     @media(max-width:768px){
+
       .main-grid{grid-template-columns:1fr;}
       .chart-grid{grid-template-columns:1fr;}
       .cards{grid-template-columns:repeat(2,1fr);}
@@ -359,6 +376,74 @@
       </div>
     </div>
   </div>
+
+      <!-- FITUR CERDAS -->
+<div class="main-grid">
+  <div class="panel">
+    <div class="panel-title">🧠 Health Score Brooder</div>
+    <div class="score-wrap">
+      <div class="score-circle" id="healthScoreCircle">--</div>
+      <div>
+        <div id="healthScoreText" style="font-family:var(--font-head);font-size:1.7rem;color:var(--sun2);">Menunggu Data</div>
+        <div id="healthScoreDesc" style="font-family:var(--font-body);font-size:0.9rem;color:var(--text-dim);font-weight:700;margin-top:6px;">Skor dihitung dari suhu, kelembaban, udara, dan koneksi.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">💡 Rekomendasi Otomatis</div>
+    <div class="range-list">
+      <div class="offline-info"><span>Saran Suhu</span><span class="offline-timer" id="recTemp">--</span></div>
+      <div class="offline-info"><span>Saran Humid</span><span class="offline-timer" id="recHumid">--</span></div>
+      <div class="offline-info"><span>Saran Udara</span><span class="offline-timer" id="recAir">--</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="main-grid">
+  <div class="panel">
+    <div class="panel-title">🎛️ Control Mode Panel</div>
+    <div class="action-grid">
+      <div class="action-card"><div class="action-label">Lampu Pemanas</div><div class="action-value" id="heaterStatus">AUTO</div></div>
+      <div class="action-card"><div class="action-label">Kipas</div><div class="action-value" id="fanStatus">AUTO</div></div>
+      <div class="action-card"><div class="action-label">Humidifier</div><div class="action-value" id="humidifierStatus">AUTO</div></div>
+      <div class="action-card"><div class="action-label">SD Card</div><div class="action-value" id="sdStatus">--</div></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">🐣 Umur Anak Ayam</div>
+    <select class="select-age" id="chickAge" onchange="updateAgeGuide()">
+      <option value="1">Minggu ke-1</option>
+      <option value="2">Minggu ke-2</option>
+      <option value="3">Minggu ke-3</option>
+      <option value="4">Minggu ke-4</option>
+      <option value="5">Minggu ke-5</option>
+      <option value="6">Minggu 5+</option>
+    </select>
+    <div class="range-list" style="margin-top:12px;">
+      <div class="offline-info"><span>Suhu Ideal</span><span class="offline-timer" id="ageTemp">34–35°C</span></div>
+      <div class="offline-info"><span>Keterangan</span><span class="offline-timer" id="ageDesc">Baru lahir</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="main-grid">
+  <div class="panel">
+    <div class="panel-title">📝 Log Event Penting</div>
+    <div class="event-log" id="eventLog">
+      <div class="event-item">Menunggu event dari sistem...</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">🖥️ Aksi Cepat</div>
+    <div class="action-grid">
+      <button class="btn-action" onclick="togglePresentation()">Mode Presentasi</button>
+      <a class="btn-action" href="https://docs.google.com/spreadsheets/d/122fonv691gqpCS40-3zcSATa6sZ0nk7T-gKrELlMwuk/edit?usp=sharing" target="_blank">Buka Spreadsheet</a>
+    </div>
+  </div>
+</div>
 
       <!-- Gauge Probe BESAR -->
       <div class="gauge-wrap">
@@ -539,7 +624,7 @@
   </div>
 
   <!-- SPREADSHEET (dipindah ke paling bawah) -->
-  <div class="panel" style="margin-bottom:14px;">
+  <div class="panel spreadsheet-panel" style="margin-bottom:14px;">
     <div class="panel-title">📄 Spreadsheet Data Sensor</div>
     <div style="width:100%;height:620px;overflow:hidden;border-radius:16px;border:2px solid rgba(255,215,0,0.25);background:rgba(255,255,255,0.6);">
       <iframe
@@ -659,6 +744,7 @@ let maxMQVal = 0;
 let humidSum = 0;
 let humidCount = 0;
 let lastStatus='',alarmInterval=null;
+let lastEventKey = '';
 const cFont={family:'Baloo 2',size:12},cGrid='rgba(255,180,0,0.1)',cTick='#A1887F';
 
 const tempChart=new Chart(document.getElementById('tempChart').getContext('2d'),{type:'line',data:{labels,datasets:[{label:'Probe',data:probeData,borderColor:'#FF9500',backgroundColor:'rgba(255,149,0,0.1)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#FF9500',tension:0.4,fill:true},{label:'DHT22',data:dhtData,borderColor:'#5DADE2',backgroundColor:'rgba(93,173,226,0.08)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#5DADE2',tension:0.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},scales:{x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},y:{min:20,max:50,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}}}});
@@ -674,13 +760,87 @@ import("https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js").then(({init
       const data=snapshot.val();if(!data)return;
       const now=new Date();
       const ts=now.toLocaleString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
-      window.updateUI({probe:data.suhu_probe??0,dht:data.suhu_dht??0,humid:data.kelembaban??0,mqRaw:data.mq135_raw??0,mqVolt:data.mq135_voltage??0,airStr:data.kualitas_udara??'--',time:ts});
+      window.updateUI({
+  probe:data.suhu_probe??0,
+  dht:data.suhu_dht??0,
+  humid:data.kelembaban??0,
+  mqRaw:data.mq135_raw??0,
+  mqVolt:data.mq135_voltage??0,
+  airStr:data.kualitas_udara??'--',
+  sdStatus:data.sd_status??'--',
+  time:ts
+});
       window.resetOfflineTimer();setStatus('online');
     },()=>setStatus('offline'));
   });
 });
 
-window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,time}){
+  function addEventLog(text,type='info'){
+  const log=document.getElementById('eventLog');
+  const now=new Date();
+  const time=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')+':'+String(now.getSeconds()).padStart(2,'0');
+  const key=time+'-'+text;
+  if(key===lastEventKey)return;
+  lastEventKey=key;
+  const item=document.createElement('div');
+  item.className='event-item';
+  item.textContent=`${time} · ${text}`;
+  log.prepend(item);
+  while(log.children.length>12)log.lastChild.remove();
+}
+
+function togglePresentation(){
+  document.body.classList.toggle('presentation-mode');
+}
+
+function updateAgeGuide(){
+  const age=document.getElementById('chickAge').value;
+  const guide={
+    1:['34–35°C','Anak ayam baru lahir'],
+    2:['32–33°C','Mulai aktif bergerak'],
+    3:['30–31°C','Bulu mulai tumbuh'],
+    4:['28–29°C','Adaptasi suhu ruang'],
+    5:['26–27°C','Hampir mandiri'],
+    6:['25°C','Suhu ruang normal']
+  };
+  document.getElementById('ageTemp').textContent=guide[age][0];
+  document.getElementById('ageDesc').textContent=guide[age][1];
+}
+
+function updateSmartPanels(probe,humid,mqRaw,sdStatus='--'){
+  let score=100;
+  if(probe<30)score-=20;
+  if(probe>35)score-=15;
+  if(probe>40)score-=35;
+  if(humid<55||humid>65)score-=12;
+  if(mqRaw>=1200)score-=12;
+  if(mqRaw>=2500)score-=25;
+  if(offlineSeconds>=30)score-=10;
+  score=Math.max(0,Math.min(100,score));
+
+  const circle=document.getElementById('healthScoreCircle');
+  circle.textContent=score;
+  circle.style.background=`conic-gradient(${score>=80?'#27ae60':score>=60?'#e67e00':'#c0392b'} 0deg, ${score>=80?'#27ae60':score>=60?'#e67e00':'#c0392b'} ${score*3.6}deg, rgba(255,255,255,0.55) ${score*3.6}deg)`;
+
+  document.getElementById('healthScoreText').textContent=score>=80?'Kondisi Bagus':score>=60?'Perlu Dipantau':'Kondisi Buruk';
+  document.getElementById('healthScoreDesc').textContent=score>=80?'Brooder berada dalam kondisi aman.':score>=60?'Ada parameter yang perlu dicek.':'Segera cek suhu, udara, atau koneksi perangkat.';
+
+  document.getElementById('recTemp').textContent=probe<30?'Nyalakan pemanas':probe>40?'Matikan pemanas':'Suhu aman';
+  document.getElementById('recHumid').textContent=humid<55?'Tambah kelembaban':humid>65?'Kurangi kelembaban':'Humid ideal';
+  document.getElementById('recAir').textContent=mqRaw>=2500?'Cek ventilasi':mqRaw>=1200?'Pantau udara':'Udara baik';
+
+  document.getElementById('heaterStatus').textContent=probe<30?'ON':probe>35?'OFF':'AUTO';
+  document.getElementById('fanStatus').textContent=probe>38||mqRaw>=1200?'ON':'AUTO';
+  document.getElementById('humidifierStatus').textContent=humid<55?'ON':humid>65?'OFF':'AUTO';
+  document.getElementById('sdStatus').textContent=sdStatus;
+
+  if(probe>40)addEventLog('Suhu bahaya terdeteksi','danger');
+  else if(probe<30)addEventLog('Suhu terlalu dingin','warn');
+  if(mqRaw>=2500)addEventLog('Kualitas udara buruk','danger');
+  else if(mqRaw>=1200)addEventLog('Kualitas udara sedang','warn');
+}
+
+window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,sdStatus,time}){
   const prevProbe=probeData.length>0?probeData[probeData.length-1]:null;
   const prevDHT=dhtData.length>0?dhtData[dhtData.length-1]:null;
   const prevHumid=humidData.length>0?humidData[humidData.length-1]:null;
@@ -704,6 +864,7 @@ window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,time}){
   const as=getAirStatus(mqRaw);const ae=document.getElementById('airStatus');ae.textContent=as.text;ae.className='card-status '+as.cls;
 
   updateGaugeProbe(probe);updateGaugeDHT(dht);updateGaugeHumid(humid);updateGaugeMQ(mqRaw);
+  updateSmartPanels(probe, humid, mqRaw, sdStatus);
 
     // OVERALL STATUS
   const overallIcon = document.getElementById('overallIcon');
