@@ -306,9 +306,43 @@
   </div>
 
   <!-- ===== 4 GAUGES ===== -->
+    <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-title">📋 Riwayat Data</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tanggal & Waktu</th>
+            <th>Probe (°C)</th>
+            <th>DHT22 (°C)</th>
+            <th>Humid (%)</th>
+            <th>MQ135 Raw</th>
+            <th>Kualitas Udara</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody">
+          <tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:24px;">Menunggu data dari Firebase... 🐥</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SPREADSHEET GOOGLE SHEETS -->
   <div class="panel" style="margin-bottom:14px;">
-    <div class="panel-title">⚡ Gauge Sensor Realtime</div>
-    <div class="gauge-grid">
+    <div class="panel-title">📄 Spreadsheet Data Sensor</div>
+    <div style="width:100%;height:620px;overflow:hidden;border-radius:16px;border:2px solid rgba(255,215,0,0.25);background:rgba(255,255,255,0.6);">
+      <iframe
+        src="https://docs.google.com/spreadsheets/d/122fonv691gqpCS40-3zcSATa6sZ0nk7T-gKrELlMwuk/preview"
+        width="100%"
+        height="620"
+        style="border:0;">
+      </iframe>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+
       <!-- Gauge Probe (besar) -->
       <div class="gauge-item">
         <div class="gauge-label-top">🌡️ Suhu Probe</div>
