@@ -20,10 +20,7 @@
       --font-body:'Baloo 2',sans-serif;
     }
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      font-family:var(--font-body);color:var(--text);min-height:100vh;overflow-x:hidden;
-      background:linear-gradient(160deg,#FFF9C4 0%,#FFE57F 40%,#FFD740 75%,#FFC107 100%);
-    }
+    body{font-family:var(--font-body);color:var(--text);min-height:100vh;overflow-x:hidden;background:linear-gradient(160deg,#FFF9C4 0%,#FFE57F 40%,#FFD740 75%,#FFC107 100%);}
 
     /* LOADING */
     #loadingScreen{position:fixed;inset:0;z-index:99999;background:linear-gradient(160deg,#FFF9C4,#FFE57F,#FFD740,#FFC107);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity 0.8s ease,visibility 0.8s ease;}
@@ -78,6 +75,18 @@
     @keyframes alarmPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.01);}}
     @keyframes bgShift{0%{background-position:0%}100%{background-position:200%}}
 
+    /* DEVICE CARD */
+    .device-status-card{display:none;align-items:center;gap:14px;padding:14px 20px;border-radius:20px;font-family:var(--font-head);font-size:1rem;border:2.5px solid;margin-bottom:14px;backdrop-filter:blur(8px);animation:devicePulse 1.5s ease infinite;}
+    .device-status-card.show{display:flex;}
+    .device-status-card.offline{background:rgba(255,107,107,0.15);border-color:var(--coral);color:var(--coral);}
+    .device-status-card.waiting{background:rgba(255,179,71,0.12);border-color:var(--peach);color:var(--sun2);}
+    @keyframes devicePulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,107,0.3);}50%{box-shadow:0 0 0 10px rgba(255,107,107,0);}}
+    .device-status-icon{font-size:2rem;}
+    .device-status-info{flex:1;}
+    .device-status-title{font-family:var(--font-head);font-size:1.1rem;}
+    .device-status-sub{font-family:var(--font-body);font-size:0.82rem;font-weight:600;margin-top:2px;opacity:0.8;}
+    .device-status-timer{font-family:var(--font-head);font-size:1.5rem;background:rgba(255,255,255,0.4);padding:8px 16px;border-radius:12px;border:2px solid rgba(255,255,255,0.5);}
+
     /* BANNERS */
     .banner-group{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
     .notif-banner,.pwa-banner{background:rgba(255,255,255,0.72);border:2px solid rgba(255,200,0,0.35);border-radius:18px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;backdrop-filter:blur(8px);}
@@ -95,24 +104,23 @@
     .header-title h1{font-family:var(--font-head);font-size:1.9rem;color:var(--sun2);letter-spacing:0.5px;text-shadow:2px 3px 0 rgba(255,140,0,0.2);}
     .header-title p{font-family:var(--font-body);font-size:0.72rem;color:var(--text-dim);letter-spacing:1px;margin-top:2px;font-weight:600;}
     .header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+
+    /* ===== REALTIME CLOCK ===== */
+    .clock-box{
+      display:flex;flex-direction:column;align-items:center;
+      background:rgba(255,255,255,0.6);border:2px solid rgba(255,200,0,0.4);
+      border-radius:16px;padding:8px 16px;backdrop-filter:blur(8px);
+    }
+    .clock-time{font-family:var(--font-head);font-size:1.5rem;color:var(--sun2);letter-spacing:1px;line-height:1;}
+    .clock-date{font-family:var(--font-body);font-size:0.68rem;color:var(--text-dim);font-weight:700;margin-top:2px;text-align:center;}
+    .clock-day{font-family:var(--font-body);font-size:0.62rem;color:var(--text-dim);font-weight:600;}
+
     .status-badge{display:flex;align-items:center;gap:10px;padding:10px 22px;border-radius:20px;font-family:var(--font-head);font-size:1rem;transition:all 0.4s;}
     .status-badge.online{background:rgba(92,184,92,0.15);border:2px solid var(--grass);color:var(--grass);}
     .status-badge.offline{background:rgba(255,107,107,0.12);border:2px solid var(--coral);color:var(--coral);}
     .status-badge.waiting{background:rgba(255,179,71,0.15);border:2px solid var(--peach);color:var(--sun2);}
     .dot{width:10px;height:10px;border-radius:50%;background:currentColor;animation:dotPulse 1.2s ease-in-out infinite;}
     @keyframes dotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.7);opacity:0.5}}
-
-    /* ===== OFFLINE DEVICE CARD ===== */
-    .device-status-card{display:none;align-items:center;gap:14px;padding:14px 20px;border-radius:20px;font-family:var(--font-head);font-size:1rem;border:2.5px solid;margin-bottom:14px;backdrop-filter:blur(8px);animation:devicePulse 1.5s ease infinite;}
-    .device-status-card.show{display:flex;}
-    .device-status-card.offline{background:rgba(255,107,107,0.15);border-color:var(--coral);color:var(--coral);}
-    .device-status-card.waiting{background:rgba(255,179,71,0.12);border-color:var(--peach);color:var(--sun2);}
-    @keyframes devicePulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,107,0.3);}50%{box-shadow:0 0 0 10px rgba(255,107,107,0);}}
-    .device-status-icon{font-size:2rem;}
-    .device-status-info{flex:1;}
-    .device-status-title{font-family:var(--font-head);font-size:1.1rem;}
-    .device-status-sub{font-family:var(--font-body);font-size:0.82rem;font-weight:600;margin-top:2px;opacity:0.8;}
-    .device-status-timer{font-family:var(--font-head);font-size:1.5rem;background:rgba(255,255,255,0.4);padding:8px 16px;border-radius:12px;border:2px solid rgba(255,255,255,0.5);}
 
     /* CARDS */
     .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:14px;}
@@ -141,30 +149,39 @@
 
     .main-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
     .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+
     .panel{background:rgba(255,255,255,0.82);border:2px solid rgba(255,215,0,0.32);border-radius:24px;padding:18px;position:relative;overflow:hidden;box-shadow:var(--shadow);backdrop-filter:blur(8px);}
     .panel::before{content:'';position:absolute;top:0;left:0;width:5px;height:100%;background:linear-gradient(180deg,var(--sun),var(--peach),transparent);border-radius:24px 0 0 24px;}
     .panel-title{font-family:var(--font-head);font-size:1.1rem;color:var(--sun2);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
     .panel-title::after{content:'';flex:1;height:2px;background:linear-gradient(90deg,rgba(255,180,0,0.3),transparent);border-radius:2px;}
 
-    /* ===== MULTI GAUGE GRID ===== */
-    .gauge-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-    .gauge-item{display:flex;flex-direction:column;align-items:center;gap:6px;}
-    .gauge-label-top{font-family:var(--font-head);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.5px;}
+    /* ===== GAUGES ===== */
+    .gauge-panel{background:rgba(255,255,255,0.82);border:2px solid rgba(255,215,0,0.32);border-radius:24px;padding:18px;position:relative;overflow:hidden;box-shadow:var(--shadow);backdrop-filter:blur(8px);margin-bottom:14px;}
+    .gauge-panel::before{content:'';position:absolute;top:0;left:0;width:5px;height:100%;background:linear-gradient(180deg,var(--sun),var(--peach),transparent);border-radius:24px 0 0 24px;}
+    .gauge-panel-title{font-family:var(--font-head);font-size:1.1rem;color:var(--sun2);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+    .gauge-panel-title::after{content:'';flex:1;height:2px;background:linear-gradient(90deg,rgba(255,180,0,0.3),transparent);border-radius:2px;}
 
-    .gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;}
+    .gauge-layout{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;}
+    .gauge-right{display:flex;flex-direction:column;gap:14px;}
+
+    .gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
+    .gauge-title{font-family:var(--font-head);font-size:0.82rem;color:var(--text-dim);text-align:center;letter-spacing:0.3px;}
     .gauge{position:relative;}
-    .gauge.lg{width:160px;height:160px;}
+    .gauge.lg{width:170px;height:170px;}
     .gauge.sm{width:110px;height:110px;}
     .gauge svg{width:100%;height:100%;transform:rotate(-90deg);}
     .gauge-track{fill:none;stroke:rgba(255,200,0,0.15);stroke-width:11;}
     .gauge-fill{fill:none;stroke-width:11;stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(.25,.46,.45,.94),stroke 0.5s ease;filter:drop-shadow(0 0 6px currentColor);}
-    /* circumferences: lg r=65 → 408.4, sm r=43 → 270.2 */
     .gauge.lg .gauge-fill{stroke-dasharray:408;stroke-dashoffset:408;}
     .gauge.sm .gauge-fill{stroke-dasharray:270;stroke-dashoffset:270;}
     .gauge-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-    .gauge.lg .gauge-num{font-family:var(--font-head);font-size:2.1rem;transition:color 0.5s;}
-    .gauge.sm .gauge-num{font-family:var(--font-head);font-size:1.35rem;transition:color 0.5s;}
+    .gauge.lg .gauge-num{font-family:var(--font-head);font-size:2rem;transition:color 0.5s;}
+    .gauge.sm .gauge-num{font-family:var(--font-head);font-size:1.3rem;transition:color 0.5s;}
     .gauge-lbl{font-family:var(--font-body);font-size:0.58rem;color:var(--text-dim);letter-spacing:1.5px;margin-top:1px;font-weight:700;}
+
+    .gauge-small-item{display:flex;flex-direction:row;gap:12px;align-items:center;border-radius:18px;padding:10px 14px;border:1.5px solid;}
+    .gauge-small-info{display:flex;flex-direction:column;gap:4px;}
+    .gauge-small-label{font-family:var(--font-head);font-size:0.82rem;}
 
     .range-list{display:flex;flex-direction:column;gap:7px;}
     .range-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,0.5);border:1.5px solid rgba(255,200,0,0.18);}
@@ -199,8 +216,16 @@
     @keyframes blink{50%{opacity:0}}
     .flip{animation:numFlip 0.3s ease;}
     @keyframes numFlip{0%{transform:scaleY(0.5);opacity:0.5}100%{transform:scaleY(1);opacity:1}}
-    @media(max-width:768px){.main-grid{grid-template-columns:1fr;}.chart-grid{grid-template-columns:1fr;}.cards{grid-template-columns:repeat(2,1fr);}.header-title h1{font-size:1.5rem;}.gauge-grid{grid-template-columns:repeat(2,1fr);}}
-    @media(max-width:420px){.cards{grid-template-columns:1fr;}.week-grid{grid-template-columns:1fr;}.gauge-grid{grid-template-columns:1fr;}}
+
+    @media(max-width:768px){
+      .main-grid{grid-template-columns:1fr;}
+      .chart-grid{grid-template-columns:1fr;}
+      .cards{grid-template-columns:repeat(2,1fr);}
+      .header-title h1{font-size:1.5rem;}
+      .gauge-layout{grid-template-columns:1fr;justify-items:center;}
+      .gauge-right{flex-direction:row;flex-wrap:wrap;justify-content:center;}
+    }
+    @media(max-width:420px){.cards{grid-template-columns:1fr;}.week-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
@@ -231,7 +256,6 @@
   <div class="alarm-strip" id="alarmStrip">🚨 BAHAYA! Suhu Kritis — Segera Periksa Brooder! 🚨</div>
   <div class="offline-strip" id="offlineStrip">📡 ESP32 Offline! Data tidak diperbarui — Cek koneksi WiFi!</div>
 
-  <!-- ===== DEVICE OFFLINE CARD ===== -->
   <div class="device-status-card waiting show" id="deviceCard">
     <div class="device-status-icon" id="deviceIcon">⏳</div>
     <div class="device-status-info">
@@ -246,12 +270,9 @@
       <p>🔔 Aktifkan notifikasi untuk alert suhu bahaya!</p>
       <button class="btn-banner" onclick="requestNotif()">Aktifkan Notifikasi</button>
     </div>
-    <div class="pwa-banner" id="pwaBanner" style="display:none;">
-      <p>📱 Install Brooder Monitor sebagai aplikasi di HP kamu!</p>
-      <button class="btn-banner" id="pwaBtn">Install App</button>
-    </div>
   </div>
 
+  <!-- HEADER dengan JAM REALTIME -->
   <header>
     <div class="header-left">
       <div class="egg-anim">🐥</div>
@@ -261,6 +282,12 @@
       </div>
     </div>
     <div class="header-right">
+      <!-- JAM REALTIME -->
+      <div class="clock-box">
+        <div class="clock-time" id="clockTime">00:00:00</div>
+        <div class="clock-date" id="clockDate">--</div>
+        <div class="clock-day" id="clockDay">--</div>
+      </div>
       <div class="status-badge waiting" id="statusBadge">
         <div class="dot"></div>
         <span id="statusText">Menunggu...</span>
@@ -291,61 +318,25 @@
       <div class="trend-wrap"><div class="trend stable" id="trendHumid">➡️ Stabil</div></div>
       <div class="card-bg-num" id="bgHumid">--</div>
     </div>
-    <!-- FIXED: MQ135 card - tampilkan mq135_raw sebagai angka + kualitas_udara sebagai status -->
     <div class="card" style="--card-color:#C39BD3;">
       <div class="card-top"><div class="card-icon">💨</div><div class="card-label">Kualitas Udara MQ135</div></div>
       <div class="card-value-wrap"><span class="card-value" id="airRaw" style="font-size:2.2rem;">--</span><span class="card-unit">raw</span></div>
       <div class="card-status s-normal" id="airStatus">--</div>
       <div class="trend-wrap">
-        <div style="font-family:var(--font-body);font-size:0.75rem;font-weight:700;color:var(--text-dim);">
-          Volt: <span id="airVolt" style="color:#C39BD3;">--</span> V
-        </div>
+        <div style="font-family:var(--font-body);font-size:0.75rem;font-weight:700;color:var(--text-dim);">Volt: <span id="airVolt" style="color:#C39BD3;">--</span> V</div>
       </div>
       <div class="card-bg-num" id="bgAir">--</div>
     </div>
   </div>
 
-  <!-- ===== 4 GAUGES ===== -->
-    <div class="panel" style="margin-bottom:14px;">
-    <div class="panel-title">📋 Riwayat Data</div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Tanggal & Waktu</th>
-            <th>Probe (°C)</th>
-            <th>DHT22 (°C)</th>
-            <th>Humid (%)</th>
-            <th>MQ135 Raw</th>
-            <th>Kualitas Udara</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="historyBody">
-          <tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:24px;">Menunggu data dari Firebase... 🐥</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <!-- ===== 4 GAUGES dengan JUDUL ===== -->
+  <div class="gauge-panel">
+    <div class="gauge-panel-title">⚡ Gauge Semua Sensor</div>
+    <div class="gauge-layout">
 
-  <!-- SPREADSHEET GOOGLE SHEETS -->
-  <div class="panel" style="margin-bottom:14px;">
-    <div class="panel-title">📄 Spreadsheet Data Sensor</div>
-    <div style="width:100%;height:620px;overflow:hidden;border-radius:16px;border:2px solid rgba(255,215,0,0.25);background:rgba(255,255,255,0.6);">
-      <iframe
-        src="https://docs.google.com/spreadsheets/d/122fonv691gqpCS40-3zcSATa6sZ0nk7T-gKrELlMwuk/preview"
-        width="100%"
-        height="620"
-        style="border:0;">
-      </iframe>
-    </div>
-  </div>
-
-  <div class="footer-bar">
-
-      <!-- Gauge Probe (besar) -->
-      <div class="gauge-item">
-        <div class="gauge-label-top">🌡️ Suhu Probe</div>
+      <!-- Gauge Probe BESAR -->
+      <div class="gauge-wrap">
+        <div class="gauge-title">🌡️ Suhu Probe (DS18B20)</div>
         <div class="gauge lg">
           <svg viewBox="0 0 160 160">
             <circle class="gauge-track" cx="80" cy="80" r="65"/>
@@ -359,65 +350,77 @@
         <div class="card-status s-normal" id="gaugeStatusProbe">--</div>
       </div>
 
-      <!-- Gauge DHT (kecil atas) + Humid (kecil bawah) -->
-      <div style="display:flex;flex-direction:column;gap:14px;justify-content:center;">
-        <!-- DHT -->
-        <div class="gauge-item" style="flex-direction:row;gap:12px;align-items:center;background:rgba(93,173,226,0.08);border-radius:18px;padding:12px 16px;border:1.5px solid rgba(93,173,226,0.25);">
-          <div class="gauge sm">
-            <svg viewBox="0 0 100 100">
-              <circle class="gauge-track" cx="50" cy="50" r="43"/>
-              <circle class="gauge-fill" id="gaugeFillDHT" cx="50" cy="50" r="43" stroke="#5DADE2"/>
-            </svg>
-            <div class="gauge-center">
-              <div class="gauge-num" id="gaugeNumDHT" style="color:#5DADE2;">--</div>
-              <div class="gauge-lbl">°C</div>
+      <!-- 3 Gauge Kecil -->
+      <div class="gauge-right">
+
+        <!-- DHT22 -->
+        <div class="gauge-small-item" style="background:rgba(93,173,226,0.08);border-color:rgba(93,173,226,0.3);">
+          <div class="gauge-wrap">
+            <div class="gauge-title" style="color:#5DADE2;">🌡️ DHT22</div>
+            <div class="gauge sm">
+              <svg viewBox="0 0 100 100">
+                <circle class="gauge-track" cx="50" cy="50" r="43"/>
+                <circle class="gauge-fill" id="gaugeFillDHT" cx="50" cy="50" r="43" stroke="#5DADE2"/>
+              </svg>
+              <div class="gauge-center">
+                <div class="gauge-num" id="gaugeNumDHT" style="color:#5DADE2;">--</div>
+                <div class="gauge-lbl">°C</div>
+              </div>
             </div>
           </div>
-          <div>
-            <div style="font-family:var(--font-head);font-size:0.82rem;color:#5DADE2;">🌡️ DHT22</div>
-            <div class="card-status s-normal" id="gaugeStatusDHT" style="margin-top:6px;">--</div>
+          <div class="gauge-small-info">
+            <div class="gauge-small-label" style="color:#5DADE2;">Suhu Udara</div>
+            <div class="card-status s-normal" id="gaugeStatusDHT">--</div>
           </div>
         </div>
 
-        <!-- Humid -->
-        <div class="gauge-item" style="flex-direction:row;gap:12px;align-items:center;background:rgba(92,184,92,0.08);border-radius:18px;padding:12px 16px;border:1.5px solid rgba(92,184,92,0.25);">
-          <div class="gauge sm">
-            <svg viewBox="0 0 100 100">
-              <circle class="gauge-track" cx="50" cy="50" r="43"/>
-              <circle class="gauge-fill" id="gaugeFillHumid" cx="50" cy="50" r="43" stroke="#5CB85C"/>
-            </svg>
-            <div class="gauge-center">
-              <div class="gauge-num" id="gaugeNumHumid" style="color:#5CB85C;">--</div>
-              <div class="gauge-lbl">%</div>
+        <!-- Kelembaban -->
+        <div class="gauge-small-item" style="background:rgba(92,184,92,0.08);border-color:rgba(92,184,92,0.3);">
+          <div class="gauge-wrap">
+            <div class="gauge-title" style="color:#5CB85C;">💧 Kelembaban</div>
+            <div class="gauge sm">
+              <svg viewBox="0 0 100 100">
+                <circle class="gauge-track" cx="50" cy="50" r="43"/>
+                <circle class="gauge-fill" id="gaugeFillHumid" cx="50" cy="50" r="43" stroke="#5CB85C"/>
+              </svg>
+              <div class="gauge-center">
+                <div class="gauge-num" id="gaugeNumHumid" style="color:#5CB85C;">--</div>
+                <div class="gauge-lbl">%</div>
+              </div>
             </div>
           </div>
-          <div>
-            <div style="font-family:var(--font-head);font-size:0.82rem;color:#5CB85C;">💧 Kelembaban</div>
-            <div class="card-status s-normal" id="gaugeStatusHumid" style="margin-top:6px;">--</div>
+          <div class="gauge-small-info">
+            <div class="gauge-small-label" style="color:#5CB85C;">Humidity</div>
+            <div class="card-status s-normal" id="gaugeStatusHumid">--</div>
           </div>
         </div>
 
         <!-- MQ135 -->
-        <div class="gauge-item" style="flex-direction:row;gap:12px;align-items:center;background:rgba(195,155,211,0.1);border-radius:18px;padding:12px 16px;border:1.5px solid rgba(195,155,211,0.3);">
-          <div class="gauge sm">
-            <svg viewBox="0 0 100 100">
-              <circle class="gauge-track" cx="50" cy="50" r="43"/>
-              <circle class="gauge-fill" id="gaugeFillMQ" cx="50" cy="50" r="43" stroke="#C39BD3"/>
-            </svg>
-            <div class="gauge-center">
-              <div class="gauge-num" id="gaugeNumMQ" style="color:#C39BD3;font-size:1.0rem;">--</div>
-              <div class="gauge-lbl">RAW</div>
+        <div class="gauge-small-item" style="background:rgba(195,155,211,0.1);border-color:rgba(195,155,211,0.3);">
+          <div class="gauge-wrap">
+            <div class="gauge-title" style="color:#C39BD3;">💨 MQ135</div>
+            <div class="gauge sm">
+              <svg viewBox="0 0 100 100">
+                <circle class="gauge-track" cx="50" cy="50" r="43"/>
+                <circle class="gauge-fill" id="gaugeFillMQ" cx="50" cy="50" r="43" stroke="#C39BD3"/>
+              </svg>
+              <div class="gauge-center">
+                <div class="gauge-num" id="gaugeNumMQ" style="color:#C39BD3;font-size:1rem;">--</div>
+                <div class="gauge-lbl">RAW</div>
+              </div>
             </div>
           </div>
-          <div>
-            <div style="font-family:var(--font-head);font-size:0.82rem;color:#C39BD3;">💨 MQ135</div>
-            <div class="card-status s-normal" id="gaugeStatusMQ" style="margin-top:6px;">--</div>
+          <div class="gauge-small-info">
+            <div class="gauge-small-label" style="color:#C39BD3;">Kualitas Udara</div>
+            <div class="card-status s-normal" id="gaugeStatusMQ">--</div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 
+  <!-- RANGE + PANDUAN -->
   <div class="main-grid">
     <div class="panel">
       <div class="panel-title">🌡️ Range Suhu Brooder</div>
@@ -449,6 +452,7 @@
     </div>
   </div>
 
+  <!-- MONITOR KONEKSI + GRAFIK MQ135 -->
   <div class="main-grid">
     <div class="panel">
       <div class="panel-title">📡 Monitor Koneksi ESP32</div>
@@ -473,6 +477,7 @@
     </div>
   </div>
 
+  <!-- GRAFIK SUHU & KELEMBABAN -->
   <div class="chart-grid">
     <div class="panel">
       <div class="panel-title">📈 Grafik Suhu Realtime</div>
@@ -484,6 +489,7 @@
     </div>
   </div>
 
+  <!-- RIWAYAT DATA (dipindah ke bawah) -->
   <div class="panel" style="margin-bottom:14px;">
     <div class="panel-title">📋 Riwayat Data</div>
     <div class="table-wrap">
@@ -506,22 +512,48 @@
     </div>
   </div>
 
+  <!-- SPREADSHEET (dipindah ke paling bawah) -->
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-title">📄 Spreadsheet Data Sensor</div>
+    <div style="width:100%;height:620px;overflow:hidden;border-radius:16px;border:2px solid rgba(255,215,0,0.25);background:rgba(255,255,255,0.6);">
+      <iframe
+        src="https://docs.google.com/spreadsheets/d/122fonv691gqpCS40-3zcSATa6sZ0nk7T-gKrELlMwuk/preview"
+        width="100%" height="620" style="border:0;">
+      </iframe>
+    </div>
+  </div>
+
   <div class="footer-bar">
-    <span>🐥 Brooder Ayam v4.2 · ESP32 + DS18B20 + DHT22 + MQ135 + Firebase RTDB</span>
+    <span>🐥 Brooder Ayam v4.3 · ESP32 + DS18B20 + DHT22 + MQ135 + Firebase RTDB</span>
     <span>Update: <span id="lastUpdate" style="color:var(--sun2);font-family:var(--font-head);">--</span> <span class="blink">♥️</span></span>
   </div>
 </div>
 
 <script>
-// ===== LOADING =====
+// LOADING
 window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loadingScreen').classList.add('hide');},2800);});
 
-// ===== PARTICLES =====
+// ===== JAM REALTIME =====
+const hariID=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+const bulanID=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+function updateClock(){
+  const now=new Date();
+  const h=String(now.getHours()).padStart(2,'0');
+  const m=String(now.getMinutes()).padStart(2,'0');
+  const s=String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('clockTime').textContent=`${h}:${m}:${s}`;
+  document.getElementById('clockDate').textContent=`${now.getDate()} ${bulanID[now.getMonth()]} ${now.getFullYear()}`;
+  document.getElementById('clockDay').textContent=hariID[now.getDay()];
+}
+updateClock();
+setInterval(updateClock,1000);
+
+// PARTICLES
 const emojis=['🐥','🐣','🌟','✨','🌼','☀️','🌸','🔥'];
 const pCont=document.getElementById('particles');
 for(let i=0;i<22;i++){const p=document.createElement('div');p.className='particle';p.textContent=emojis[i%emojis.length];p.style.left=Math.random()*100+'vw';p.style.setProperty('--dur',(9+Math.random()*14)+'s');p.style.setProperty('--delay',(Math.random()*14)+'s');p.style.fontSize=(0.7+Math.random()*1)+'rem';pCont.appendChild(p);}
 
-// ===== PANDUAN MINGGU =====
+// PANDUAN MINGGU
 const weekGuide=[
   {week:1,temp:'34–35°C',desc:'Anak ayam baru lahir',badge:'🔥 Panas',cls:'s-panas'},
   {week:2,temp:'32–33°C',desc:'Mulai aktif bergerak',badge:'🌡️ Hangat',cls:'s-toleran'},
@@ -532,7 +564,7 @@ const weekGuide=[
 ];
 document.getElementById('weekGrid').innerHTML=weekGuide.map(w=>`<div class="week-card" id="week${w.week}"><div class="week-num">Minggu ${w.week}</div><div class="week-temp">${w.temp}</div><div class="week-desc">${w.desc}</div><div class="week-badge ${w.cls}">${w.badge}</div></div>`).join('');
 
-// ===== AUDIO =====
+// AUDIO
 const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx=null;
 function initAudio(){if(!audioCtx)audioCtx=new AudioCtx();}
 function playBeep(f=880,t='sine',d=0.3,v=0.3){try{initAudio();if(audioCtx.state==='suspended')audioCtx.resume();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=f;o.type=t;g.gain.setValueAtTime(v,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+d);o.start();o.stop(audioCtx.currentTime+d);}catch(e){}}
@@ -541,200 +573,78 @@ function playWarn(){playBeep(660,'triangle',0.4,0.2);setTimeout(()=>playBeep(550
 function playOk(){playBeep(523,'sine',0.15,0.15);setTimeout(()=>playBeep(659,'sine',0.15,0.15),120);setTimeout(()=>playBeep(784,'sine',0.2,0.12),240);}
 document.addEventListener('click',initAudio,{once:true});document.addEventListener('touchstart',initAudio,{once:true});
 
-// ===== STATUS BADGE =====
+// STATUS
 function setStatus(s){
   const b=document.getElementById('statusBadge'),t=document.getElementById('statusText');
-  b.className='status-badge '+s;
-  t.textContent=s==='online'?'Online':'Offline';
+  b.className='status-badge '+s;t.textContent=s==='online'?'Online':'Offline';
   document.getElementById('deviceStatus').textContent=s==='online'?'✅ Online':'❌ Offline';
   document.getElementById('deviceStatus').className='offline-timer'+(s==='offline'?' warn':'');
-
-  // Update device card
   const card=document.getElementById('deviceCard');
-  if(s==='online'){
-    card.classList.remove('show');
-  } else if(s==='offline'){
-    card.className='device-status-card offline show';
-    document.getElementById('deviceIcon').textContent='📵';
-    document.getElementById('deviceTitle').textContent='ESP32 OFFLINE!';
-    document.getElementById('deviceSub').textContent='Tidak ada data masuk — Cek WiFi & koneksi sensor';
-  } else {
-    card.className='device-status-card waiting show';
-    document.getElementById('deviceIcon').textContent='⏳';
-    document.getElementById('deviceTitle').textContent='Menunggu koneksi ESP32...';
-    document.getElementById('deviceSub').textContent='Memuat data dari Firebase Realtime Database';
-  }
+  if(s==='online'){card.classList.remove('show');}
+  else if(s==='offline'){card.className='device-status-card offline show';document.getElementById('deviceIcon').textContent='📵';document.getElementById('deviceTitle').textContent='ESP32 OFFLINE!';document.getElementById('deviceSub').textContent='Tidak ada data — Cek WiFi & koneksi sensor';}
+  else{card.className='device-status-card waiting show';}
 }
 
-// ===== TOAST =====
+// TOAST
 function showToast(msg,type='ok'){const icons={ok:'✅',warn:'⚠️',danger:'🚨'};const d=document.createElement('div');d.className=`toast ${type}`;d.innerHTML=`<span>${icons[type]}</span><span>${msg}</span>`;document.getElementById('toastContainer').appendChild(d);setTimeout(()=>{d.style.animation='toastOut 0.3s ease forwards';setTimeout(()=>d.remove(),300);},5000);}
 
-// ===== NOTIF =====
+// NOTIF
 function requestNotif(){if(!('Notification'in window)){showToast('Browser tidak support notifikasi','warn');return;}Notification.requestPermission().then(p=>{if(p==='granted'){document.getElementById('notifBanner').style.display='none';showToast('Notifikasi aktif! 🎉','ok');playOk();}else showToast('Izin ditolak','warn');});}
 function sendNotif(title,body){if(Notification.permission==='granted')new Notification(title,{body});}
 if(Notification.permission==='granted')document.getElementById('notifBanner').style.display='none';
 
-// ===== OFFLINE TIMER =====
-let offlineSeconds=0,offlineInterval=null,totalUpdates=0;
-let a30=false,a60=false,a120=false;
-let deviceOnline=false;
-
-function fmtTime(s){return s<60?s+' detik':Math.floor(s/60)+' mnt '+s%60+' dtk';}
-
+// OFFLINE TIMER
+let offlineSeconds=0,offlineInterval=null,totalUpdates=0,a30=false,a60=false,a120=false;
 function startOfflineTimer(){
   if(offlineInterval)clearInterval(offlineInterval);offlineSeconds=0;a30=a60=a120=false;
   offlineInterval=setInterval(()=>{
     offlineSeconds++;
     const el=document.getElementById('offlineCounter');
-    el.textContent=fmtTime(offlineSeconds);
+    el.textContent=offlineSeconds<60?offlineSeconds+' detik':Math.floor(offlineSeconds/60)+' mnt '+offlineSeconds%60+' dtk';
     el.className='offline-timer'+(offlineSeconds>=30?' warn':'');
-
-    // Update device timer display
-    document.getElementById('deviceTimer').textContent=
-      String(Math.floor(offlineSeconds/60)).padStart(2,'0')+':'+String(offlineSeconds%60).padStart(2,'0');
-
+    document.getElementById('deviceTimer').textContent=String(Math.floor(offlineSeconds/60)).padStart(2,'0')+':'+String(offlineSeconds%60).padStart(2,'0');
     if(offlineSeconds===30&&!a30){a30=true;showToast('⚠️ Koneksi lambat! 30 detik tanpa data','warn');playWarn();}
     if(offlineSeconds===60&&!a60){a60=true;setStatus('offline');document.getElementById('offlineStrip').classList.add('show');showToast('📡 ESP32 Offline! 1 menit tanpa data!','danger');sendNotif('📡 ESP32 Offline!','Tidak ada data 1 menit!');playAlarm();}
     if(offlineSeconds===120&&!a120){a120=true;showToast('🚨 KRITIS! ESP32 tidak respond 2 menit!','danger');sendNotif('🚨 ESP32 KRITIS!','Tidak ada data 2 menit!');playAlarm();}
   },1000);
 }
-
-window.resetOfflineTimer=function(){
-  offlineSeconds=0;a30=a60=a120=false;
-  deviceOnline=true;
-  document.getElementById('offlineCounter').textContent='0 detik';
-  document.getElementById('offlineCounter').className='offline-timer';
-  document.getElementById('offlineStrip').classList.remove('show');
-  document.getElementById('deviceTimer').textContent='00:00';
-  totalUpdates++;
-  document.getElementById('totalUpdates').textContent=totalUpdates;
-  startOfflineTimer();
-};
+window.resetOfflineTimer=function(){offlineSeconds=0;a30=a60=a120=false;document.getElementById('offlineCounter').textContent='0 detik';document.getElementById('offlineCounter').className='offline-timer';document.getElementById('offlineStrip').classList.remove('show');document.getElementById('deviceTimer').textContent='00:00';totalUpdates++;document.getElementById('totalUpdates').textContent=totalUpdates;startOfflineTimer();};
 startOfflineTimer();
 
-// ===== STATUS HELPERS =====
-function getTempStatus(t){
-  if(t<30)return{text:'Terlalu Dingin',cls:'s-dingin',color:'#1976D2'};
-  if(t<=35)return{text:'Normal',cls:'s-normal',color:'#27ae60'};
-  if(t<=38)return{text:'Toleransi',cls:'s-toleran',color:'#e67e00'};
-  if(t<=40)return{text:'Panas!',cls:'s-panas',color:'#FF9500'};
-  return{text:'BAHAYA!',cls:'s-bahaya',color:'#c0392b'};
-}
-function getHumidStatus(h){
-  if(h<55)return{text:'Kering',cls:'s-dingin'};
-  if(h<=65)return{text:'Ideal',cls:'s-normal'};
-  return{text:'Lembab',cls:'s-toleran'};
-}
-// FIXED: MQ135 status pakai mq135_raw (angka), bukan string
-function getAirStatus(v){
-  if(v<1200)return{text:'Udara Baik',cls:'s-normal',color:'#27ae60'};
-  if(v<2500)return{text:'Udara Sedang',cls:'s-toleran',color:'#e67e00'};
-  return{text:'Udara Buruk',cls:'s-bahaya',color:'#c0392b'};
-}
+// STATUS HELPERS
+function getTempStatus(t){if(t<30)return{text:'Terlalu Dingin',cls:'s-dingin',color:'#1976D2'};if(t<=35)return{text:'Normal',cls:'s-normal',color:'#27ae60'};if(t<=38)return{text:'Toleransi',cls:'s-toleran',color:'#e67e00'};if(t<=40)return{text:'Panas!',cls:'s-panas',color:'#FF9500'};return{text:'BAHAYA!',cls:'s-bahaya',color:'#c0392b'};}
+function getHumidStatus(h){if(h<55)return{text:'Kering',cls:'s-dingin'};if(h<=65)return{text:'Ideal',cls:'s-normal'};return{text:'Lembab',cls:'s-toleran'};}
+function getAirStatus(v){if(v<1200)return{text:'Udara Baik',cls:'s-normal',color:'#27ae60'};if(v<2500)return{text:'Udara Sedang',cls:'s-toleran',color:'#e67e00'};return{text:'Udara Buruk',cls:'s-bahaya',color:'#c0392b'};}
 
-// ===== GAUGE UPDATE =====
-// Probe: range 20-50°C → circumference 408
-function updateGaugeProbe(t){
-  const pct=Math.min(Math.max((t-20)/30,0),1);
-  const fill=document.getElementById('gaugeFillProbe');
-  fill.style.strokeDashoffset=408*(1-pct);
-  const st=getTempStatus(t);
-  fill.style.stroke=st.color;
-  const n=document.getElementById('gaugeNumProbe');n.style.color=st.color;n.textContent=t.toFixed(1);
-  const gs=document.getElementById('gaugeStatusProbe');gs.textContent=st.text;gs.className='card-status '+st.cls;
-}
-// DHT: range 20-50°C → circumference 270
-function updateGaugeDHT(t){
-  const pct=Math.min(Math.max((t-20)/30,0),1);
-  const fill=document.getElementById('gaugeFillDHT');
-  fill.style.strokeDashoffset=270*(1-pct);
-  const st=getTempStatus(t);
-  fill.style.stroke=st.color;
-  const n=document.getElementById('gaugeNumDHT');n.style.color=st.color;n.textContent=t.toFixed(1);
-  const gs=document.getElementById('gaugeStatusDHT');gs.textContent=st.text;gs.className='card-status '+st.cls;
-}
-// Humid: range 0-100% → circumference 270
-function updateGaugeHumid(h){
-  const pct=Math.min(Math.max(h/100,0),1);
-  const fill=document.getElementById('gaugeFillHumid');
-  fill.style.strokeDashoffset=270*(1-pct);
-  const st=getHumidStatus(h);
-  fill.style.stroke=st.cls==='s-normal'?'#5CB85C':st.cls==='s-dingin'?'#1976D2':'#e67e00';
-  const n=document.getElementById('gaugeNumHumid');n.textContent=h.toFixed(0);
-  const gs=document.getElementById('gaugeStatusHumid');gs.textContent=st.text;gs.className='card-status '+st.cls;
-}
-// MQ135: range 0-4095 → circumference 270
-function updateGaugeMQ(v){
-  const pct=Math.min(Math.max(v/4095,0),1);
-  const fill=document.getElementById('gaugeFillMQ');
-  fill.style.strokeDashoffset=270*(1-pct);
-  const st=getAirStatus(v);
-  fill.style.stroke=st.color;
-  const n=document.getElementById('gaugeNumMQ');n.style.color=st.color;n.textContent=v;
-  const gs=document.getElementById('gaugeStatusMQ');gs.textContent=st.text;gs.className='card-status '+st.cls;
-}
+// GAUGES
+function updateGaugeProbe(t){const pct=Math.min(Math.max((t-20)/30,0),1);const fill=document.getElementById('gaugeFillProbe');fill.style.strokeDashoffset=408*(1-pct);const st=getTempStatus(t);fill.style.stroke=st.color;const n=document.getElementById('gaugeNumProbe');n.style.color=st.color;n.textContent=t.toFixed(1);const gs=document.getElementById('gaugeStatusProbe');gs.textContent=st.text;gs.className='card-status '+st.cls;}
+function updateGaugeDHT(t){const pct=Math.min(Math.max((t-20)/30,0),1);const fill=document.getElementById('gaugeFillDHT');fill.style.strokeDashoffset=270*(1-pct);const st=getTempStatus(t);fill.style.stroke=st.color;const n=document.getElementById('gaugeNumDHT');n.style.color=st.color;n.textContent=t.toFixed(1);const gs=document.getElementById('gaugeStatusDHT');gs.textContent=st.text;gs.className='card-status '+st.cls;}
+function updateGaugeHumid(h){const pct=Math.min(Math.max(h/100,0),1);const fill=document.getElementById('gaugeFillHumid');fill.style.strokeDashoffset=270*(1-pct);const st=getHumidStatus(h);fill.style.stroke=st.cls==='s-normal'?'#5CB85C':st.cls==='s-dingin'?'#1976D2':'#e67e00';const n=document.getElementById('gaugeNumHumid');n.textContent=h.toFixed(0);const gs=document.getElementById('gaugeStatusHumid');gs.textContent=st.text;gs.className='card-status '+st.cls;}
+function updateGaugeMQ(v){const pct=Math.min(Math.max(v/4095,0),1);const fill=document.getElementById('gaugeFillMQ');fill.style.strokeDashoffset=270*(1-pct);const st=getAirStatus(v);fill.style.stroke=st.color;const n=document.getElementById('gaugeNumMQ');n.style.color=st.color;n.textContent=v;const gs=document.getElementById('gaugeStatusMQ');gs.textContent=st.text;gs.className='card-status '+st.cls;}
 
-function updateTrend(id,curr,prev,unit='°'){
-  if(prev===null)return;
-  const diff=curr-prev,el=document.getElementById(id);
-  if(diff>0.3){el.textContent=`🔺 Naik +${diff.toFixed(1)}${unit}`;el.className='trend up';}
-  else if(diff<-0.3){el.textContent=`🔻 Turun ${diff.toFixed(1)}${unit}`;el.className='trend down';}
-  else{el.textContent='➡️ Stabil';el.className='trend stable';}
-}
+function updateTrend(id,curr,prev,unit='°'){if(prev===null)return;const diff=curr-prev,el=document.getElementById(id);if(diff>0.3){el.textContent=`🔺 Naik +${diff.toFixed(1)}${unit}`;el.className='trend up';}else if(diff<-0.3){el.textContent=`🔻 Turun ${diff.toFixed(1)}${unit}`;el.className='trend down';}else{el.textContent='➡️ Stabil';el.className='trend stable';}}
+function animateValue(el,val,dec=1){el.classList.remove('flip');void el.offsetWidth;el.classList.add('flip');el.textContent=typeof val==='number'?val.toFixed(dec):val;}
 
-function animateValue(el,val,dec=1){
-  el.classList.remove('flip');void el.offsetWidth;el.classList.add('flip');
-  el.textContent=typeof val==='number'?val.toFixed(dec):val;
-}
-
-// ===== CHARTS =====
+// CHARTS
 const labels=[],probeData=[],dhtData=[],humidData=[],mqData=[],historyRows=[];
 let lastStatus='',alarmInterval=null;
 const cFont={family:'Baloo 2',size:12},cGrid='rgba(255,180,0,0.1)',cTick='#A1887F';
 
-const tempChart=new Chart(document.getElementById('tempChart').getContext('2d'),{type:'line',data:{labels,datasets:[
-  {label:'Probe',data:probeData,borderColor:'#FF9500',backgroundColor:'rgba(255,149,0,0.1)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#FF9500',tension:0.4,fill:true},
-  {label:'DHT22',data:dhtData,borderColor:'#5DADE2',backgroundColor:'rgba(93,173,226,0.08)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#5DADE2',tension:0.4,fill:true}
-]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},scales:{x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},y:{min:20,max:50,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}}}});
+const tempChart=new Chart(document.getElementById('tempChart').getContext('2d'),{type:'line',data:{labels,datasets:[{label:'Probe',data:probeData,borderColor:'#FF9500',backgroundColor:'rgba(255,149,0,0.1)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#FF9500',tension:0.4,fill:true},{label:'DHT22',data:dhtData,borderColor:'#5DADE2',backgroundColor:'rgba(93,173,226,0.08)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#5DADE2',tension:0.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},scales:{x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},y:{min:20,max:50,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}}}});
+const humidChart=new Chart(document.getElementById('humidChart').getContext('2d'),{type:'line',data:{labels,datasets:[{label:'Kelembaban (%)',data:humidData,borderColor:'#5CB85C',backgroundColor:'rgba(92,184,92,0.1)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#5CB85C',tension:0.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},scales:{x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},y:{min:0,max:100,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}}}});
+const mqChart=new Chart(document.getElementById('mqChart').getContext('2d'),{type:'line',data:{labels,datasets:[{label:'MQ135 Raw',data:mqData,borderColor:'#C39BD3',backgroundColor:'rgba(195,155,211,0.12)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#C39BD3',tension:0.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},scales:{x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},y:{min:0,max:4095,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}}}});
 
-const humidChart=new Chart(document.getElementById('humidChart').getContext('2d'),{type:'line',data:{labels,datasets:[
-  {label:'Kelembaban (%)',data:humidData,borderColor:'#5CB85C',backgroundColor:'rgba(92,184,92,0.1)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#5CB85C',tension:0.4,fill:true}
-]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},scales:{x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},y:{min:0,max:100,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}}}});
-
-// MQ135 chart
-const mqChart=new Chart(document.getElementById('mqChart').getContext('2d'),{type:'line',data:{labels,datasets:[
-  {label:'MQ135 Raw',data:mqData,borderColor:'#C39BD3',backgroundColor:'rgba(195,155,211,0.12)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#C39BD3',tension:0.4,fill:true}
-]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},scales:{x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},y:{min:0,max:4095,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}}}});
-
-// ===== FIREBASE =====
+// FIREBASE
 import("https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js").then(({initializeApp})=>{
   import("https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js").then(({getDatabase,ref,onValue})=>{
-    const app=initializeApp({
-      apiKey:"AIzaSyDj10sgn0UnQTwh4knuVq9pJCPp3A3Pm24",
-      authDomain:"inkubator-anak-ayam.firebaseapp.com",
-      databaseURL:"https://inkubator-anak-ayam-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId:"inkubator-anak-ayam",
-      storageBucket:"inkubator-anak-ayam.firebasestorage.app",
-      messagingSenderId:"831255035925",
-      appId:"1:831255035925:web:b63716fcfaa46de356ce1c"
-    });
+    const app=initializeApp({apiKey:"AIzaSyDj10sgn0UnQTwh4knuVq9pJCPp3A3Pm24",authDomain:"inkubator-anak-ayam.firebaseapp.com",databaseURL:"https://inkubator-anak-ayam-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"inkubator-anak-ayam",storageBucket:"inkubator-anak-ayam.firebasestorage.app",messagingSenderId:"831255035925",appId:"1:831255035925:web:b63716fcfaa46de356ce1c"});
     const db=getDatabase(app);
     onValue(ref(db,'/inkubator'),(snapshot)=>{
       const data=snapshot.val();if(!data)return;
       const now=new Date();
       const ts=now.toLocaleString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
-      window.updateUI({
-        probe: data.suhu_probe ?? 0,
-        dht:   data.suhu_dht   ?? 0,
-        humid: data.kelembaban ?? 0,
-        // FIXED: ambil mq135_raw (angka), bukan kualitas_udara (string)
-        mqRaw: data.mq135_raw  ?? 0,
-        mqVolt:data.mq135_voltage ?? 0,
-        airStr:data.kualitas_udara ?? '--',
-        time:  ts
-      });
-      window.resetOfflineTimer();
-      setStatus('online');
+      window.updateUI({probe:data.suhu_probe??0,dht:data.suhu_dht??0,humid:data.kelembaban??0,mqRaw:data.mq135_raw??0,mqVolt:data.mq135_voltage??0,airStr:data.kualitas_udara??'--',time:ts});
+      window.resetOfflineTimer();setStatus('online');
     },()=>setStatus('offline'));
   });
 });
@@ -743,89 +653,40 @@ window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,time}){
   const prevProbe=probeData.length>0?probeData[probeData.length-1]:null;
   const prevDHT=dhtData.length>0?dhtData[dhtData.length-1]:null;
   const prevHumid=humidData.length>0?humidData[humidData.length-1]:null;
-
   updateTrend('trendProbe',probe,prevProbe,'°');
   updateTrend('trendDHT',dht,prevDHT,'°');
-  if(prevHumid!==null){
-    const hd=humid-prevHumid,he=document.getElementById('trendHumid');
-    if(hd>1){he.textContent=`🔺 Naik +${hd.toFixed(1)}%`;he.className='trend up';}
-    else if(hd<-1){he.textContent=`🔻 Turun ${hd.toFixed(1)}%`;he.className='trend down';}
-    else{he.textContent='➡️ Stabil';he.className='trend stable';}
-  }
+  if(prevHumid!==null){const hd=humid-prevHumid,he=document.getElementById('trendHumid');if(hd>1){he.textContent=`🔺 Naik +${hd.toFixed(1)}%`;he.className='trend up';}else if(hd<-1){he.textContent=`🔻 Turun ${hd.toFixed(1)}%`;he.className='trend down';}else{he.textContent='➡️ Stabil';he.className='trend stable';}}
 
-  // Update card values
   animateValue(document.getElementById('tempProbe'),probe);
   animateValue(document.getElementById('tempDHT'),dht);
   animateValue(document.getElementById('humidity'),humid);
-  // FIXED: tampilkan angka raw MQ135
-  const airRawEl=document.getElementById('airRaw');
-  airRawEl.classList.remove('flip');void airRawEl.offsetWidth;airRawEl.classList.add('flip');
-  airRawEl.textContent=mqRaw>0?mqRaw:'--';
+  const airRawEl=document.getElementById('airRaw');airRawEl.classList.remove('flip');void airRawEl.offsetWidth;airRawEl.classList.add('flip');airRawEl.textContent=mqRaw>0?mqRaw:'--';
   document.getElementById('airVolt').textContent=mqVolt>0?mqVolt.toFixed(2):'--';
-
   document.getElementById('lastUpdate').textContent=time;
   document.getElementById('lastDataTime').textContent=time.split(', ')[1]||time;
-  document.getElementById('bgProbe').textContent=probe.toFixed(0);
-  document.getElementById('bgDHT').textContent=dht.toFixed(0);
-  document.getElementById('bgHumid').textContent=humid.toFixed(0);
-  document.getElementById('bgAir').textContent=mqRaw>0?mqRaw:'--';
+  document.getElementById('bgProbe').textContent=probe.toFixed(0);document.getElementById('bgDHT').textContent=dht.toFixed(0);document.getElementById('bgHumid').textContent=humid.toFixed(0);document.getElementById('bgAir').textContent=mqRaw>0?mqRaw:'--';
 
-  // Status cards
   const st=getTempStatus(probe);
   const te=document.getElementById('tempStatus');te.textContent=st.text;te.className='card-status '+st.cls;
-  const ds=getTempStatus(dht);
-  const de=document.getElementById('dhtStatus');de.textContent=ds.text;de.className='card-status '+ds.cls;
-  const hs=getHumidStatus(humid);
-  const he=document.getElementById('humidStatus');he.textContent=hs.text;he.className='card-status '+hs.cls;
-  // FIXED: pakai mqRaw angka untuk status
-  const as=getAirStatus(mqRaw);
-  const ae=document.getElementById('airStatus');ae.textContent=as.text;ae.className='card-status '+as.cls;
+  const ds=getTempStatus(dht);const de=document.getElementById('dhtStatus');de.textContent=ds.text;de.className='card-status '+ds.cls;
+  const hs=getHumidStatus(humid);const he=document.getElementById('humidStatus');he.textContent=hs.text;he.className='card-status '+hs.cls;
+  const as=getAirStatus(mqRaw);const ae=document.getElementById('airStatus');ae.textContent=as.text;ae.className='card-status '+as.cls;
 
-  // Update 4 gauges
-  updateGaugeProbe(probe);
-  updateGaugeDHT(dht);
-  updateGaugeHumid(humid);
-  updateGaugeMQ(mqRaw);
+  updateGaugeProbe(probe);updateGaugeDHT(dht);updateGaugeHumid(humid);updateGaugeMQ(mqRaw);
 
-  // Alarm logic
-  if(st.text!==lastStatus){
-    lastStatus=st.text;
-    if(st.cls==='s-bahaya'){
-      document.body.classList.add('danger-mode');
-      document.getElementById('alarmStrip').classList.add('show');
-      showToast(`🚨 SUHU BAHAYA! ${probe.toFixed(1)}°C`,'danger');
-      sendNotif('🚨 Brooder BAHAYA!',`Suhu: ${probe.toFixed(1)}°C`);
-      playAlarm();
-      if(!alarmInterval)alarmInterval=setInterval(playAlarm,8000);
-    } else {
-      document.body.classList.remove('danger-mode');
-      document.getElementById('alarmStrip').classList.remove('show');
-      if(alarmInterval){clearInterval(alarmInterval);alarmInterval=null;}
-      if(st.cls==='s-panas'){showToast(`🔥 Suhu Panas! ${probe.toFixed(1)}°C`,'warn');playWarn();}
-      else if(st.cls==='s-dingin'){showToast(`❄️ Suhu Dingin! ${probe.toFixed(1)}°C`,'warn');playWarn();}
-      else if(st.cls==='s-normal'){showToast(`✅ Suhu Normal! ${probe.toFixed(1)}°C`,'ok');playOk();}
-    }
+  if(st.text!==lastStatus){lastStatus=st.text;
+    if(st.cls==='s-bahaya'){document.body.classList.add('danger-mode');document.getElementById('alarmStrip').classList.add('show');showToast(`🚨 SUHU BAHAYA! ${probe.toFixed(1)}°C`,'danger');sendNotif('🚨 Brooder BAHAYA!',`Suhu: ${probe.toFixed(1)}°C`);playAlarm();if(!alarmInterval)alarmInterval=setInterval(playAlarm,8000);}
+    else{document.body.classList.remove('danger-mode');document.getElementById('alarmStrip').classList.remove('show');if(alarmInterval){clearInterval(alarmInterval);alarmInterval=null;}if(st.cls==='s-panas'){showToast(`🔥 Suhu Panas! ${probe.toFixed(1)}°C`,'warn');playWarn();}else if(st.cls==='s-dingin'){showToast(`❄️ Suhu Dingin! ${probe.toFixed(1)}°C`,'warn');playWarn();}else if(st.cls==='s-normal'){showToast(`✅ Suhu Normal! ${probe.toFixed(1)}°C`,'ok');playOk();}}
   }
 
-  // Charts
   const ts=time.split(', ')[1]||time;
   if(labels.length>=20){labels.shift();probeData.shift();dhtData.shift();humidData.shift();mqData.shift();}
   labels.push(ts);probeData.push(probe);dhtData.push(dht);humidData.push(humid);mqData.push(mqRaw);
   tempChart.update();humidChart.update();mqChart.update();
 
-  // History table
   historyRows.unshift({time,probe,dht,humid,mqRaw,airStr,st});
   if(historyRows.length>20)historyRows.pop();
-  document.getElementById('historyBody').innerHTML=historyRows.map(r=>`
-    <tr>
-      <td>${r.time}</td>
-      <td style="color:#FF9500;font-weight:800;">${r.probe.toFixed(1)}</td>
-      <td style="color:#5DADE2;font-weight:800;">${r.dht.toFixed(1)}</td>
-      <td style="color:#5CB85C;font-weight:800;">${r.humid.toFixed(1)}</td>
-      <td style="color:#C39BD3;font-weight:800;">${r.mqRaw>0?r.mqRaw:'--'}</td>
-      <td style="color:#9B59B6;font-weight:700;">${r.airStr}</td>
-      <td><span class="tbadge ${r.st.cls}">${r.st.text}</span></td>
-    </tr>`).join('');
+  document.getElementById('historyBody').innerHTML=historyRows.map(r=>`<tr><td>${r.time}</td><td style="color:#FF9500;font-weight:800;">${r.probe.toFixed(1)}</td><td style="color:#5DADE2;font-weight:800;">${r.dht.toFixed(1)}</td><td style="color:#5CB85C;font-weight:800;">${r.humid.toFixed(1)}</td><td style="color:#C39BD3;font-weight:800;">${r.mqRaw>0?r.mqRaw:'--'}</td><td style="color:#9B59B6;font-weight:700;">${r.airStr}</td><td><span class="tbadge ${r.st.cls}">${r.st.text}</span></td></tr>`).join('');
 };
 </script>
 </body>
