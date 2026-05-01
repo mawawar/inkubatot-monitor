@@ -334,6 +334,32 @@
     <div class="gauge-panel-title">⚡ Gauge Semua Sensor</div>
     <div class="gauge-layout">
 
+        <!-- STATUS OVERALL + RINGKASAN -->
+  <div class="main-grid">
+    <div class="panel">
+      <div class="panel-title">✅ Status Brooder</div>
+      <div style="text-align:center;padding:12px;">
+        <div id="overallIcon" style="font-size:3rem;">⏳</div>
+        <div id="overallStatus" style="font-family:var(--font-head);font-size:2rem;color:var(--sun2);margin-top:8px;">
+          Menunggu Data
+        </div>
+        <div id="overallDesc" style="font-family:var(--font-body);font-size:0.9rem;color:var(--text-dim);font-weight:700;margin-top:6px;">
+          Data dari ESP32 belum diterima
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">📊 Ringkasan Sesi</div>
+      <div class="range-list">
+        <div class="offline-info"><span>Suhu Tertinggi</span><span class="offline-timer" id="maxTemp">-- °C</span></div>
+        <div class="offline-info"><span>Suhu Terendah</span><span class="offline-timer" id="minTemp">-- °C</span></div>
+        <div class="offline-info"><span>MQ135 Tertinggi</span><span class="offline-timer" id="maxMQ">--</span></div>
+        <div class="offline-info"><span>Rata-rata Humid</span><span class="offline-timer" id="avgHumid">-- %</span></div>
+      </div>
+    </div>
+  </div>
+
       <!-- Gauge Probe BESAR -->
       <div class="gauge-wrap">
         <div class="gauge-title">🌡️ Suhu Probe (DS18B20)</div>
@@ -627,6 +653,11 @@ function animateValue(el,val,dec=1){el.classList.remove('flip');void el.offsetWi
 
 // CHARTS
 const labels=[],probeData=[],dhtData=[],humidData=[],mqData=[],historyRows=[];
+let maxTempVal = null;
+let minTempVal = null;
+let maxMQVal = 0;
+let humidSum = 0;
+let humidCount = 0;
 let lastStatus='',alarmInterval=null;
 const cFont={family:'Baloo 2',size:12},cGrid='rgba(255,180,0,0.1)',cTick='#A1887F';
 
@@ -673,6 +704,41 @@ window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,time}){
   const as=getAirStatus(mqRaw);const ae=document.getElementById('airStatus');ae.textContent=as.text;ae.className='card-status '+as.cls;
 
   updateGaugeProbe(probe);updateGaugeDHT(dht);updateGaugeHumid(humid);updateGaugeMQ(mqRaw);
+
+    // OVERALL STATUS
+  const overallIcon = document.getElementById('overallIcon');
+  const overallStatus = document.getElementById('overallStatus');
+  const overallDesc = document.getElementById('overallDesc');
+
+  if (probe > 40 || mqRaw >= 2500) {
+    overallIcon.textContent = '🚨';
+    overallStatus.textContent = 'Bahaya';
+    overallStatus.style.color = '#c0392b';
+    overallDesc.textContent = probe > 40 ? 'Suhu terlalu panas, segera cek brooder!' : 'Kualitas udara buruk, cek ventilasi!';
+  } else if (probe < 30 || humid < 55 || humid > 65 || mqRaw >= 1200) {
+    overallIcon.textContent = '⚠️';
+    overallStatus.textContent = 'Perlu Dicek';
+    overallStatus.style.color = '#e67e00';
+    overallDesc.textContent = 'Ada parameter yang mulai keluar dari batas ideal.';
+  } else {
+    overallIcon.textContent = '✅';
+    overallStatus.textContent = 'Aman';
+    overallStatus.style.color = '#27ae60';
+    overallDesc.textContent = 'Suhu, kelembaban, dan udara dalam kondisi baik.';
+  }
+
+  // RINGKASAN SESI
+  maxTempVal = maxTempVal === null ? probe : Math.max(maxTempVal, probe);
+  minTempVal = minTempVal === null ? probe : Math.min(minTempVal, probe);
+  maxMQVal = Math.max(maxMQVal, mqRaw);
+  humidSum += humid;
+  humidCount++;
+
+  document.getElementById('maxTemp').textContent = maxTempVal.toFixed(1) + ' °C';
+  document.getElementById('minTemp').textContent = minTempVal.toFixed(1) + ' °C';
+  document.getElementById('maxMQ').textContent = maxMQVal;
+  document.getElementById('avgHumid').textContent = (humidSum / humidCount).toFixed(1) + ' %';
+
 
   if(st.text!==lastStatus){lastStatus=st.text;
     if(st.cls==='s-bahaya'){document.body.classList.add('danger-mode');document.getElementById('alarmStrip').classList.add('show');showToast(`🚨 SUHU BAHAYA! ${probe.toFixed(1)}°C`,'danger');sendNotif('🚨 Brooder BAHAYA!',`Suhu: ${probe.toFixed(1)}°C`);playAlarm();if(!alarmInterval)alarmInterval=setInterval(playAlarm,8000);}
