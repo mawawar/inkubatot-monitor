@@ -551,15 +551,35 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
  
   <!-- ==================== CONTROL MODE & UMUR AYAM ==================== -->
   <div class="main-grid">
-    <div class="panel">
-      <div class="panel-title">🎛️ Control Mode Panel</div>
-      <div class="action-grid">
-        <div class="action-card"><div class="action-label">Lampu Pemanas</div><div class="action-value" id="heaterStatus">AUTO</div></div>
-        <div class="action-card"><div class="action-label">Kipas</div><div class="action-value" id="fanStatus">AUTO</div></div>
-        <div class="action-card"><div class="action-label">Humidifier</div><div class="action-value" id="humidifierStatus">AUTO</div></div>
-        <div class="action-card"><div class="action-label">SD Card</div><div class="action-value" id="sdStatus">--</div></div>
-      </div>
+   <div class="panel">
+  <div class="panel-title">🎛️ Control Mode Panel</div>
+  <div class="action-grid">
+    <div class="action-card">
+      <div class="action-label">Lampu Pemanas</div>
+      <div class="action-value" id="heaterStatus">OFF</div>
+      <button class="btn-action" onclick="setLampu(true)">ON</button>
+      <button class="btn-action" onclick="setLampu(false)">OFF</button>
     </div>
+
+    <div class="action-card">
+      <div class="action-label">Kipas 1</div>
+      <div class="action-value"><span id="kipas1Value">0</span>%</div>
+      <input type="range" min="0" max="100" value="0" id="kipas1Slider" oninput="setKipas1(this.value)" style="width:100%;">
+    </div>
+
+    <div class="action-card">
+      <div class="action-label">Kipas 2</div>
+      <div class="action-value"><span id="kipas2Value">0</span>%</div>
+      <input type="range" min="0" max="100" value="0" id="kipas2Slider" oninput="setKipas2(this.value)" style="width:100%;">
+    </div>
+
+    <div class="action-card">
+      <div class="action-label">SD Card</div>
+      <div class="action-value" id="sdStatus">--</div>
+    </div>
+  </div>
+</div>
+
     <div class="panel">
       <div class="panel-title">🐣 Umur Anak Ayam</div>
       <select class="select-age" id="chickAge" onchange="updateAgeGuide()">
@@ -844,14 +864,34 @@ const mqChart=new Chart(document.getElementById('mqChart').getContext('2d'),{typ
  
 // FIREBASE
 import("https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js").then(({initializeApp})=>{
-  import("https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js").then(({getDatabase,ref,onValue})=>{
+  import("https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js").then(({getDatabase,ref,onValue,set})=>{
     const app=initializeApp({apiKey:"AIzaSyDj10sgn0UnQTwh4knuVq9pJCPp3A3Pm24",authDomain:"inkubator-anak-ayam.firebaseapp.com",databaseURL:"https://inkubator-anak-ayam-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"inkubator-anak-ayam",storageBucket:"inkubator-anak-ayam.firebasestorage.app",messagingSenderId:"831255035925",appId:"1:831255035925:web:b63716fcfaa46de356ce1c"});
     const db=getDatabase(app);
+window.db = db;
+window.fbRef = ref;
+window.fbSet = set;
     onValue(ref(db,'/inkubator'),(snapshot)=>{
       const data=snapshot.val();if(!data)return;
       const now=new Date();
       const ts=now.toLocaleString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
-      window.updateUI({probe:data.suhu_probe??0,dht:data.suhu_dht??0,humid:data.kelembaban??0,mqRaw:data.mq135_raw??0,mqVolt:data.mq135_voltage??0,airStr:data.kualitas_udara??'--',sdStatus:data.sd_status??'--',time:ts});
+     window.updateUI({
+  probe:data.suhu_probe??0,
+  dht:data.suhu_dht??0,
+  humid:data.kelembaban??0,
+  mqRaw:data.mq135_raw??0,
+  mqVolt:data.mq135_voltage??0,
+  airStr:data.kualitas_udara??'--',
+  sdStatus:data.sd_status??'--',
+  lampuStatus:data.lampu_status??false,
+  kipas1Speed:data.kipas1_speed??0,
+  kipas2Speed:data.kipas2_speed??0,
+  time:ts
+});
+document.getElementById('heaterStatus').textContent = lampuStatus ? 'ON' : 'OFF';
+document.getElementById('kipas1Value').textContent = kipas1Speed;
+document.getElementById('kipas2Value').textContent = kipas2Speed;
+document.getElementById('kipas1Slider').value = kipas1Speed;
+document.getElementById('kipas2Slider').value = kipas2Speed;
       window.resetOfflineTimer();setStatus('online');
     },()=>setStatus('offline'));
   });
@@ -952,7 +992,28 @@ function updateMascot(probe,humid,mqRaw){
 
 window.addEventListener('load',()=>{loadTheme();attachButtonSounds();});
 
-window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,sdStatus,time}){
+  function setLampu(state){
+  if(!window.db) return showToast('Firebase belum siap','warn');
+  window.fbSet(window.fbRef(window.db, '/kontrol/lampu'), state);
+  document.getElementById('heaterStatus').textContent = state ? 'ON' : 'OFF';
+  showToast(state ? 'Lampu dinyalakan' : 'Lampu dimatikan', 'ok');
+}
+
+function setKipas1(value){
+  value = Number(value);
+  document.getElementById('kipas1Value').textContent = value;
+  if(!window.db) return;
+  window.fbSet(window.fbRef(window.db, '/kontrol/kipas1'), value);
+}
+
+function setKipas2(value){
+  value = Number(value);
+  document.getElementById('kipas2Value').textContent = value;
+  if(!window.db) return;
+  window.fbSet(window.fbRef(window.db, '/kontrol/kipas2'), value);
+}
+
+window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,sdStatus,lampuStatus,kipas1Speed,kipas2Speed,time}){
   const prevProbe=probeData.length>0?probeData[probeData.length-1]:null;
   const prevDHT=dhtData.length>0?dhtData[dhtData.length-1]:null;
   const prevHumid=humidData.length>0?humidData[humidData.length-1]:null;
