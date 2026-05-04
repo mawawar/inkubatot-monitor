@@ -248,6 +248,26 @@
     body.presentation-mode .notif-banner,
     body.presentation-mode .spreadsheet-panel,
     body.presentation-mode .footer-bar{display:none;}
+
+    /* MASCOT + THEME */
+.mascot-panel{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+.mascot-left{display:flex;align-items:center;gap:16px;}
+.mascot-face{font-size:4rem;animation:mascotFloat 2s ease-in-out infinite;}
+.mascot-title{font-family:var(--font-head);font-size:1.6rem;color:var(--sun2);}
+.mascot-sub{font-family:var(--font-body);font-size:0.9rem;color:var(--text-dim);font-weight:700;margin-top:4px;}
+@keyframes mascotFloat{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-8px) rotate(3deg);}}
+
+.theme-switcher{display:flex;gap:8px;flex-wrap:wrap;}
+.theme-btn{border:2px solid rgba(255,200,0,0.35);background:rgba(255,255,255,0.7);color:var(--text);border-radius:14px;padding:8px 12px;font-family:var(--font-head);font-size:0.85rem;cursor:pointer;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s;}
+.theme-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:var(--shadow-lg);}
+.theme-btn.active{background:linear-gradient(135deg,var(--sun),var(--sun2));color:#fff;}
+
+body.theme-night{background:linear-gradient(160deg,#1B263B,#263859,#3E4C7A);--text:#FDF6E3;--text-dim:#D8C9A8;--sun:#8EC5FC;--sun2:#E0C3FC;}
+body.theme-night .panel,body.theme-night .card,body.theme-night header,body.theme-night .footer-bar,body.theme-night .notif-banner{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.22);}
+body.theme-night .cloud{background:rgba(255,255,255,0.25);}
+
+body.theme-farm{background:linear-gradient(160deg,#E8F5D8,#BEE7A5,#8FD694);--sun:#7BC950;--sun2:#4A9B42;--text:#36512A;--text-dim:#6E8B5A;}
+body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--sun:#5DADE2;--sun2:#2E86C1;--text:#34495E;--text-dim:#7F8C8D;}
  
     @media(max-width:768px){
       .main-grid{grid-template-columns:1fr;}
@@ -333,6 +353,29 @@
       </div>
     </div>
   </header>
+
+    <!-- ==================== STATUS MASCOT + THEME ==================== -->
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="mascot-panel">
+      <div class="mascot-left">
+        <div class="mascot-face" id="mascotFace">🐥</div>
+        <div>
+          <div class="mascot-title" id="mascotTitle">Menunggu Data</div>
+          <div class="mascot-sub" id="mascotSub">Maskot akan berubah sesuai kondisi brooder.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel-title" style="font-size:0.95rem;margin-bottom:8px;">🎨 Tema</div>
+        <div class="theme-switcher">
+          <button class="theme-btn active" onclick="setTheme('sunny', this)">Sunny</button>
+          <button class="theme-btn" onclick="setTheme('night', this)">Night</button>
+          <button class="theme-btn" onclick="setTheme('farm', this)">Farm</button>
+          <button class="theme-btn" onclick="setTheme('clean', this)">Clean</button>
+        </div>
+      </div>
+    </div>
+  </div>
  
   <!-- ==================== SENSOR CARDS ==================== -->
   <div class="cards">
@@ -856,7 +899,59 @@ function updateSmartPanels(probe,humid,mqRaw,sdStatus='--'){
   if(mqRaw>=2500)addEventLog('Kualitas udara buruk');
   else if(mqRaw>=1200)addEventLog('Kualitas udara sedang');
 }
- 
+
+  function playClickSound(){
+  try{
+    initAudio();
+    if(audioCtx.state==='suspended')audioCtx.resume();
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+    o.connect(g);g.connect(audioCtx.destination);
+    o.frequency.value=620;o.type='sine';
+    g.gain.setValueAtTime(0.045,audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.08);
+    o.start();o.stop(audioCtx.currentTime+0.08);
+  }catch(e){}
+}
+
+function setTheme(theme,btn){
+  document.body.classList.remove('theme-night','theme-farm','theme-clean');
+  if(theme!=='sunny')document.body.classList.add('theme-'+theme);
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  localStorage.setItem('brooderTheme',theme);
+  playClickSound();
+}
+
+function loadTheme(){
+  const saved=localStorage.getItem('brooderTheme')||'sunny';
+  document.body.classList.remove('theme-night','theme-farm','theme-clean');
+  if(saved!=='sunny')document.body.classList.add('theme-'+saved);
+  document.querySelectorAll('.theme-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.toLowerCase()===saved);
+  });
+}
+
+function attachButtonSounds(){
+  document.querySelectorAll('button,.btn-action,.btn-banner,a.btn-action').forEach(el=>{
+    el.addEventListener('click',playClickSound);
+  });
+}
+
+function updateMascot(probe,humid,mqRaw){
+  const face=document.getElementById('mascotFace');
+  const title=document.getElementById('mascotTitle');
+  const sub=document.getElementById('mascotSub');
+
+  if(offlineSeconds>=60){face.textContent='💤';title.textContent='ESP32 Offline';sub.textContent='Data belum masuk lagi dari perangkat.';}
+  else if(probe>40||mqRaw>=2500){face.textContent='😰';title.textContent='Bahaya!';sub.textContent=probe>40?'Brooder terlalu panas, segera cek pemanas.':'Udara buruk, cek ventilasi brooder.';}
+  else if(probe<30){face.textContent='🥶';title.textContent='Kedinginan';sub.textContent='Suhu terlalu rendah untuk anak ayam.';}
+  else if(probe>38){face.textContent='🥵';title.textContent='Kepanasan';sub.textContent='Suhu mulai tinggi, pantau kondisi brooder.';}
+  else if(humid<55||humid>65||mqRaw>=1200){face.textContent='🤔';title.textContent='Perlu Dicek';sub.textContent='Ada parameter yang mulai keluar dari kondisi ideal.';}
+  else{face.textContent='🐥';title.textContent='Brooder Nyaman';sub.textContent='Kondisi brooder aman untuk anak ayam.';}
+}
+
+window.addEventListener('load',()=>{loadTheme();attachButtonSounds();});
+
 window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,sdStatus,time}){
   const prevProbe=probeData.length>0?probeData[probeData.length-1]:null;
   const prevDHT=dhtData.length>0?dhtData[dhtData.length-1]:null;
@@ -880,8 +975,9 @@ window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,sdStatus,time}){
   const hs=getHumidStatus(humid);document.getElementById('humidStatus').textContent=hs.text;document.getElementById('humidStatus').className='card-status '+hs.cls;
   const as=getAirStatus(mqRaw);document.getElementById('airStatus').textContent=as.text;document.getElementById('airStatus').className='card-status '+as.cls;
  
-  updateGaugeProbe(probe);updateGaugeDHT(dht);updateGaugeHumid(humid);updateGaugeMQ(mqRaw);
-  updateSmartPanels(probe,humid,mqRaw,sdStatus);
+ updateGaugeProbe(probe);updateGaugeDHT(dht);updateGaugeHumid(humid);updateGaugeMQ(mqRaw);
+updateMascot(probe,humid,mqRaw);
+updateSmartPanels(probe,humid,mqRaw,sdStatus);
  
   // OVERALL STATUS
   const overallIcon=document.getElementById('overallIcon');
