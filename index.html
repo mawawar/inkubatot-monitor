@@ -887,11 +887,6 @@ window.fbSet = set;
   kipas2Speed:data.kipas2_speed??0,
   time:ts
 });
-document.getElementById('heaterStatus').textContent = lampuStatus ? 'ON' : 'OFF';
-document.getElementById('kipas1Value').textContent = kipas1Speed;
-document.getElementById('kipas2Value').textContent = kipas2Speed;
-document.getElementById('kipas1Slider').value = kipas1Speed;
-document.getElementById('kipas2Slider').value = kipas2Speed;
       window.resetOfflineTimer();setStatus('online');
     },()=>setStatus('offline'));
   });
@@ -930,9 +925,6 @@ function updateSmartPanels(probe,humid,mqRaw,sdStatus='--'){
   document.getElementById('recTemp').textContent=probe<30?'Nyalakan pemanas':probe>40?'Matikan pemanas':'Suhu aman';
   document.getElementById('recHumid').textContent=humid<55?'Tambah kelembaban':humid>65?'Kurangi kelembaban':'Humid ideal';
   document.getElementById('recAir').textContent=mqRaw>=2500?'Cek ventilasi':mqRaw>=1200?'Pantau udara':'Udara baik';
-  document.getElementById('heaterStatus').textContent=probe<30?'ON':probe>35?'OFF':'AUTO';
-  document.getElementById('fanStatus').textContent=probe>38||mqRaw>=1200?'ON':'AUTO';
-  document.getElementById('humidifierStatus').textContent=humid<55?'ON':humid>65?'OFF':'AUTO';
   document.getElementById('sdStatus').textContent=sdStatus;
   if(probe>40)addEventLog('Suhu bahaya terdeteksi');
   else if(probe<30)addEventLog('Suhu terlalu dingin');
@@ -1035,10 +1027,16 @@ window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,sdStatus,lampuStat
   const ds=getTempStatus(dht);document.getElementById('dhtStatus').textContent=ds.text;document.getElementById('dhtStatus').className='card-status '+ds.cls;
   const hs=getHumidStatus(humid);document.getElementById('humidStatus').textContent=hs.text;document.getElementById('humidStatus').className='card-status '+hs.cls;
   const as=getAirStatus(mqRaw);document.getElementById('airStatus').textContent=as.text;document.getElementById('airStatus').className='card-status '+as.cls;
- 
- updateGaugeProbe(probe);updateGaugeDHT(dht);updateGaugeHumid(humid);updateGaugeMQ(mqRaw);
-updateMascot(probe,humid,mqRaw);
-updateSmartPanels(probe,humid,mqRaw,sdStatus);
+  updateGaugeProbe(probe);updateGaugeDHT(dht);updateGaugeHumid(humid);updateGaugeMQ(mqRaw);
+  updateMascot(probe,humid,mqRaw);
+  updateSmartPanels(probe,humid,mqRaw,sdStatus);
+
+  document.getElementById('heaterStatus').textContent = lampuStatus ? 'ON' : 'OFF';
+  document.getElementById('kipas1Value').textContent = kipas1Speed;
+  document.getElementById('kipas2Value').textContent = kipas2Speed;
+  document.getElementById('kipas1Slider').value = kipas1Speed;
+  document.getElementById('kipas2Slider').value = kipas2Speed;
+
  
   // OVERALL STATUS
   const overallIcon=document.getElementById('overallIcon');
