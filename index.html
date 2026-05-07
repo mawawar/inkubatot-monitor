@@ -21,7 +21,7 @@
     }
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:var(--font-body);color:var(--text);min-height:100vh;overflow-x:hidden;background:linear-gradient(160deg,#FFF9C4 0%,#FFE57F 40%,#FFD740 75%,#FFC107 100%);}
- 
+
     /* LOADING */
     #loadingScreen{position:fixed;inset:0;z-index:99999;background:linear-gradient(160deg,#FFF9C4,#FFE57F,#FFD740,#FFC107);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity 0.8s ease,visibility 0.8s ease;}
     #loadingScreen.hide{opacity:0;visibility:hidden;}
@@ -40,7 +40,7 @@
     .loading-dots span{animation:dotBlink 1.2s ease infinite;}
     .loading-dots span:nth-child(2){animation-delay:0.2s;}.loading-dots span:nth-child(3){animation-delay:0.4s;}
     @keyframes dotBlink{0%,100%{opacity:0.2}50%{opacity:1}}
- 
+
     /* CLOUDS */
     .clouds{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
     .cloud{position:absolute;background:rgba(255,255,255,0.6);border-radius:50px;animation:cloudFloat var(--dur,30s) linear var(--delay,0s) infinite;}
@@ -52,12 +52,12 @@
     .particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
     .particle{position:absolute;opacity:0;animation:floatUp var(--dur,10s) ease-in-out var(--delay,0s) infinite;}
     @keyframes floatUp{0%{opacity:0;transform:translateY(100vh) scale(0.6);}10%{opacity:0.6;}90%{opacity:0.3;}100%{opacity:0;transform:translateY(-80px) scale(1.1) rotate(25deg);}}
- 
+
     body.danger-mode{animation:dangerFlash 0.5s ease infinite;}
     @keyframes dangerFlash{0%,100%{background:linear-gradient(160deg,#FFF9C4,#FFE57F,#FFD740,#FFC107);}50%{background:linear-gradient(160deg,#FFE0E0,#FFBBBB,#FF8888);}}
- 
+
     .wrapper{position:relative;z-index:1;padding:16px;max-width:1280px;margin:0 auto;}
- 
+
     /* TOAST */
     .toast-container{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;}
     .toast{padding:14px 20px;border-radius:20px;font-family:var(--font-body);font-size:0.88rem;font-weight:700;min-width:270px;display:flex;align-items:center;gap:12px;animation:toastIn 0.4s cubic-bezier(.175,.885,.32,1.275);box-shadow:0 8px 24px rgba(0,0,0,0.12);border:2px solid rgba(255,255,255,0.5);}
@@ -66,7 +66,7 @@
     .toast.ok{background:#E8F8E8;color:#27ae60;border-color:#5CB85C;}
     @keyframes toastIn{from{opacity:0;transform:translateX(60px) scale(0.85)}to{opacity:1;transform:translateX(0) scale(1)}}
     @keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateX(60px)}}
- 
+
     /* STRIPS */
     .alarm-strip{display:none;background:linear-gradient(90deg,#FF6B6B,#FF3B3B,#FF6B6B);background-size:200% 100%;color:#fff;padding:12px 20px;border-radius:18px;margin-bottom:12px;font-family:var(--font-head);font-size:1rem;text-align:center;animation:alarmPulse 0.6s ease infinite,bgShift 2s linear infinite;box-shadow:0 4px 24px rgba(255,59,59,0.4);}
     .alarm-strip.show{display:block;}
@@ -74,7 +74,7 @@
     .offline-strip.show{display:block;}
     @keyframes alarmPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.01);}}
     @keyframes bgShift{0%{background-position:0%}100%{background-position:200%}}
- 
+
     /* DEVICE CARD */
     .device-status-card{display:none;align-items:center;gap:14px;padding:14px 20px;border-radius:20px;font-family:var(--font-head);font-size:1rem;border:2.5px solid;margin-bottom:14px;backdrop-filter:blur(8px);animation:devicePulse 1.5s ease infinite;}
     .device-status-card.show{display:flex;}
@@ -86,14 +86,14 @@
     .device-status-title{font-family:var(--font-head);font-size:1.1rem;}
     .device-status-sub{font-family:var(--font-body);font-size:0.82rem;font-weight:600;margin-top:2px;opacity:0.8;}
     .device-status-timer{font-family:var(--font-head);font-size:1.5rem;background:rgba(255,255,255,0.4);padding:8px 16px;border-radius:12px;border:2px solid rgba(255,255,255,0.5);}
- 
+
     /* BANNERS */
     .banner-group{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
     .notif-banner{background:rgba(255,255,255,0.72);border:2px solid rgba(255,200,0,0.35);border-radius:18px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;backdrop-filter:blur(8px);}
     .notif-banner p{font-family:var(--font-body);font-size:0.85rem;color:var(--text-dim);font-weight:600;}
     .btn-banner{background:linear-gradient(135deg,var(--sun),var(--sun2));color:#fff;border:none;padding:9px 20px;border-radius:12px;font-family:var(--font-head);font-size:0.95rem;cursor:pointer;box-shadow:0 3px 12px rgba(255,150,0,0.35);transition:all 0.2s;}
     .btn-banner:hover{transform:scale(1.07);}
- 
+
     /* HEADER */
     header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;background:linear-gradient(135deg,rgba(255,255,255,0.88),rgba(255,248,170,0.75));border:2.5px solid rgba(255,200,0,0.45);border-radius:26px;margin-bottom:14px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);backdrop-filter:blur(12px);flex-wrap:wrap;gap:14px;}
     header::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--coral),var(--sun),var(--grass),var(--sky),var(--lavender),var(--coral));background-size:200% 100%;border-radius:26px 26px 0 0;animation:rainbowSlide 4s linear infinite;}
@@ -104,20 +104,20 @@
     .header-title h1{font-family:var(--font-head);font-size:1.9rem;color:var(--sun2);letter-spacing:0.5px;text-shadow:2px 3px 0 rgba(255,140,0,0.2);}
     .header-title p{font-family:var(--font-body);font-size:0.72rem;color:var(--text-dim);letter-spacing:1px;margin-top:2px;font-weight:600;}
     .header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
- 
+
     /* CLOCK */
     .clock-box{display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,0.6);border:2px solid rgba(255,200,0,0.4);border-radius:16px;padding:8px 16px;backdrop-filter:blur(8px);}
     .clock-time{font-family:var(--font-head);font-size:1.5rem;color:var(--sun2);letter-spacing:1px;line-height:1;}
     .clock-date{font-family:var(--font-body);font-size:0.68rem;color:var(--text-dim);font-weight:700;margin-top:2px;text-align:center;}
     .clock-day{font-family:var(--font-body);font-size:0.62rem;color:var(--text-dim);font-weight:600;}
- 
+
     .status-badge{display:flex;align-items:center;gap:10px;padding:10px 22px;border-radius:20px;font-family:var(--font-head);font-size:1rem;transition:all 0.4s;}
     .status-badge.online{background:rgba(92,184,92,0.15);border:2px solid var(--grass);color:var(--grass);}
     .status-badge.offline{background:rgba(255,107,107,0.12);border:2px solid var(--coral);color:var(--coral);}
     .status-badge.waiting{background:rgba(255,179,71,0.15);border:2px solid var(--peach);color:var(--sun2);}
     .dot{width:10px;height:10px;border-radius:50%;background:currentColor;animation:dotPulse 1.2s ease-in-out infinite;}
     @keyframes dotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.7);opacity:0.5}}
- 
+
     /* CARDS */
     .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:14px;}
     .card{background:rgba(255,255,255,0.88);border:2.5px solid rgba(255,220,0,0.3);border-radius:24px;padding:18px;position:relative;overflow:hidden;transition:all 0.3s cubic-bezier(.175,.885,.32,1.275);box-shadow:var(--shadow);backdrop-filter:blur(8px);}
@@ -136,36 +136,37 @@
     .trend.up{background:#FFE0E0;color:#c0392b;}
     .trend.down{background:#E3F2FD;color:#1976D2;}
     .trend.stable{background:#E8F8E8;color:#27ae60;}
- 
-    .s-normal{background:#E8F8E8;color:#27ae60;border:1.5px solid #5CB85C;}
+
+    /* ===== STATUS CLASSES — UPDATED dengan s-sejuk & s-beku ===== */
+    .s-normal {background:#E8F8E8;color:#27ae60;border:1.5px solid #5CB85C;}
     .s-toleran{background:#FFF3CD;color:#8B5E3C;border:1.5px solid #FFB347;}
-    .s-panas{background:#FFF0CC;color:#e67e00;border:1.5px solid #FFA500;}
-    .s-dingin{background:#E3F2FD;color:#1976D2;border:1.5px solid #87CEEB;}
-    .s-bahaya{background:#FFE0E0;color:#c0392b;border:1.5px solid #FF6B6B;animation:blinkRed 0.6s step-end infinite;}
-    @keyframes blinkRed{50%{background:#FFBBBB;}}
- 
+    .s-panas  {background:#FFF0CC;color:#e67e00;border:1.5px solid #FFA500;}
+    .s-sejuk  {background:#E0F7FA;color:#00838F;border:1.5px solid #4DD0E1;}
+    .s-dingin {background:#E3F2FD;color:#1565C0;border:1.5px solid #64B5F6;}
+    .s-beku   {background:#EDE7F6;color:#4527A0;border:1.5px solid #9575CD;animation:blinkBlue 0.8s step-end infinite;}
+    .s-bahaya {background:#FFE0E0;color:#c0392b;border:1.5px solid #FF6B6B;animation:blinkRed 0.6s step-end infinite;}
+    @keyframes blinkRed {50%{background:#FFBBBB;}}
+    @keyframes blinkBlue{50%{background:#D1C4E9;}}
+
     /* GRID LAYOUTS */
     .main-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
     .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
- 
+
     /* PANEL */
     .panel{background:rgba(255,255,255,0.82);border:2px solid rgba(255,215,0,0.32);border-radius:24px;padding:18px;position:relative;overflow:hidden;box-shadow:var(--shadow);backdrop-filter:blur(8px);}
     .panel::before{content:'';position:absolute;top:0;left:0;width:5px;height:100%;background:linear-gradient(180deg,var(--sun),var(--peach),transparent);border-radius:24px 0 0 24px;}
     .panel-title{font-family:var(--font-head);font-size:1.1rem;color:var(--sun2);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
     .panel-title::after{content:'';flex:1;height:2px;background:linear-gradient(90deg,rgba(255,180,0,0.3),transparent);border-radius:2px;}
- 
-    /* GAUGE PANEL - terpisah dari konten lain */
+
+    /* GAUGE PANEL */
     .gauge-panel{background:rgba(255,255,255,0.82);border:2px solid rgba(255,215,0,0.32);border-radius:24px;padding:18px;position:relative;overflow:hidden;box-shadow:var(--shadow);backdrop-filter:blur(8px);margin-bottom:14px;}
     .gauge-panel::before{content:'';position:absolute;top:0;left:0;width:5px;height:100%;background:linear-gradient(180deg,var(--sun),var(--peach),transparent);border-radius:24px 0 0 24px;}
     .gauge-panel-title{font-family:var(--font-head);font-size:1.1rem;color:var(--sun2);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
     .gauge-panel-title::after{content:'';flex:1;height:2px;background:linear-gradient(90deg,rgba(255,180,0,0.3),transparent);border-radius:2px;}
- 
-    /* GAUGE BESAR - grid 2 kolom */
+
     .gauge-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
- 
-    /* GAUGE KECIL - grid 2 kolom */
     .gauge-grid-small{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:14px;}
- 
+
     .gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
     .gauge-title{font-family:var(--font-head);font-size:0.85rem;color:var(--text-dim);text-align:center;}
     .gauge{position:relative;}
@@ -180,16 +181,14 @@
     .gauge.lg .gauge-num{font-family:var(--font-head);font-size:2rem;transition:color 0.5s;}
     .gauge.sm .gauge-num{font-family:var(--font-head);font-size:1.3rem;transition:color 0.5s;}
     .gauge-lbl{font-family:var(--font-body);font-size:0.58rem;color:var(--text-dim);letter-spacing:1.5px;margin-top:1px;font-weight:700;}
- 
-    /* GAUGE SMALL CARD */
     .gauge-small-card{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;border-radius:20px;border:2px solid;backdrop-filter:blur(6px);}
- 
-    /* RANGE & MISC */
+
+    /* RANGE */
     .range-list{display:flex;flex-direction:column;gap:7px;}
     .range-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,0.5);border:1.5px solid rgba(255,200,0,0.18);}
     .range-item span:first-child{font-family:var(--font-body);font-size:0.82rem;font-weight:700;}
     .range-badge{font-family:var(--font-body);font-size:0.68rem;font-weight:800;padding:3px 10px;border-radius:8px;border:1.5px solid currentColor;}
- 
+
     .week-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
     .week-card{padding:10px 12px;border-radius:14px;background:rgba(255,255,255,0.6);border:1.5px solid rgba(255,200,0,0.25);transition:all 0.2s;cursor:default;}
     .week-card:hover{transform:scale(1.03);}
@@ -198,14 +197,14 @@
     .week-temp{font-family:var(--font-head);font-size:1.4rem;color:var(--sun2);}
     .week-desc{font-family:var(--font-body);font-size:0.65rem;color:var(--text-dim);font-weight:600;margin-top:2px;}
     .week-badge{display:inline-block;font-family:var(--font-body);font-size:0.62rem;font-weight:800;padding:2px 7px;border-radius:6px;margin-top:4px;border:1.5px solid currentColor;}
- 
+
     .offline-info{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,0.6);border-radius:14px;border:1.5px solid rgba(255,200,0,0.2);}
     .offline-info span:first-child{font-family:var(--font-body);font-size:0.82rem;font-weight:700;color:var(--text-dim);}
     .offline-timer{font-family:var(--font-head);font-size:1.05rem;color:var(--sun2);}
     .offline-timer.warn{color:var(--coral);}
- 
+
     .chart-wrap{position:relative;height:180px;}
- 
+
     table{width:100%;border-collapse:collapse;font-size:0.8rem;min-width:560px;}
     .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
     thead th{font-family:var(--font-head);font-size:0.82rem;letter-spacing:0.5px;color:var(--sun2);text-transform:uppercase;padding:10px 12px;border-bottom:2px solid rgba(255,180,0,0.25);text-align:left;}
@@ -216,21 +215,21 @@
     tbody td{padding:9px 12px;color:var(--text);font-family:var(--font-body);font-weight:600;}
     tbody td:first-child{color:var(--text-dim);font-size:0.75rem;white-space:nowrap;}
     .tbadge{font-family:var(--font-body);font-size:0.7rem;font-weight:800;padding:3px 9px;border-radius:8px;border:1.5px solid currentColor;}
- 
+
     .footer-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 18px;background:rgba(255,255,255,0.75);border:2px solid rgba(255,215,0,0.3);border-radius:18px;backdrop-filter:blur(8px);}
     .footer-bar span{font-family:var(--font-body);font-size:0.8rem;color:var(--text-dim);font-weight:700;}
     .blink{animation:blink 1s step-end infinite;color:var(--coral);}
     @keyframes blink{50%{opacity:0}}
     .flip{animation:numFlip 0.3s ease;}
     @keyframes numFlip{0%{transform:scaleY(0.5);opacity:0.5}100%{transform:scaleY(1);opacity:1}}
- 
+
     /* FITUR TAMBAHAN */
     .action-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;}
     .action-card{background:rgba(255,255,255,0.58);border:1.5px solid rgba(255,200,0,0.22);border-radius:16px;padding:12px;}
     .action-label{font-family:var(--font-body);font-size:0.78rem;color:var(--text-dim);font-weight:800;}
     .action-value{font-family:var(--font-head);font-size:1.2rem;color:var(--sun2);margin-top:4px;}
     .action-value.small{font-size:0.95rem;}
- 
+
     .score-wrap{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;}
     .score-circle{width:130px;height:130px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:2rem;color:#fff;background:conic-gradient(#27ae60 0deg,#27ae60 300deg,rgba(255,255,255,0.5) 300deg);box-shadow:var(--shadow);}
     .event-log{display:flex;flex-direction:column;gap:8px;max-height:210px;overflow:auto;}
@@ -238,37 +237,126 @@
     .select-age{width:100%;padding:10px 12px;border-radius:12px;border:2px solid rgba(255,200,0,0.35);font-family:var(--font-body);font-weight:800;color:var(--text);background:rgba(255,255,255,0.8);}
     .btn-action{display:inline-block;text-decoration:none;text-align:center;background:linear-gradient(135deg,var(--sun),var(--sun2));color:#fff;border:none;padding:10px 18px;border-radius:12px;font-family:var(--font-head);font-size:0.95rem;cursor:pointer;box-shadow:0 3px 12px rgba(255,150,0,0.35);transition:all 0.2s;}
     .btn-action:hover{transform:scale(1.05);}
- 
+
     /* IDENTITAS */
     .identitas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;}
     .identitas-item{background:rgba(255,255,255,0.58);border:1.5px solid rgba(255,200,0,0.25);border-radius:16px;padding:12px 14px;}
     .identitas-label{font-family:var(--font-body);font-size:0.72rem;color:var(--text-dim);font-weight:800;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px;}
     .identitas-value{font-family:var(--font-head);font-size:1rem;color:var(--sun2);line-height:1.3;}
- 
+
     body.presentation-mode .notif-banner,
     body.presentation-mode .spreadsheet-panel,
     body.presentation-mode .footer-bar{display:none;}
 
     /* MASCOT + THEME */
-.mascot-panel{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;}
-.mascot-left{display:flex;align-items:center;gap:16px;}
-.mascot-face{font-size:4rem;animation:mascotFloat 2s ease-in-out infinite;}
-.mascot-title{font-family:var(--font-head);font-size:1.6rem;color:var(--sun2);}
-.mascot-sub{font-family:var(--font-body);font-size:0.9rem;color:var(--text-dim);font-weight:700;margin-top:4px;}
-@keyframes mascotFloat{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-8px) rotate(3deg);}}
+    .mascot-panel{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+    .mascot-left{display:flex;align-items:center;gap:16px;}
+    .mascot-face{font-size:4rem;animation:mascotFloat 2s ease-in-out infinite;}
+    .mascot-title{font-family:var(--font-head);font-size:1.6rem;color:var(--sun2);}
+    .mascot-sub{font-family:var(--font-body);font-size:0.9rem;color:var(--text-dim);font-weight:700;margin-top:4px;}
+    @keyframes mascotFloat{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-8px) rotate(3deg);}}
+    .theme-switcher{display:flex;gap:8px;flex-wrap:wrap;}
+    .theme-btn{border:2px solid rgba(255,200,0,0.35);background:rgba(255,255,255,0.7);color:var(--text);border-radius:14px;padding:8px 12px;font-family:var(--font-head);font-size:0.85rem;cursor:pointer;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s;}
+    .theme-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:var(--shadow-lg);}
+    .theme-btn.active{background:linear-gradient(135deg,var(--sun),var(--sun2));color:#fff;}
+    body.theme-night{background:linear-gradient(160deg,#1B263B,#263859,#3E4C7A);--text:#FDF6E3;--text-dim:#D8C9A8;--sun:#8EC5FC;--sun2:#E0C3FC;}
+    body.theme-night .panel,body.theme-night .card,body.theme-night header,body.theme-night .footer-bar,body.theme-night .notif-banner{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.22);}
+    body.theme-night .cloud{background:rgba(255,255,255,0.25);}
+    body.theme-farm{background:linear-gradient(160deg,#E8F5D8,#BEE7A5,#8FD694);--sun:#7BC950;--sun2:#4A9B42;--text:#36512A;--text-dim:#6E8B5A;}
+    body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--sun:#5DADE2;--sun2:#2E86C1;--text:#34495E;--text-dim:#7F8C8D;}
 
-.theme-switcher{display:flex;gap:8px;flex-wrap:wrap;}
-.theme-btn{border:2px solid rgba(255,200,0,0.35);background:rgba(255,255,255,0.7);color:var(--text);border-radius:14px;padding:8px 12px;font-family:var(--font-head);font-size:0.85rem;cursor:pointer;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s;}
-.theme-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:var(--shadow-lg);}
-.theme-btn.active{background:linear-gradient(135deg,var(--sun),var(--sun2));color:#fff;}
+    /* ===== CONTROL PANEL BARU ===== */
+    .ctrl-grid{display:grid;grid-template-columns:1fr;gap:12px;}
 
-body.theme-night{background:linear-gradient(160deg,#1B263B,#263859,#3E4C7A);--text:#FDF6E3;--text-dim:#D8C9A8;--sun:#8EC5FC;--sun2:#E0C3FC;}
-body.theme-night .panel,body.theme-night .card,body.theme-night header,body.theme-night .footer-bar,body.theme-night .notif-banner{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.22);}
-body.theme-night .cloud{background:rgba(255,255,255,0.25);}
+    .ctrl-card{
+      background:rgba(255,255,255,0.65);
+      border:2px solid rgba(255,200,0,0.22);
+      border-radius:18px;padding:14px 16px;
+      display:flex;flex-direction:column;gap:10px;
+      transition:box-shadow 0.2s;
+    }
+    .ctrl-card:hover{box-shadow:var(--shadow);}
 
-body.theme-farm{background:linear-gradient(160deg,#E8F5D8,#BEE7A5,#8FD694);--sun:#7BC950;--sun2:#4A9B42;--text:#36512A;--text-dim:#6E8B5A;}
-body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--sun:#5DADE2;--sun2:#2E86C1;--text:#34495E;--text-dim:#7F8C8D;}
- 
+    .ctrl-card-header{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+    .ctrl-card-left{display:flex;align-items:center;gap:8px;}
+    .ctrl-icon{font-size:1.4rem;}
+    .ctrl-title{font-family:var(--font-head);font-size:0.95rem;color:var(--text);}
+
+    .ctrl-badge{
+      font-family:var(--font-head);font-size:0.8rem;
+      padding:4px 12px;border-radius:10px;
+      transition:all 0.3s;border:1.5px solid;
+    }
+    .ctrl-badge.on {background:#E8F8E8;color:#27ae60;border-color:#5CB85C;}
+    .ctrl-badge.off{background:#FFE0E0;color:#c0392b;border-color:#FF6B6B;}
+    .ctrl-badge.standby{background:#FFF3CD;color:#8B5E3C;border-color:#FFB347;}
+
+    /* Toggle Switch */
+    .toggle-row{display:flex;align-items:center;gap:12px;}
+    .toggle-sw{position:relative;width:56px;height:28px;flex-shrink:0;}
+    .toggle-sw input{opacity:0;width:0;height:0;}
+    .toggle-track{
+      position:absolute;cursor:pointer;inset:0;
+      background:#ddd;border-radius:28px;
+      transition:.3s;border:2px solid rgba(0,0,0,0.06);
+    }
+    .toggle-track::before{
+      content:'';position:absolute;
+      width:20px;height:20px;left:2px;bottom:2px;
+      background:white;border-radius:50%;
+      transition:.3s;box-shadow:0 2px 5px rgba(0,0,0,0.18);
+    }
+    .toggle-sw input:checked + .toggle-track{background:linear-gradient(135deg,#FF9500,#FFD700);}
+    .toggle-sw input:checked + .toggle-track::before{transform:translateX(28px);}
+    .toggle-lbl{font-family:var(--font-body);font-size:0.82rem;font-weight:700;color:var(--text-dim);}
+
+    /* Slider Kipas */
+    .slider-wrap{display:flex;flex-direction:column;gap:6px;}
+    .slider-top{display:flex;justify-content:space-between;align-items:center;}
+    .slider-lbl{font-family:var(--font-body);font-size:0.8rem;font-weight:700;color:var(--text-dim);}
+    .slider-num{font-family:var(--font-head);font-size:1.05rem;color:var(--sun2);}
+
+    .fan-slider{
+      -webkit-appearance:none;appearance:none;
+      width:100%;height:7px;border-radius:7px;
+      outline:none;cursor:pointer;
+    }
+    .fan-slider::-webkit-slider-thumb{
+      -webkit-appearance:none;appearance:none;
+      width:20px;height:20px;border-radius:50%;
+      background:linear-gradient(135deg,var(--sun),var(--sun2));
+      cursor:pointer;
+      box-shadow:0 2px 8px rgba(255,150,0,0.4);
+      border:2px solid white;
+      transition:transform 0.15s;
+    }
+    .fan-slider::-webkit-slider-thumb:hover{transform:scale(1.25);}
+    .fan-slider::-moz-range-thumb{
+      width:20px;height:20px;border-radius:50%;
+      background:linear-gradient(135deg,var(--sun),var(--sun2));
+      cursor:pointer;border:2px solid white;
+    }
+
+    /* Quick buttons */
+    .btn-quick-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px;}
+    .btn-quick{
+      font-family:var(--font-head);font-size:0.72rem;
+      padding:4px 9px;border-radius:9px;
+      border:1.5px solid rgba(255,200,0,0.3);
+      background:rgba(255,255,255,0.7);
+      color:var(--text);cursor:pointer;
+      transition:all 0.18s;
+    }
+    .btn-quick:hover{
+      background:linear-gradient(135deg,var(--sun),var(--sun2));
+      color:#fff;border-color:transparent;
+      transform:scale(1.05);
+    }
+
+    /* SD Card row */
+    .sd-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,0.5);border:1.5px solid rgba(255,200,0,0.18);}
+    .sd-lbl{font-family:var(--font-body);font-size:0.82rem;font-weight:700;color:var(--text-dim);flex:1;}
+
     @media(max-width:768px){
       .main-grid{grid-template-columns:1fr;}
       .chart-grid{grid-template-columns:1fr;}
@@ -285,7 +373,7 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
   </style>
 </head>
 <body>
- 
+
 <!-- LOADING -->
 <div id="loadingScreen">
   <div class="loading-title">🐥 Brooder Monitor</div>
@@ -297,24 +385,22 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
   <div class="loading-dots">Memuat data <span>.</span><span>.</span><span>.</span></div>
   <div class="loading-sub">Menghubungkan ke Firebase...</div>
 </div>
- 
+
 <div class="clouds">
   <div class="cloud c1" style="--dur:36s;--delay:-3s;"></div>
   <div class="cloud c2" style="--dur:28s;--delay:-14s;"></div>
   <div class="cloud c3" style="--dur:44s;--delay:-22s;"></div>
   <div class="cloud c1" style="--dur:32s;--delay:-8s;top:22%;"></div>
 </div>
- 
+
 <div class="particles" id="particles"></div>
 <div class="toast-container" id="toastContainer"></div>
- 
+
 <div class="wrapper">
- 
-  <!-- STRIPS -->
+
   <div class="alarm-strip" id="alarmStrip">🚨 BAHAYA! Suhu Kritis — Segera Periksa Brooder! 🚨</div>
   <div class="offline-strip" id="offlineStrip">📡 ESP32 Offline! Data tidak diperbarui — Cek koneksi WiFi!</div>
- 
-  <!-- DEVICE CARD -->
+
   <div class="device-status-card waiting show" id="deviceCard">
     <div class="device-status-icon" id="deviceIcon">⏳</div>
     <div class="device-status-info">
@@ -323,16 +409,14 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
     </div>
     <div class="device-status-timer" id="deviceTimer">00:00</div>
   </div>
- 
-  <!-- NOTIF BANNER -->
+
   <div class="banner-group">
     <div class="notif-banner" id="notifBanner">
       <p>🔔 Aktifkan notifikasi untuk alert suhu bahaya!</p>
       <button class="btn-banner" onclick="requestNotif()">Aktifkan Notifikasi</button>
     </div>
   </div>
- 
-  <!-- HEADER -->
+
   <header>
     <div class="header-left">
       <div class="egg-anim">🐥</div>
@@ -354,7 +438,7 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
     </div>
   </header>
 
-    <!-- ==================== STATUS MASCOT + THEME ==================== -->
+  <!-- MASCOT + THEME -->
   <div class="panel" style="margin-bottom:14px;">
     <div class="mascot-panel">
       <div class="mascot-left">
@@ -364,7 +448,6 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
           <div class="mascot-sub" id="mascotSub">Maskot akan berubah sesuai kondisi brooder.</div>
         </div>
       </div>
-
       <div>
         <div class="panel-title" style="font-size:0.95rem;margin-bottom:8px;">🎨 Tema</div>
         <div class="theme-switcher">
@@ -376,8 +459,8 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
       </div>
     </div>
   </div>
- 
-  <!-- ==================== SENSOR CARDS ==================== -->
+
+  <!-- SENSOR CARDS -->
   <div class="cards">
     <div class="card" style="--card-color:#FF9500;">
       <div class="card-top"><div class="card-icon">🌡️</div><div class="card-label">Suhu Probe</div></div>
@@ -410,103 +493,73 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
       <div class="card-bg-num" id="bgAir">--</div>
     </div>
   </div>
- 
-  <!-- ==================== GAUGE SUHU PROBE (BESAR) ==================== -->
+
+  <!-- GAUGE PROBE & DHT -->
   <div class="gauge-grid-2">
     <div class="gauge-panel">
       <div class="gauge-panel-title">🌡️ Gauge Suhu Probe DS18B20</div>
       <div class="gauge-wrap">
         <div class="gauge lg">
-          <svg viewBox="0 0 160 160">
-            <circle class="gauge-track" cx="80" cy="80" r="65"/>
-            <circle class="gauge-fill" id="gaugeFillProbe" cx="80" cy="80" r="65" stroke="#FF9500"/>
-          </svg>
-          <div class="gauge-center">
-            <div class="gauge-num" id="gaugeNumProbe" style="color:#FF9500;">--</div>
-            <div class="gauge-lbl">°C PROBE</div>
-          </div>
+          <svg viewBox="0 0 160 160"><circle class="gauge-track" cx="80" cy="80" r="65"/><circle class="gauge-fill" id="gaugeFillProbe" cx="80" cy="80" r="65" stroke="#FF9500"/></svg>
+          <div class="gauge-center"><div class="gauge-num" id="gaugeNumProbe" style="color:#FF9500;">--</div><div class="gauge-lbl">°C PROBE</div></div>
         </div>
         <div class="card-status s-normal" id="gaugeStatusProbe">--</div>
       </div>
     </div>
- 
     <div class="gauge-panel">
       <div class="gauge-panel-title">🌡️ Gauge Suhu DHT22</div>
       <div class="gauge-wrap">
         <div class="gauge lg">
-          <svg viewBox="0 0 160 160">
-            <circle class="gauge-track" cx="80" cy="80" r="65"/>
-            <circle class="gauge-fill" id="gaugeFillDHT" cx="80" cy="80" r="65" stroke="#5DADE2"/>
-          </svg>
-          <div class="gauge-center">
-            <div class="gauge-num" id="gaugeNumDHT" style="color:#5DADE2;">--</div>
-            <div class="gauge-lbl">°C DHT22</div>
-          </div>
+          <svg viewBox="0 0 160 160"><circle class="gauge-track" cx="80" cy="80" r="65"/><circle class="gauge-fill" id="gaugeFillDHT" cx="80" cy="80" r="65" stroke="#5DADE2"/></svg>
+          <div class="gauge-center"><div class="gauge-num" id="gaugeNumDHT" style="color:#5DADE2;">--</div><div class="gauge-lbl">°C DHT22</div></div>
         </div>
         <div class="card-status s-normal" id="gaugeStatusDHT">--</div>
       </div>
     </div>
   </div>
- 
-  <!-- ==================== GAUGE KELEMBABAN & MQ135 ==================== -->
+
+  <!-- GAUGE HUMID & MQ -->
   <div class="gauge-grid-small">
     <div class="gauge-panel">
       <div class="gauge-panel-title">💧 Gauge Kelembaban</div>
       <div class="gauge-small-card" style="background:rgba(92,184,92,0.08);border-color:rgba(92,184,92,0.3);">
         <div class="gauge-wrap">
           <div class="gauge sm">
-            <svg viewBox="0 0 100 100">
-              <circle class="gauge-track" cx="50" cy="50" r="43"/>
-              <circle class="gauge-fill" id="gaugeFillHumid" cx="50" cy="50" r="43" stroke="#5CB85C"/>
-            </svg>
-            <div class="gauge-center">
-              <div class="gauge-num" id="gaugeNumHumid" style="color:#5CB85C;">--</div>
-              <div class="gauge-lbl">%</div>
-            </div>
+            <svg viewBox="0 0 100 100"><circle class="gauge-track" cx="50" cy="50" r="43"/><circle class="gauge-fill" id="gaugeFillHumid" cx="50" cy="50" r="43" stroke="#5CB85C"/></svg>
+            <div class="gauge-center"><div class="gauge-num" id="gaugeNumHumid" style="color:#5CB85C;">--</div><div class="gauge-lbl">%</div></div>
           </div>
         </div>
-        <div style="text-align:center;">
-          <div style="font-family:var(--font-head);font-size:0.9rem;color:#5CB85C;">Humidity</div>
-          <div class="card-status s-normal" id="gaugeStatusHumid" style="margin-top:6px;">--</div>
-        </div>
+        <div style="text-align:center;"><div style="font-family:var(--font-head);font-size:0.9rem;color:#5CB85C;">Humidity</div><div class="card-status s-normal" id="gaugeStatusHumid" style="margin-top:6px;">--</div></div>
       </div>
     </div>
- 
     <div class="gauge-panel">
       <div class="gauge-panel-title">💨 Gauge Kualitas Udara MQ135</div>
       <div class="gauge-small-card" style="background:rgba(195,155,211,0.1);border-color:rgba(195,155,211,0.3);">
         <div class="gauge-wrap">
           <div class="gauge sm">
-            <svg viewBox="0 0 100 100">
-              <circle class="gauge-track" cx="50" cy="50" r="43"/>
-              <circle class="gauge-fill" id="gaugeFillMQ" cx="50" cy="50" r="43" stroke="#C39BD3"/>
-            </svg>
-            <div class="gauge-center">
-              <div class="gauge-num" id="gaugeNumMQ" style="color:#C39BD3;font-size:1rem;">--</div>
-              <div class="gauge-lbl">RAW</div>
-            </div>
+            <svg viewBox="0 0 100 100"><circle class="gauge-track" cx="50" cy="50" r="43"/><circle class="gauge-fill" id="gaugeFillMQ" cx="50" cy="50" r="43" stroke="#C39BD3"/></svg>
+            <div class="gauge-center"><div class="gauge-num" id="gaugeNumMQ" style="color:#C39BD3;font-size:1rem;">--</div><div class="gauge-lbl">RAW</div></div>
           </div>
         </div>
-        <div style="text-align:center;">
-          <div style="font-family:var(--font-head);font-size:0.9rem;color:#C39BD3;">MQ135 Raw</div>
-          <div class="card-status s-normal" id="gaugeStatusMQ" style="margin-top:6px;">--</div>
-        </div>
+        <div style="text-align:center;"><div style="font-family:var(--font-head);font-size:0.9rem;color:#C39BD3;">MQ135 Raw</div><div class="card-status s-normal" id="gaugeStatusMQ" style="margin-top:6px;">--</div></div>
       </div>
     </div>
- 
+
+    <!-- RANGE RINGKASAN — UPDATED -->
     <div class="gauge-panel" style="margin-bottom:0;">
-      <div class="gauge-panel-title">📊 Ringkasan Range</div>
+      <div class="gauge-panel-title">📊 Ringkasan Range Suhu</div>
       <div class="range-list">
-        <div class="range-item"><span style="color:#1976D2;">❄️ &lt; 30°C</span><span class="range-badge" style="color:#1976D2;">Terlalu Dingin</span></div>
-        <div class="range-item"><span style="color:#27ae60;">✅ 30–35°C</span><span class="range-badge" style="color:#27ae60;">Normal</span></div>
-        <div class="range-item"><span style="color:#e67e00;">⚠️ 36–38°C</span><span class="range-badge" style="color:#e67e00;">Toleransi</span></div>
-        <div class="range-item"><span style="color:#FF9500;">🔥 39–40°C</span><span class="range-badge" style="color:#FF9500;">Panas!</span></div>
         <div class="range-item"><span style="color:#c0392b;">☠️ &gt; 40°C</span><span class="range-badge" style="color:#c0392b;">Bahaya!</span></div>
+        <div class="range-item"><span style="color:#e67e00;">🔥 39–40°C</span><span class="range-badge" style="color:#e67e00;">Panas!</span></div>
+        <div class="range-item"><span style="color:#8B5E3C;">⚠️ 36–38°C</span><span class="range-badge" style="color:#8B5E3C;">Toleransi</span></div>
+        <div class="range-item"><span style="color:#27ae60;">✅ 30–35°C</span><span class="range-badge" style="color:#27ae60;">Normal</span></div>
+        <div class="range-item"><span style="color:#00838F;">🌿 26–29°C</span><span class="range-badge" style="color:#00838F;">Sejuk</span></div>
+        <div class="range-item"><span style="color:#1565C0;">❄️ ≤ 25°C</span><span class="range-badge" style="color:#1565C0;">Dingin</span></div>
       </div>
     </div>
   </div>
- 
-  <!-- ==================== STATUS & RINGKASAN ==================== -->
+
+  <!-- STATUS & RINGKASAN -->
   <div class="main-grid">
     <div class="panel">
       <div class="panel-title">✅ Status Brooder</div>
@@ -526,8 +579,8 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
       </div>
     </div>
   </div>
- 
-  <!-- ==================== HEALTH SCORE & REKOMENDASI ==================== -->
+
+  <!-- HEALTH SCORE & REKOMENDASI -->
   <div class="main-grid">
     <div class="panel">
       <div class="panel-title">🧠 Health Score Brooder</div>
@@ -548,38 +601,101 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
       </div>
     </div>
   </div>
- 
-  <!-- ==================== CONTROL MODE & UMUR AYAM ==================== -->
+
+  <!-- ===== CONTROL PANEL BARU ===== -->
   <div class="main-grid">
-   <div class="panel">
-  <div class="panel-title">🎛️ Control Mode Panel</div>
-  <div class="action-grid">
-    <div class="action-card">
-      <div class="action-label">Lampu Pemanas</div>
-      <div class="action-value" id="heaterStatus">OFF</div>
-      <button class="btn-action" onclick="setLampu(true)">ON</button>
-      <button class="btn-action" onclick="setLampu(false)">OFF</button>
+    <div class="panel">
+      <div class="panel-title">🎛️ Panel Kontrol Manual</div>
+      <div class="ctrl-grid">
+
+        <!-- LAMPU -->
+        <div class="ctrl-card">
+          <div class="ctrl-card-header">
+            <div class="ctrl-card-left">
+              <div class="ctrl-icon">💡</div>
+              <div class="ctrl-title">Lampu Pemanas</div>
+            </div>
+            <div class="ctrl-badge off" id="lampuBadge">OFF</div>
+          </div>
+          <div class="toggle-row">
+            <label class="toggle-sw">
+              <input type="checkbox" id="lampuToggle" onchange="setLampu(this.checked)"/>
+              <span class="toggle-track"></span>
+            </label>
+            <span class="toggle-lbl" id="lampuLabel">Lampu Mati</span>
+          </div>
+        </div>
+
+        <!-- KIPAS 1 -->
+        <div class="ctrl-card">
+          <div class="ctrl-card-header">
+            <div class="ctrl-card-left">
+              <div class="ctrl-icon">🌀</div>
+              <div class="ctrl-title">Kipas 1</div>
+            </div>
+            <div class="ctrl-badge standby" id="kipas1Badge">0%</div>
+          </div>
+          <div class="slider-wrap">
+            <div class="slider-top">
+              <span class="slider-lbl">Kecepatan</span>
+              <span class="slider-num"><span id="kipas1Value">0</span>%</span>
+            </div>
+            <input type="range" min="0" max="100" value="0" id="kipas1Slider" class="fan-slider"
+              style="background:linear-gradient(90deg,#FF9500 0%,#eee 0%);"
+              oninput="setKipas1(this.value)"/>
+            <div class="btn-quick-row">
+              <button class="btn-quick" onclick="qKipas(1,0)">OFF</button>
+              <button class="btn-quick" onclick="qKipas(1,25)">25%</button>
+              <button class="btn-quick" onclick="qKipas(1,50)">50%</button>
+              <button class="btn-quick" onclick="qKipas(1,75)">75%</button>
+              <button class="btn-quick" onclick="qKipas(1,100)">MAX</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KIPAS 2 -->
+        <div class="ctrl-card">
+          <div class="ctrl-card-header">
+            <div class="ctrl-card-left">
+              <div class="ctrl-icon">🌀</div>
+              <div class="ctrl-title">Kipas 2</div>
+            </div>
+            <div class="ctrl-badge standby" id="kipas2Badge">0%</div>
+          </div>
+          <div class="slider-wrap">
+            <div class="slider-top">
+              <span class="slider-lbl">Kecepatan</span>
+              <span class="slider-num"><span id="kipas2Value">0</span>%</span>
+            </div>
+            <input type="range" min="0" max="100" value="0" id="kipas2Slider" class="fan-slider"
+              style="background:linear-gradient(90deg,#5DADE2 0%,#eee 0%);"
+              oninput="setKipas2(this.value)"/>
+            <div class="btn-quick-row">
+              <button class="btn-quick" onclick="qKipas(2,0)">OFF</button>
+              <button class="btn-quick" onclick="qKipas(2,25)">25%</button>
+              <button class="btn-quick" onclick="qKipas(2,50)">50%</button>
+              <button class="btn-quick" onclick="qKipas(2,75)">75%</button>
+              <button class="btn-quick" onclick="qKipas(2,100)">MAX</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SD CARD -->
+        <div class="ctrl-card">
+          <div class="ctrl-card-header">
+            <div class="ctrl-card-left">
+              <div class="ctrl-icon">💾</div>
+              <div class="ctrl-title">SD Card</div>
+            </div>
+            <div class="ctrl-badge standby" id="sdStatus">--</div>
+          </div>
+          <div style="font-family:var(--font-body);font-size:0.78rem;color:var(--text-dim);font-weight:700;">Status penyimpanan lokal dari ESP32</div>
+        </div>
+
+      </div>
     </div>
 
-    <div class="action-card">
-      <div class="action-label">Kipas 1</div>
-      <div class="action-value"><span id="kipas1Value">0</span>%</div>
-      <input type="range" min="0" max="100" value="0" id="kipas1Slider" oninput="setKipas1(this.value)" style="width:100%;">
-    </div>
-
-    <div class="action-card">
-      <div class="action-label">Kipas 2</div>
-      <div class="action-value"><span id="kipas2Value">0</span>%</div>
-      <input type="range" min="0" max="100" value="0" id="kipas2Slider" oninput="setKipas2(this.value)" style="width:100%;">
-    </div>
-
-    <div class="action-card">
-      <div class="action-label">SD Card</div>
-      <div class="action-value" id="sdStatus">--</div>
-    </div>
-  </div>
-</div>
-
+    <!-- UMUR AYAM -->
     <div class="panel">
       <div class="panel-title">🐣 Umur Anak Ayam</div>
       <select class="select-age" id="chickAge" onchange="updateAgeGuide()">
@@ -596,17 +712,18 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
       </div>
     </div>
   </div>
- 
-  <!-- ==================== RANGE LENGKAP & PANDUAN MINGGU ==================== -->
+
+  <!-- RANGE LENGKAP — UPDATED -->
   <div class="main-grid">
     <div class="panel">
       <div class="panel-title">🌡️ Range Suhu & Sensor</div>
       <div class="range-list">
-        <div class="range-item"><span style="color:#1976D2;">❄️ &lt; 30°C</span><span class="range-badge" style="color:#1976D2;">Terlalu Dingin</span></div>
-        <div class="range-item"><span style="color:#27ae60;">✅ 30–35°C</span><span class="range-badge" style="color:#27ae60;">Normal</span></div>
-        <div class="range-item"><span style="color:#e67e00;">⚠️ 36–38°C</span><span class="range-badge" style="color:#e67e00;">Toleransi</span></div>
-        <div class="range-item"><span style="color:#FF9500;">🔥 39–40°C</span><span class="range-badge" style="color:#FF9500;">Panas!</span></div>
         <div class="range-item"><span style="color:#c0392b;">☠️ &gt; 40°C</span><span class="range-badge" style="color:#c0392b;">Bahaya!</span></div>
+        <div class="range-item"><span style="color:#e67e00;">🔥 39–40°C</span><span class="range-badge" style="color:#e67e00;">Panas!</span></div>
+        <div class="range-item"><span style="color:#8B5E3C;">⚠️ 36–38°C</span><span class="range-badge" style="color:#8B5E3C;">Toleransi</span></div>
+        <div class="range-item"><span style="color:#27ae60;">✅ 30–35°C</span><span class="range-badge" style="color:#27ae60;">Normal</span></div>
+        <div class="range-item"><span style="color:#00838F;">🌿 26–29°C</span><span class="range-badge" style="color:#00838F;">Sejuk</span></div>
+        <div class="range-item"><span style="color:#1565C0;">❄️ ≤ 25°C</span><span class="range-badge" style="color:#1565C0;">Dingin</span></div>
       </div>
       <div style="margin-top:12px;">
         <div class="panel-title" style="font-size:0.95rem;">💧 Kelembaban &nbsp;|&nbsp; 💨 MQ135</div>
@@ -623,13 +740,11 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
     <div class="panel">
       <div class="panel-title">📖 Panduan Suhu Per Minggu</div>
       <div class="week-grid" id="weekGrid"></div>
-      <div style="margin-top:10px;font-family:var(--font-body);font-size:0.75rem;color:var(--text-dim);font-weight:700;text-align:center;">
-        💡 Turunkan suhu ~2°C setiap minggu
-      </div>
+      <div style="margin-top:10px;font-family:var(--font-body);font-size:0.75rem;color:var(--text-dim);font-weight:700;text-align:center;">💡 Turunkan suhu ~2°C setiap minggu</div>
     </div>
   </div>
- 
-  <!-- ==================== MONITOR KONEKSI & LOG EVENT ==================== -->
+
+  <!-- MONITOR KONEKSI & LOG -->
   <div class="main-grid">
     <div class="panel">
       <div class="panel-title">📡 Monitor Koneksi ESP32</div>
@@ -650,29 +765,18 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
     </div>
     <div class="panel">
       <div class="panel-title">📝 Log Event Penting</div>
-      <div class="event-log" id="eventLog">
-        <div class="event-item">Menunggu event dari sistem...</div>
-      </div>
+      <div class="event-log" id="eventLog"><div class="event-item">Menunggu event dari sistem...</div></div>
     </div>
   </div>
- 
-  <!-- ==================== GRAFIK SENSOR ==================== -->
+
+  <!-- GRAFIK -->
   <div class="chart-grid">
-    <div class="panel">
-      <div class="panel-title">📈 Grafik Suhu Realtime</div>
-      <div class="chart-wrap"><canvas id="tempChart"></canvas></div>
-    </div>
-    <div class="panel">
-      <div class="panel-title">💧 Grafik Kelembaban Realtime</div>
-      <div class="chart-wrap"><canvas id="humidChart"></canvas></div>
-    </div>
+    <div class="panel"><div class="panel-title">📈 Grafik Suhu Realtime</div><div class="chart-wrap"><canvas id="tempChart"></canvas></div></div>
+    <div class="panel"><div class="panel-title">💧 Grafik Kelembaban Realtime</div><div class="chart-wrap"><canvas id="humidChart"></canvas></div></div>
   </div>
-  <div class="panel" style="margin-bottom:14px;">
-    <div class="panel-title">📈 Grafik MQ135 Realtime</div>
-    <div class="chart-wrap"><canvas id="mqChart"></canvas></div>
-  </div>
- 
-  <!-- ==================== AKSI CEPAT ==================== -->
+  <div class="panel" style="margin-bottom:14px;"><div class="panel-title">📈 Grafik MQ135 Realtime</div><div class="chart-wrap"><canvas id="mqChart"></canvas></div></div>
+
+  <!-- AKSI CEPAT -->
   <div class="panel" style="margin-bottom:14px;">
     <div class="panel-title">🖥️ Aksi Cepat</div>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -680,87 +784,51 @@ body.theme-clean{background:linear-gradient(160deg,#F7FAFC,#E3F2FD,#FFFFFF);--su
       <a class="btn-action" href="https://docs.google.com/spreadsheets/d/122fonv691gqpCS40-3zcSATa6sZ0nk7T-gKrELlMwuk/edit?usp=sharing" target="_blank">Buka Spreadsheet</a>
     </div>
   </div>
- 
-  <!-- ==================== RIWAYAT DATA ==================== -->
+
+  <!-- RIWAYAT DATA -->
   <div class="panel" style="margin-bottom:14px;">
     <div class="panel-title">📋 Riwayat Data</div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Tanggal & Waktu</th>
-            <th>Probe (°C)</th>
-            <th>DHT22 (°C)</th>
-            <th>Humid (%)</th>
-            <th>MQ135 Raw</th>
-            <th>Kualitas Udara</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="historyBody">
-          <tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:24px;">Menunggu data dari Firebase... 🐥</td></tr>
-        </tbody>
+        <thead><tr><th>Tanggal & Waktu</th><th>Probe (°C)</th><th>DHT22 (°C)</th><th>Humid (%)</th><th>MQ135 Raw</th><th>Kualitas Udara</th><th>Status</th></tr></thead>
+        <tbody id="historyBody"><tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:24px;">Menunggu data dari Firebase... 🐥</td></tr></tbody>
       </table>
     </div>
   </div>
- 
-  <!-- ==================== IDENTITAS PROJECT ==================== -->
+
+  <!-- IDENTITAS PROJECT -->
   <div class="panel" style="margin-bottom:14px;">
     <div class="panel-title">🎓 Identitas Project</div>
     <div class="identitas-grid">
-      <div class="identitas-item">
-        <div class="identitas-label">Nama Project</div>
-        <div class="identitas-value small" style="font-size:0.88rem;">Sistem Monitoring Brooder Anak Ayam Berbasis IoT</div>
-      </div>
-      <div class="identitas-item">
-        <div class="identitas-label">Mikrokontroler</div>
-        <div class="identitas-value">ESP32</div>
-      </div>
-      <div class="identitas-item">
-        <div class="identitas-label">Sensor</div>
-        <div class="identitas-value" style="font-size:0.9rem;">DS18B20 · DHT22 · MQ135</div>
-      </div>
-      <div class="identitas-item">
-        <div class="identitas-label">Database</div>
-        <div class="identitas-value" style="font-size:0.9rem;">Firebase + Google Sheets</div>
-      </div>
-      <div class="identitas-item">
-        <div class="identitas-label">Penyimpanan Lokal</div>
-        <div class="identitas-value">SD Card</div>
-      </div>
-      <div class="identitas-item">
-        <div class="identitas-label">Anggota</div>
-        <div class="identitas-value" style="font-size:0.88rem;">Dita · Marwan · Lintang · Alwan</div>
-      </div>
-      <div class="identitas-item">
-        <div class="identitas-label">Kelas</div>
-        <div class="identitas-value">BRUTU</div>
-      </div>
-      <div class="identitas-item">
-        <div class="identitas-label">Tahun</div>
-        <div class="identitas-value">2026</div>
-      </div>
+      <div class="identitas-item"><div class="identitas-label">Nama Project</div><div class="identitas-value" style="font-size:0.88rem;">Sistem Monitoring Brooder Anak Ayam Berbasis IoT</div></div>
+      <div class="identitas-item"><div class="identitas-label">Mikrokontroler</div><div class="identitas-value">ESP32</div></div>
+      <div class="identitas-item"><div class="identitas-label">Sensor</div><div class="identitas-value" style="font-size:0.9rem;">DS18B20 · DHT22 · MQ135</div></div>
+      <div class="identitas-item"><div class="identitas-label">Database</div><div class="identitas-value" style="font-size:0.9rem;">Firebase + Google Sheets</div></div>
+      <div class="identitas-item"><div class="identitas-label">Penyimpanan Lokal</div><div class="identitas-value">SD Card</div></div>
+      <div class="identitas-item"><div class="identitas-label">Anggota</div><div class="identitas-value" style="font-size:0.88rem;">Dita · Marwan · Lintang · Alwan</div></div>
+      <div class="identitas-item"><div class="identitas-label">Kelas</div><div class="identitas-value">BRUTU</div></div>
+      <div class="identitas-item"><div class="identitas-label">Tahun</div><div class="identitas-value">2026</div></div>
     </div>
   </div>
- 
-  <!-- ==================== SPREADSHEET ==================== -->
+
+  <!-- SPREADSHEET -->
   <div class="panel spreadsheet-panel" style="margin-bottom:14px;">
     <div class="panel-title">📄 Spreadsheet Data Sensor</div>
     <div style="width:100%;height:620px;overflow:hidden;border-radius:16px;border:2px solid rgba(255,215,0,0.25);background:rgba(255,255,255,0.6);">
       <iframe src="https://docs.google.com/spreadsheets/d/122fonv691gqpCS40-3zcSATa6sZ0nk7T-gKrELlMwuk/preview" width="100%" height="620" style="border:0;"></iframe>
     </div>
   </div>
- 
+
   <div class="footer-bar">
-    <span>🐥 Brooder Ayam v4.3 · ESP32 + DS18B20 + DHT22 + MQ135 + Firebase RTDB</span>
+    <span>🐥 Brooder Ayam v5.0 · ESP32 + DS18B20 + DHT22 + MQ135 + Firebase RTDB</span>
     <span>Update: <span id="lastUpdate" style="color:var(--sun2);font-family:var(--font-head);">--</span> <span class="blink">♥️</span></span>
   </div>
 </div>
- 
+
 <script>
 // LOADING
 window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loadingScreen').classList.add('hide');},2800);});
- 
+
 // JAM REALTIME
 const hariID=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 const bulanID=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
@@ -774,12 +842,12 @@ function updateClock(){
   document.getElementById('clockDay').textContent=hariID[now.getDay()];
 }
 updateClock();setInterval(updateClock,1000);
- 
+
 // PARTICLES
 const emojis=['🐥','🐣','🌟','✨','🌼','☀️','🌸','🔥'];
 const pCont=document.getElementById('particles');
 for(let i=0;i<22;i++){const p=document.createElement('div');p.className='particle';p.textContent=emojis[i%emojis.length];p.style.left=Math.random()*100+'vw';p.style.setProperty('--dur',(9+Math.random()*14)+'s');p.style.setProperty('--delay',(Math.random()*14)+'s');p.style.fontSize=(0.7+Math.random()*1)+'rem';pCont.appendChild(p);}
- 
+
 // PANDUAN MINGGU
 const weekGuide=[
   {week:1,temp:'34–35°C',desc:'Anak ayam baru lahir',badge:'🔥 Panas',cls:'s-panas'},
@@ -790,7 +858,7 @@ const weekGuide=[
   {week:'5+',temp:'25°C',desc:'Suhu ruang normal',badge:'🏠 Bebas',cls:'s-normal'},
 ];
 document.getElementById('weekGrid').innerHTML=weekGuide.map(w=>`<div class="week-card" id="week${w.week}"><div class="week-num">Minggu ${w.week}</div><div class="week-temp">${w.temp}</div><div class="week-desc">${w.desc}</div><div class="week-badge ${w.cls}">${w.badge}</div></div>`).join('');
- 
+
 // AUDIO
 const AudioCtx=window.AudioContext||window.webkitAudioContext;let audioCtx=null;
 function initAudio(){if(!audioCtx)audioCtx=new AudioCtx();}
@@ -799,7 +867,7 @@ function playAlarm(){try{initAudio();if(audioCtx.state==='suspended')audioCtx.re
 function playWarn(){playBeep(660,'triangle',0.4,0.2);setTimeout(()=>playBeep(550,'triangle',0.3,0.15),250);}
 function playOk(){playBeep(523,'sine',0.15,0.15);setTimeout(()=>playBeep(659,'sine',0.15,0.15),120);setTimeout(()=>playBeep(784,'sine',0.2,0.12),240);}
 document.addEventListener('click',initAudio,{once:true});document.addEventListener('touchstart',initAudio,{once:true});
- 
+
 // STATUS
 function setStatus(s){
   const b=document.getElementById('statusBadge'),t=document.getElementById('statusText');
@@ -811,15 +879,15 @@ function setStatus(s){
   else if(s==='offline'){card.className='device-status-card offline show';document.getElementById('deviceIcon').textContent='📵';document.getElementById('deviceTitle').textContent='ESP32 OFFLINE!';document.getElementById('deviceSub').textContent='Tidak ada data — Cek WiFi & koneksi sensor';}
   else{card.className='device-status-card waiting show';}
 }
- 
+
 // TOAST
 function showToast(msg,type='ok'){const icons={ok:'✅',warn:'⚠️',danger:'🚨'};const d=document.createElement('div');d.className=`toast ${type}`;d.innerHTML=`<span>${icons[type]}</span><span>${msg}</span>`;document.getElementById('toastContainer').appendChild(d);setTimeout(()=>{d.style.animation='toastOut 0.3s ease forwards';setTimeout(()=>d.remove(),300);},5000);}
- 
+
 // NOTIF
 function requestNotif(){if(!('Notification'in window)){showToast('Browser tidak support notifikasi','warn');return;}Notification.requestPermission().then(p=>{if(p==='granted'){document.getElementById('notifBanner').style.display='none';showToast('Notifikasi aktif! 🎉','ok');playOk();}else showToast('Izin ditolak','warn');});}
 function sendNotif(title,body){if(Notification.permission==='granted')new Notification(title,{body});}
 if(Notification.permission==='granted')document.getElementById('notifBanner').style.display='none';
- 
+
 // OFFLINE TIMER
 let offlineSeconds=0,offlineInterval=null,totalUpdates=0,a30=false,a60=false,a120=false;
 function startOfflineTimer(){
@@ -837,61 +905,61 @@ function startOfflineTimer(){
 }
 window.resetOfflineTimer=function(){offlineSeconds=0;a30=a60=a120=false;document.getElementById('offlineCounter').textContent='0 detik';document.getElementById('offlineCounter').className='offline-timer';document.getElementById('offlineStrip').classList.remove('show');document.getElementById('deviceTimer').textContent='00:00';totalUpdates++;document.getElementById('totalUpdates').textContent=totalUpdates;startOfflineTimer();};
 startOfflineTimer();
- 
-// STATUS HELPERS
-function getTempStatus(t){if(t<30)return{text:'Terlalu Dingin',cls:'s-dingin',color:'#1976D2'};if(t<=35)return{text:'Normal',cls:'s-normal',color:'#27ae60'};if(t<=38)return{text:'Toleransi',cls:'s-toleran',color:'#e67e00'};if(t<=40)return{text:'Panas!',cls:'s-panas',color:'#FF9500'};return{text:'BAHAYA!',cls:'s-bahaya',color:'#c0392b'};}
+
+// ===== STATUS HELPERS — RANGE BARU =====
+function getTempStatus(t){
+  if(t>40)  return{text:'BAHAYA!',      cls:'s-bahaya',color:'#c0392b'};
+  if(t>=39) return{text:'Panas!',       cls:'s-panas', color:'#e67e00'};
+  if(t>=36) return{text:'Toleransi',    cls:'s-toleran',color:'#8B5E3C'};
+  if(t>=30) return{text:'Normal',       cls:'s-normal',color:'#27ae60'};
+  if(t>=26) return{text:'Sejuk',        cls:'s-sejuk', color:'#00838F'};
+  return         {text:'Dingin',        cls:'s-dingin',color:'#1565C0'};
+}
 function getHumidStatus(h){if(h<55)return{text:'Kering',cls:'s-dingin'};if(h<=65)return{text:'Ideal',cls:'s-normal'};return{text:'Lembab',cls:'s-toleran'};}
 function getAirStatus(v){if(v<1200)return{text:'Udara Baik',cls:'s-normal',color:'#27ae60'};if(v<2500)return{text:'Udara Sedang',cls:'s-toleran',color:'#e67e00'};return{text:'Udara Buruk',cls:'s-bahaya',color:'#c0392b'};}
- 
+
 // GAUGES
 function updateGaugeProbe(t){const pct=Math.min(Math.max((t-20)/30,0),1);const fill=document.getElementById('gaugeFillProbe');fill.style.strokeDashoffset=408*(1-pct);const st=getTempStatus(t);fill.style.stroke=st.color;const n=document.getElementById('gaugeNumProbe');n.style.color=st.color;n.textContent=t.toFixed(1);const gs=document.getElementById('gaugeStatusProbe');gs.textContent=st.text;gs.className='card-status '+st.cls;}
 function updateGaugeDHT(t){const pct=Math.min(Math.max((t-20)/30,0),1);const fill=document.getElementById('gaugeFillDHT');fill.style.strokeDashoffset=408*(1-pct);const st=getTempStatus(t);fill.style.stroke=st.color;const n=document.getElementById('gaugeNumDHT');n.style.color=st.color;n.textContent=t.toFixed(1);const gs=document.getElementById('gaugeStatusDHT');gs.textContent=st.text;gs.className='card-status '+st.cls;}
 function updateGaugeHumid(h){const pct=Math.min(Math.max(h/100,0),1);const fill=document.getElementById('gaugeFillHumid');fill.style.strokeDashoffset=270*(1-pct);const st=getHumidStatus(h);fill.style.stroke=st.cls==='s-normal'?'#5CB85C':st.cls==='s-dingin'?'#1976D2':'#e67e00';const n=document.getElementById('gaugeNumHumid');n.textContent=h.toFixed(0);const gs=document.getElementById('gaugeStatusHumid');gs.textContent=st.text;gs.className='card-status '+st.cls;}
 function updateGaugeMQ(v){const pct=Math.min(Math.max(v/4095,0),1);const fill=document.getElementById('gaugeFillMQ');fill.style.strokeDashoffset=270*(1-pct);const st=getAirStatus(v);fill.style.stroke=st.color;const n=document.getElementById('gaugeNumMQ');n.style.color=st.color;n.textContent=v;const gs=document.getElementById('gaugeStatusMQ');gs.textContent=st.text;gs.className='card-status '+st.cls;}
- 
+
 function updateTrend(id,curr,prev,unit='°'){if(prev===null)return;const diff=curr-prev,el=document.getElementById(id);if(diff>0.3){el.textContent=`🔺 Naik +${diff.toFixed(1)}${unit}`;el.className='trend up';}else if(diff<-0.3){el.textContent=`🔻 Turun ${diff.toFixed(1)}${unit}`;el.className='trend down';}else{el.textContent='➡️ Stabil';el.className='trend stable';}}
 function animateValue(el,val,dec=1){el.classList.remove('flip');void el.offsetWidth;el.classList.add('flip');el.textContent=typeof val==='number'?val.toFixed(dec):val;}
- 
+
 // CHARTS
 const labels=[],probeData=[],dhtData=[],humidData=[],mqData=[],historyRows=[];
 let maxTempVal=null,minTempVal=null,maxMQVal=0,humidSum=0,humidCount=0;
 let lastStatus='',alarmInterval=null,lastEventKey='';
 const cFont={family:'Baloo 2',size:12},cGrid='rgba(255,180,0,0.1)',cTick='#A1887F';
- 
+
 const tempChart=new Chart(document.getElementById('tempChart').getContext('2d'),{type:'line',data:{labels,datasets:[{label:'Probe',data:probeData,borderColor:'#FF9500',backgroundColor:'rgba(255,149,0,0.1)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#FF9500',tension:0.4,fill:true},{label:'DHT22',data:dhtData,borderColor:'#5DADE2',backgroundColor:'rgba(93,173,226,0.08)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#5DADE2',tension:0.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},scales:{x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},y:{min:20,max:50,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}}}});
 const humidChart=new Chart(document.getElementById('humidChart').getContext('2d'),{type:'line',data:{labels,datasets:[{label:'Kelembaban (%)',data:humidData,borderColor:'#5CB85C',backgroundColor:'rgba(92,184,92,0.1)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#5CB85C',tension:0.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},scales:{x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},y:{min:0,max:100,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}}}});
 const mqChart=new Chart(document.getElementById('mqChart').getContext('2d'),{type:'line',data:{labels,datasets:[{label:'MQ135 Raw',data:mqData,borderColor:'#C39BD3',backgroundColor:'rgba(195,155,211,0.12)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#C39BD3',tension:0.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:600},plugins:{legend:{labels:{color:cTick,font:cFont,boxWidth:12}}},scales:{x:{ticks:{color:cTick,font:cFont,maxTicksLimit:6},grid:{color:cGrid}},y:{min:0,max:4095,ticks:{color:cTick,font:cFont},grid:{color:cGrid}}}}});
- 
+
 // FIREBASE
 import("https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js").then(({initializeApp})=>{
   import("https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js").then(({getDatabase,ref,onValue,set})=>{
     const app=initializeApp({apiKey:"AIzaSyDj10sgn0UnQTwh4knuVq9pJCPp3A3Pm24",authDomain:"inkubator-anak-ayam.firebaseapp.com",databaseURL:"https://inkubator-anak-ayam-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"inkubator-anak-ayam",storageBucket:"inkubator-anak-ayam.firebasestorage.app",messagingSenderId:"831255035925",appId:"1:831255035925:web:b63716fcfaa46de356ce1c"});
     const db=getDatabase(app);
-window.db = db;
-window.fbRef = ref;
-window.fbSet = set;
+    window.db=db;window.fbRef=ref;window.fbSet=set;
     onValue(ref(db,'/inkubator'),(snapshot)=>{
       const data=snapshot.val();if(!data)return;
       const now=new Date();
       const ts=now.toLocaleString('id-ID',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
-     window.updateUI({
-  probe:data.suhu_probe??0,
-  dht:data.suhu_dht??0,
-  humid:data.kelembaban??0,
-  mqRaw:data.mq135_raw??0,
-  mqVolt:data.mq135_voltage??0,
-  airStr:data.kualitas_udara??'--',
-  sdStatus:data.sd_status??'--',
-  lampuStatus:data.lampu_status??false,
-  kipas1Speed:data.kipas1_speed??0,
-  kipas2Speed:data.kipas2_speed??0,
-  time:ts
-});
+      window.updateUI({
+        probe:data.suhu_probe??0,dht:data.suhu_dht??0,humid:data.kelembaban??0,
+        mqRaw:data.mq135_raw??0,mqVolt:data.mq135_voltage??0,
+        airStr:data.kualitas_udara??'--',sdStatus:data.sd_status??'--',
+        lampuStatus:data.lampu_status??false,
+        kipas1Speed:data.kipas1_speed??0,kipas2Speed:data.kipas2_speed??0,
+        time:ts
+      });
       window.resetOfflineTimer();setStatus('online');
     },()=>setStatus('offline'));
   });
 });
- 
+
 function addEventLog(text){
   const log=document.getElementById('eventLog');
   const now=new Date();
@@ -901,16 +969,16 @@ function addEventLog(text){
   const item=document.createElement('div');item.className='event-item';item.textContent=`${time} · ${text}`;
   log.prepend(item);while(log.children.length>12)log.lastChild.remove();
 }
- 
+
 function togglePresentation(){document.body.classList.toggle('presentation-mode');}
- 
+
 function updateAgeGuide(){
   const age=document.getElementById('chickAge').value;
   const guide={1:['34–35°C','Anak ayam baru lahir'],2:['32–33°C','Mulai aktif bergerak'],3:['30–31°C','Bulu mulai tumbuh'],4:['28–29°C','Adaptasi suhu ruang'],5:['26–27°C','Hampir mandiri'],6:['25°C','Suhu ruang normal']};
   document.getElementById('ageTemp').textContent=guide[age][0];
   document.getElementById('ageDesc').textContent=guide[age][1];
 }
- 
+
 function updateSmartPanels(probe,humid,mqRaw,sdStatus='--'){
   let score=100;
   if(probe<30)score-=20;if(probe>35)score-=15;if(probe>40)score-=35;
@@ -922,27 +990,22 @@ function updateSmartPanels(probe,humid,mqRaw,sdStatus='--'){
   circle.style.background=`conic-gradient(${score>=80?'#27ae60':score>=60?'#e67e00':'#c0392b'} 0deg,${score>=80?'#27ae60':score>=60?'#e67e00':'#c0392b'} ${score*3.6}deg,rgba(255,255,255,0.55) ${score*3.6}deg)`;
   document.getElementById('healthScoreText').textContent=score>=80?'Kondisi Bagus':score>=60?'Perlu Dipantau':'Kondisi Buruk';
   document.getElementById('healthScoreDesc').textContent=score>=80?'Brooder berada dalam kondisi aman.':score>=60?'Ada parameter yang perlu dicek.':'Segera cek suhu, udara, atau koneksi perangkat.';
-  document.getElementById('recTemp').textContent=probe<30?'Nyalakan pemanas':probe>40?'Matikan pemanas':'Suhu aman';
+  document.getElementById('recTemp').textContent=probe<26?'Segera nyalakan pemanas!':probe<30?'Nyalakan pemanas':probe>40?'Matikan pemanas':'Suhu aman';
   document.getElementById('recHumid').textContent=humid<55?'Tambah kelembaban':humid>65?'Kurangi kelembaban':'Humid ideal';
   document.getElementById('recAir').textContent=mqRaw>=2500?'Cek ventilasi':mqRaw>=1200?'Pantau udara':'Udara baik';
-  document.getElementById('sdStatus').textContent=sdStatus;
-  if(probe>40)addEventLog('Suhu bahaya terdeteksi');
-  else if(probe<30)addEventLog('Suhu terlalu dingin');
-  if(mqRaw>=2500)addEventLog('Kualitas udara buruk');
-  else if(mqRaw>=1200)addEventLog('Kualitas udara sedang');
+  // SD card badge
+  const sdEl=document.getElementById('sdStatus');
+  sdEl.textContent=sdStatus;
+  sdEl.className='ctrl-badge '+(sdStatus==='OK'?'on':'standby');
+  if(probe>40)addEventLog('🚨 Suhu bahaya terdeteksi');
+  else if(probe<26)addEventLog('🥶 Suhu sangat dingin!');
+  else if(probe<30)addEventLog('❄️ Suhu terlalu dingin');
+  if(mqRaw>=2500)addEventLog('💨 Kualitas udara buruk');
+  else if(mqRaw>=1200)addEventLog('💨 Kualitas udara sedang');
 }
 
-  function playClickSound(){
-  try{
-    initAudio();
-    if(audioCtx.state==='suspended')audioCtx.resume();
-    const o=audioCtx.createOscillator(),g=audioCtx.createGain();
-    o.connect(g);g.connect(audioCtx.destination);
-    o.frequency.value=620;o.type='sine';
-    g.gain.setValueAtTime(0.045,audioCtx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.08);
-    o.start();o.stop(audioCtx.currentTime+0.08);
-  }catch(e){}
+function playClickSound(){
+  try{initAudio();if(audioCtx.state==='suspended')audioCtx.resume();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=620;o.type='sine';g.gain.setValueAtTime(0.045,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.08);o.start();o.stop(audioCtx.currentTime+0.08);}catch(e){}
 }
 
 function setTheme(theme,btn){
@@ -958,9 +1021,7 @@ function loadTheme(){
   const saved=localStorage.getItem('brooderTheme')||'sunny';
   document.body.classList.remove('theme-night','theme-farm','theme-clean');
   if(saved!=='sunny')document.body.classList.add('theme-'+saved);
-  document.querySelectorAll('.theme-btn').forEach(b=>{
-    b.classList.toggle('active',b.textContent.toLowerCase()===saved);
-  });
+  document.querySelectorAll('.theme-btn').forEach(b=>{b.classList.toggle('active',b.textContent.toLowerCase()===saved);});
 }
 
 function attachButtonSounds(){
@@ -969,40 +1030,82 @@ function attachButtonSounds(){
   });
 }
 
+// ===== MASCOT — UPDATED dengan ekspresi sejuk & dingin =====
 function updateMascot(probe,humid,mqRaw){
   const face=document.getElementById('mascotFace');
   const title=document.getElementById('mascotTitle');
   const sub=document.getElementById('mascotSub');
 
-  if(offlineSeconds>=60){face.textContent='💤';title.textContent='ESP32 Offline';sub.textContent='Data belum masuk lagi dari perangkat.';}
-  else if(probe>40||mqRaw>=2500){face.textContent='😰';title.textContent='Bahaya!';sub.textContent=probe>40?'Brooder terlalu panas, segera cek pemanas.':'Udara buruk, cek ventilasi brooder.';}
-  else if(probe<30){face.textContent='🥶';title.textContent='Kedinginan';sub.textContent='Suhu terlalu rendah untuk anak ayam.';}
-  else if(probe>38){face.textContent='🥵';title.textContent='Kepanasan';sub.textContent='Suhu mulai tinggi, pantau kondisi brooder.';}
-  else if(humid<55||humid>65||mqRaw>=1200){face.textContent='🤔';title.textContent='Perlu Dicek';sub.textContent='Ada parameter yang mulai keluar dari kondisi ideal.';}
-  else{face.textContent='🐥';title.textContent='Brooder Nyaman';sub.textContent='Kondisi brooder aman untuk anak ayam.';}
+  if(offlineSeconds>=60){
+    face.textContent='💤';title.textContent='ESP32 Offline';
+    sub.textContent='Data belum masuk dari perangkat.';
+  } else if(probe>40||mqRaw>=2500){
+    face.textContent='😰';title.textContent='Bahaya!';
+    sub.textContent=probe>40?'Brooder terlalu panas, segera cek pemanas.':'Udara buruk, cek ventilasi brooder.';
+  } else if(probe<26){
+    // DINGIN — ≤ 25°C
+    face.textContent='🥶';title.textContent='Sangat Dingin!';
+    sub.textContent='Suhu sangat rendah, segera nyalakan pemanas!';
+  } else if(probe<30){
+    // SEJUK — 26–29°C
+    face.textContent='🧊';title.textContent='Agak Dingin';
+    sub.textContent='Suhu sejuk, pantau kondisi anak ayam ya.';
+  } else if(probe>38){
+    face.textContent='🥵';title.textContent='Kepanasan';
+    sub.textContent='Suhu mulai tinggi, pantau kondisi brooder.';
+  } else if(humid<55||humid>65||mqRaw>=1200){
+    face.textContent='🤔';title.textContent='Perlu Dicek';
+    sub.textContent='Ada parameter yang mulai keluar dari kondisi ideal.';
+  } else {
+    face.textContent='🐥';title.textContent='Brooder Nyaman';
+    sub.textContent='Kondisi brooder aman untuk anak ayam.';
+  }
 }
 
 window.addEventListener('load',()=>{loadTheme();attachButtonSounds();});
 
-  function setLampu(state){
-  if(!window.db) return showToast('Firebase belum siap','warn');
-  window.fbSet(window.fbRef(window.db, '/kontrol/lampu'), state);
-  document.getElementById('heaterStatus').textContent = state ? 'ON' : 'OFF';
-  showToast(state ? 'Lampu dinyalakan' : 'Lampu dimatikan', 'ok');
+// ===== CONTROL FUNCTIONS =====
+function setLampu(state){
+  playClickSound();
+  const badge=document.getElementById('lampuBadge');
+  const label=document.getElementById('lampuLabel');
+  badge.textContent=state?'ON':'OFF';
+  badge.className='ctrl-badge '+(state?'on':'off');
+  label.textContent=state?'Lampu Menyala 💡':'Lampu Mati';
+  if(!window.db)return showToast('Firebase belum siap','warn');
+  window.fbSet(window.fbRef(window.db,'/kontrol/lampu'),state);
+  showToast(state?'💡 Lampu dinyalakan!':'💡 Lampu dimatikan','ok');
+}
+
+function _updateKipasUI(fan, value){
+  const valEl=document.getElementById(`kipas${fan}Value`);
+  const badge=document.getElementById(`kipas${fan}Badge`);
+  const slider=document.getElementById(`kipas${fan}Slider`);
+  valEl.textContent=value;
+  badge.textContent=value+'%';
+  badge.className='ctrl-badge '+(value==0?'off':value==100?'on':'standby');
+  const color=fan===1?'#FF9500':'#5DADE2';
+  slider.style.background=`linear-gradient(90deg,${color} ${value}%,#e0e0e0 ${value}%)`;
 }
 
 function setKipas1(value){
-  value = Number(value);
-  document.getElementById('kipas1Value').textContent = value;
-  if(!window.db) return;
-  window.fbSet(window.fbRef(window.db, '/kontrol/kipas1'), value);
+  value=Number(value);
+  _updateKipasUI(1,value);
+  if(!window.db)return;
+  window.fbSet(window.fbRef(window.db,'/kontrol/kipas1'),value);
 }
 
 function setKipas2(value){
-  value = Number(value);
-  document.getElementById('kipas2Value').textContent = value;
-  if(!window.db) return;
-  window.fbSet(window.fbRef(window.db, '/kontrol/kipas2'), value);
+  value=Number(value);
+  _updateKipasUI(2,value);
+  if(!window.db)return;
+  window.fbSet(window.fbRef(window.db,'/kontrol/kipas2'),value);
+}
+
+function qKipas(fan,value){
+  playClickSound();
+  document.getElementById(`kipas${fan}Slider`).value=value;
+  if(fan===1)setKipas1(value);else setKipas2(value);
 }
 
 window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,sdStatus,lampuStatus,kipas1Speed,kipas2Speed,time}){
@@ -1012,7 +1115,7 @@ window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,sdStatus,lampuStat
   updateTrend('trendProbe',probe,prevProbe,'°');
   updateTrend('trendDHT',dht,prevDHT,'°');
   if(prevHumid!==null){const hd=humid-prevHumid,he=document.getElementById('trendHumid');if(hd>1){he.textContent=`🔺 Naik +${hd.toFixed(1)}%`;he.className='trend up';}else if(hd<-1){he.textContent=`🔻 Turun ${hd.toFixed(1)}%`;he.className='trend down';}else{he.textContent='➡️ Stabil';he.className='trend stable';}}
- 
+
   animateValue(document.getElementById('tempProbe'),probe);
   animateValue(document.getElementById('tempDHT'),dht);
   animateValue(document.getElementById('humidity'),humid);
@@ -1021,32 +1124,35 @@ window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,sdStatus,lampuStat
   document.getElementById('lastUpdate').textContent=time;
   document.getElementById('lastDataTime').textContent=time.split(', ')[1]||time;
   document.getElementById('bgProbe').textContent=probe.toFixed(0);document.getElementById('bgDHT').textContent=dht.toFixed(0);document.getElementById('bgHumid').textContent=humid.toFixed(0);document.getElementById('bgAir').textContent=mqRaw>0?mqRaw:'--';
- 
+
   const st=getTempStatus(probe);
   document.getElementById('tempStatus').textContent=st.text;document.getElementById('tempStatus').className='card-status '+st.cls;
   const ds=getTempStatus(dht);document.getElementById('dhtStatus').textContent=ds.text;document.getElementById('dhtStatus').className='card-status '+ds.cls;
   const hs=getHumidStatus(humid);document.getElementById('humidStatus').textContent=hs.text;document.getElementById('humidStatus').className='card-status '+hs.cls;
   const as=getAirStatus(mqRaw);document.getElementById('airStatus').textContent=as.text;document.getElementById('airStatus').className='card-status '+as.cls;
+
   updateGaugeProbe(probe);updateGaugeDHT(dht);updateGaugeHumid(humid);updateGaugeMQ(mqRaw);
   updateMascot(probe,humid,mqRaw);
   updateSmartPanels(probe,humid,mqRaw,sdStatus);
 
-  document.getElementById('heaterStatus').textContent = lampuStatus ? 'ON' : 'OFF';
-  document.getElementById('kipas1Value').textContent = kipas1Speed;
-  document.getElementById('kipas2Value').textContent = kipas2Speed;
-  document.getElementById('kipas1Slider').value = kipas1Speed;
-  document.getElementById('kipas2Slider').value = kipas2Speed;
+  // Sync kontrol dari Firebase
+  const toggle=document.getElementById('lampuToggle');
+  toggle.checked=lampuStatus;
+  document.getElementById('lampuBadge').textContent=lampuStatus?'ON':'OFF';
+  document.getElementById('lampuBadge').className='ctrl-badge '+(lampuStatus?'on':'off');
+  document.getElementById('lampuLabel').textContent=lampuStatus?'Lampu Menyala 💡':'Lampu Mati';
+  document.getElementById('kipas1Slider').value=kipas1Speed;
+  document.getElementById('kipas2Slider').value=kipas2Speed;
+  _updateKipasUI(1,kipas1Speed);
+  _updateKipasUI(2,kipas2Speed);
 
- 
   // OVERALL STATUS
-  const overallIcon=document.getElementById('overallIcon');
-  const overallStatus=document.getElementById('overallStatus');
-  const overallDesc=document.getElementById('overallDesc');
+  const overallIcon=document.getElementById('overallIcon'),overallStatus=document.getElementById('overallStatus'),overallDesc=document.getElementById('overallDesc');
   if(probe>40||mqRaw>=2500){overallIcon.textContent='🚨';overallStatus.textContent='Bahaya';overallStatus.style.color='#c0392b';overallDesc.textContent=probe>40?'Suhu terlalu panas, segera cek brooder!':'Kualitas udara buruk, cek ventilasi!';}
+  else if(probe<26){overallIcon.textContent='🥶';overallStatus.textContent='Sangat Dingin';overallStatus.style.color='#1565C0';overallDesc.textContent='Suhu sangat dingin, segera nyalakan pemanas!';}
   else if(probe<30||humid<55||humid>65||mqRaw>=1200){overallIcon.textContent='⚠️';overallStatus.textContent='Perlu Dicek';overallStatus.style.color='#e67e00';overallDesc.textContent='Ada parameter yang mulai keluar dari batas ideal.';}
   else{overallIcon.textContent='✅';overallStatus.textContent='Aman';overallStatus.style.color='#27ae60';overallDesc.textContent='Suhu, kelembaban, dan udara dalam kondisi baik.';}
- 
-  // RINGKASAN SESI
+
   maxTempVal=maxTempVal===null?probe:Math.max(maxTempVal,probe);
   minTempVal=minTempVal===null?probe:Math.min(minTempVal,probe);
   maxMQVal=Math.max(maxMQVal,mqRaw);humidSum+=humid;humidCount++;
@@ -1054,17 +1160,17 @@ window.updateUI=function({probe,dht,humid,mqRaw,mqVolt,airStr,sdStatus,lampuStat
   document.getElementById('minTemp').textContent=minTempVal.toFixed(1)+' °C';
   document.getElementById('maxMQ').textContent=maxMQVal;
   document.getElementById('avgHumid').textContent=(humidSum/humidCount).toFixed(1)+' %';
- 
+
   if(st.text!==lastStatus){lastStatus=st.text;
     if(st.cls==='s-bahaya'){document.body.classList.add('danger-mode');document.getElementById('alarmStrip').classList.add('show');showToast(`🚨 SUHU BAHAYA! ${probe.toFixed(1)}°C`,'danger');sendNotif('🚨 Brooder BAHAYA!',`Suhu: ${probe.toFixed(1)}°C`);playAlarm();if(!alarmInterval)alarmInterval=setInterval(playAlarm,8000);}
-    else{document.body.classList.remove('danger-mode');document.getElementById('alarmStrip').classList.remove('show');if(alarmInterval){clearInterval(alarmInterval);alarmInterval=null;}if(st.cls==='s-panas'){showToast(`🔥 Suhu Panas! ${probe.toFixed(1)}°C`,'warn');playWarn();}else if(st.cls==='s-dingin'){showToast(`❄️ Suhu Dingin! ${probe.toFixed(1)}°C`,'warn');playWarn();}else if(st.cls==='s-normal'){showToast(`✅ Suhu Normal! ${probe.toFixed(1)}°C`,'ok');playOk();}}
+    else{document.body.classList.remove('danger-mode');document.getElementById('alarmStrip').classList.remove('show');if(alarmInterval){clearInterval(alarmInterval);alarmInterval=null;}if(st.cls==='s-panas'){showToast(`🔥 Suhu Panas! ${probe.toFixed(1)}°C`,'warn');playWarn();}else if(st.cls==='s-sejuk'){showToast(`🌿 Suhu Sejuk ${probe.toFixed(1)}°C`,'warn');playWarn();}else if(st.cls==='s-dingin'){showToast(`❄️ Suhu Dingin! ${probe.toFixed(1)}°C`,'danger');playAlarm();}else if(st.cls==='s-normal'){showToast(`✅ Suhu Normal! ${probe.toFixed(1)}°C`,'ok');playOk();}}
   }
- 
+
   const ts=time.split(', ')[1]||time;
   if(labels.length>=20){labels.shift();probeData.shift();dhtData.shift();humidData.shift();mqData.shift();}
   labels.push(ts);probeData.push(probe);dhtData.push(dht);humidData.push(humid);mqData.push(mqRaw);
   tempChart.update();humidChart.update();mqChart.update();
- 
+
   historyRows.unshift({time,probe,dht,humid,mqRaw,airStr,st});
   if(historyRows.length>20)historyRows.pop();
   document.getElementById('historyBody').innerHTML=historyRows.map(r=>`<tr><td>${r.time}</td><td style="color:#FF9500;font-weight:800;">${r.probe.toFixed(1)}</td><td style="color:#5DADE2;font-weight:800;">${r.dht.toFixed(1)}</td><td style="color:#5CB85C;font-weight:800;">${r.humid.toFixed(1)}</td><td style="color:#C39BD3;font-weight:800;">${r.mqRaw>0?r.mqRaw:'--'}</td><td style="color:#9B59B6;font-weight:700;">${r.airStr}</td><td><span class="tbadge ${r.st.cls}">${r.st.text}</span></td></tr>`).join('');
